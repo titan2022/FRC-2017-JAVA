@@ -31,6 +31,7 @@ public class Robot extends IterativeRobot {
     	//Instantiate OI
     	oi = new OI();
     	//Instantiate Commands
+
     	driveCommand = new DriveCommand();
     }
     
@@ -43,13 +44,13 @@ public class Robot extends IterativeRobot {
     //This starts the methods for teleop and stops methods for autonomous
     @Override
 	public void teleopInit() {
-
+    	driveCommand.start();
     }
     
     //This stops the methods for autonomous
 	@Override
 	public void disabledInit() {
-
+		driveCommand.cancel();
 	}
     
 	//Methods below this line do not need to be edited/////////////////////////////////////////////////////////////////////////
