@@ -28,13 +28,15 @@ public class DriveCommand extends Command {
     protected void execute() {
     	double speedLeft = oi.xbox.GetLeftY();
     	double absSpeedLeft = Math.abs(speedLeft);
-    	if(absSpeedLeft < 0.1)
+    	if(absSpeedLeft < 0.1){
     		speedLeft = 0;
+    	}
     	driveSubsystem.setLeftSpeed(speedLeft);
     	double speedRight = oi.xbox.GetRightY();
     	double absSpeedRight = Math.abs(speedRight);
-    	if(absSpeedRight < 0.1)
+    	if(absSpeedRight < 0.1){
     		speedRight = 0; 
+    	}
     	driveSubsystem.setRightSpeed(speedRight);
     }
 
