@@ -16,12 +16,22 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static DriveSubsystem driveSubsystem = new DriveSubsystem();
-	public static OI oi = new OI();
+	//Instantiate Subsystems
+	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	
+	//Create References to commands
 	public DriveCommand driveCommand;
-    
+		
+	//Create reference to OI
+	public static OI oi;
+	
 	//Initialization code ran when you turn on the robot
     public void robotInit() {
+    	
+    	//Instantiate OI
+    	oi = new OI();
+    	//Instantiate Commands
+
     	driveCommand = new DriveCommand();
     }
     
