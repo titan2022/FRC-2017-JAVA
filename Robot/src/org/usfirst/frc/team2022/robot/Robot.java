@@ -4,6 +4,7 @@ package org.usfirst.frc.team2022.robot;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -26,13 +27,17 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	//Initialization code ran when you turn on the robot
-    public void robotInit() {
-    	
+    public void robotInit() {    	
     	//Instantiate OI
     	oi = new OI();
+    	
     	//Instantiate Commands
-
     	driveCommand = new DriveCommand();
+    	
+    	//Instantiate Camera
+    	CameraServer cams = CameraServer.getInstance();
+    	// set any cam parameters, then start capture
+    	cams.startAutomaticCapture();
     }
     
 	
