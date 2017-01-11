@@ -10,6 +10,10 @@ package org.usfirst.frc.team2022.robot;
  */
 
 public class RobotMap {
+	public static final int motorPort1 = 0;
+	public static final int motorPort2 = 1;
+	public static final int motorPort3 = 2;
+	public static final int motorPort4 = 3;
 	
 
 }

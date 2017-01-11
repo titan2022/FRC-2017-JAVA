@@ -1,6 +1,9 @@
 
 package org.usfirst.frc.team2022.robot;
 
+import org.usfirst.frc.team2022.command.DriveCommand;
+import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -13,11 +16,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	
+	public static DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public static OI oi = new OI();
+	public DriveCommand driveCommand;
     
 	//Initialization code ran when you turn on the robot
     public void robotInit() {
-       
+    	driveCommand = new DriveCommand();
     }
     
 	
@@ -29,13 +34,13 @@ public class Robot extends IterativeRobot {
     //This starts the methods for teleop and stops methods for autonomous
     @Override
 	public void teleopInit() {
-
+    	driveCommand.start();
     }
     
     //This stops the methods for autonomous
 	@Override
 	public void disabledInit() {
-
+		driveCommand.cancel();
 	}
     
 	//Methods below this line do not need to be edited/////////////////////////////////////////////////////////////////////////
