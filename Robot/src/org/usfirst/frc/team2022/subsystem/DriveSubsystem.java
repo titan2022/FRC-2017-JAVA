@@ -1,23 +1,10 @@
 package org.usfirst.frc.team2022.subsystem;
 
-<<<<<<< HEAD
-=======
-import org.usfirst.frc.team2022.command.Gyro;
 import org.usfirst.frc.team2022.command.DriveCommand;
->>>>>>> origin/gyro
 import org.usfirst.frc.team2022.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.GyroBase;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SampleRobot;
-import edu.wpi.first.wpilibj.Timer;
 import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SampleRobot;
-import edu.wpi.first.wpilibj.Timer;
 /**
  *
  */
@@ -26,7 +13,6 @@ public class DriveSubsystem extends Subsystem {
     // here. Call these from Commands.
 	
 	private CANTalon left1,left2,right1,right2;
-	private RobotDrive myRobot;
 	private AnalogGyro gyro; 
 	double Kp = 0; 
 	
