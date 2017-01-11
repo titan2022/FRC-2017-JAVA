@@ -1,6 +1,9 @@
 
 package org.usfirst.frc.team2022.robot;
 
+import org.usfirst.frc.team2022.command.DriveCommand;
+import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -13,11 +16,22 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	//Instantiate Subsystems
+	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	
-    
+	//Create References to commands
+	public DriveCommand driveCommand;
+		
+	//Create reference to OI
+	public static OI oi;
+	
 	//Initialization code ran when you turn on the robot
     public void robotInit() {
-       
+    	
+    	//Instantiate OI
+    	oi = new OI();
+    	//Instantiate Commands
+    	driveCommand = new DriveCommand();
     }
     
 	
