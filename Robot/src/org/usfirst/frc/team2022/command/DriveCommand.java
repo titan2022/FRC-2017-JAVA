@@ -27,8 +27,12 @@ public class DriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double speedLeft = oi.xbox.GetLeftY();
+    	if(speedLeft > 0.1)
+    		speedLeft = 0;
     	driveSubsystem.setLeftSpeed(speedLeft);
     	double speedRight = oi.xbox.GetRightY();
+    	if(speedRight > 0.1)
+    		speedRight = 0; 
     	driveSubsystem.setRightSpeed(speedRight);
     }
 
