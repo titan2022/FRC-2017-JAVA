@@ -10,6 +10,8 @@ package org.usfirst.frc.team2022.robot;
  */
 
 public class RobotMap {
-	
+	// ports for drive base
+		public static int leftDrivePort = 0;
+		public static int rightDrivePort = 0;
 
 }
