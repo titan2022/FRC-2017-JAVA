@@ -23,6 +23,7 @@ public class AutoDriveStraight extends Command {
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	OI oi = Robot.oi;
 	
+	
 
     public AutoDriveStraight(double inchesToDrive, double speed) {
         // Use requires() here to declare subsystem dependencies
