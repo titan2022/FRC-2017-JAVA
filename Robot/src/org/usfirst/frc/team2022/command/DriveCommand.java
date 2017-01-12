@@ -25,13 +25,16 @@ public class DriveCommand extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	double absSpeedLeft = Math.abs(speedLeft);
+    protected void execute() {    	
+    	double speedLeft = oi.xbox.GetLeftY();
+    	
+		double absSpeedLeft = Math.abs(speedLeft);
     	if(absSpeedLeft < 0.1){
     		speedLeft = 0;
     	}
     	driveSubsystem.setLeftSpeed(speedLeft);
 
+    	double speedRight = oi.xbox.GetRightY();
     	double absSpeedRight = Math.abs(speedRight);
     	if(absSpeedRight < 0.1){
 
