@@ -5,6 +5,7 @@ import org.usfirst.frc.team2022.robot.RobotMap;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
  
 
@@ -20,6 +21,7 @@ public class ShooterSubsystem extends Subsystem {
 	public ShooterSubsystem(){
 		//Instantiate Encoder
 		shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, false);
+		shooterEncoder.setPIDSourceType(PIDSourceType.kRate);
 		
 		//Set Encoder distanceFromTower per pulse
 		shooterEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
