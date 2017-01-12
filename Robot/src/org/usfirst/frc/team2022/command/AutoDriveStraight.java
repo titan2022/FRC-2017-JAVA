@@ -19,6 +19,9 @@ public abstract class AutoDriveStraight extends Command {
 	PIDController straightController;
 	DummyPIDOutput pidOutput;
 		
+		
+		
+		
 	//References to objects in Robot
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	OI oi = Robot.oi;
