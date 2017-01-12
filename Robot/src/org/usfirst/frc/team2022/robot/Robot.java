@@ -43,28 +43,9 @@ public class Robot extends IterativeRobot {
     	
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
-
   
-    	//thread for Camera Server
-    	Thread thread = new Thread() {
-    		public void run(){
-    			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-                camera.setResolution(640, 480);
-                
-                CvSink cvSink = CameraServer.getInstance().getVideo();
-                CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
-                
-                Mat source = new Mat();
-                Mat output = new Mat();
-                
-                while(true) {
-                    cvSink.grabFrame(source);
-                    //Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-                    outputStream.putFrame(output);
-                } 
-    		}	
-    	};
-    		thread.start();  
+    	//Simple Camera Server
+    	CameraServer.getInstance().startAutomaticCapture(); 
     }
     
 	
