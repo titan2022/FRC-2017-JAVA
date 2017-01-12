@@ -22,7 +22,7 @@ public class ShooterSubsystem extends Subsystem {
 		shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, false);
 		
 		//Set Encoder distanceFromTower per pulse
-		shooterEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
+		shooterEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
 	}
 	
 	public void initDefaultCommand() {
