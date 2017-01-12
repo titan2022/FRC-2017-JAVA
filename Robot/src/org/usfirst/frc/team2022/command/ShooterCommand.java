@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2022.command;
 
+import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
@@ -9,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterCommand extends Command {
 	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
+	
 	OI oi = Robot.oi;
 	
 	public ShooterCommand() {
@@ -23,16 +25,21 @@ public class ShooterCommand extends Command {
 	
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { 
-    	boolean shooter = oi.xbox.GetAValue();
-    	double speed = 1; 
-    	if(shooter == true){
-    		shooterSubsystem.setSpeed(speed);
+    	double manualSpeed = oi.xbox.GetRightTriggers();
+    	shooterSubsystem.setSpeed(manualSpeed);
+    	
+    	if(oi.xbox.GetAValue() == true)
+    	{
+    		AutoShooterCommand autoShooterCommand = new AutoShooterCommand(ConstantsMap.motorSpeed);
+    		while(!isFinished()){
+    			autoShooterCommand.start();
+    		}
     	}
     	
     	SmartDashboard.putNumber("Left Encoder Raw Count = ", shooterSubsystem.getShooterEncoderCount());
     	SmartDashboard.putNumber("Left Encoder Distance = ", shooterSubsystem.getShooterEncoderDistance());
     	SmartDashboard.putNumber("Left Encoder Rate = ", shooterSubsystem.getShooterEncoderRate());
-  }
+   }
 	
 	@Override
 	protected boolean isFinished() {
