@@ -9,16 +9,16 @@ import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AutoDriveStraight extends Command {
+public abstract class AutoDriveStraight extends Command {
 	
 	private boolean finished = false;
 	private double inchesToDrive = 0;
 	private double speed = 0;
 	
 	//PID Objects
-	PIDController straightController;
-	DummyPIDOutput pidOutput;
-	
+		PIDController straightController;
+		DummyPIDOutput pidOutput;
+		
 	//References to objects in Robot
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	OI oi = Robot.oi;
