@@ -6,4 +6,6 @@ package org.usfirst.frc.team2022.robot;
 
 public class ConstantsMap {
 
+	public static final double DRIVE_ENCODER_DIST_PER_TICK = 0;
+
 }

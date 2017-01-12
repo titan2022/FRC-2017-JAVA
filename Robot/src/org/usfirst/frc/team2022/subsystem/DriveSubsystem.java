@@ -2,8 +2,6 @@ package org.usfirst.frc.team2022.subsystem;
 
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 
-import org.usfirst.frc.team2022.command.Gyro;
-
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -40,6 +38,10 @@ public class DriveSubsystem extends Subsystem {
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB, false);
 
 		gyro = new AnalogGyro(1);
+		
+		//Set Encoder distanceFromTower per pulse
+		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
+		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
 	}
 	
 	public double getAngle(){
@@ -58,11 +60,8 @@ public class DriveSubsystem extends Subsystem {
 		gyro.calibrate();
 	}
 		
-  //Set Encoder distanceFromTower per pulse
-  rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
-  leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
+	
 		
-	}
 	// Setter methods for each side.
 	public void setLeftSpeed(double speed) {		
 		left1.set(speed);
