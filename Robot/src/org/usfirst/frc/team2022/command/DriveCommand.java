@@ -5,7 +5,6 @@ import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -36,24 +35,12 @@ public class DriveCommand extends Command {
     	driveSubsystem.setLeftSpeed(speedLeft);
 
     	double speedRight = oi.xbox.GetRightY();
-
-    	driveSubsystem.setSpeedRight(speedRight);
-    	
-    	SmartDashboard.putNumber("Left Encoder Raw Count", leftEncoder.get());
-    	SmartDashboard.putNumber("Right Encoder Raw Count", rightEncoder.get());
-    	SmartDashboard.putNumber("Left Encoder Distance", leftEncoder.getDistance());
-    	SmartDashboard.putNumber("Right Encoder Distance", rightEncoder.getDistance());
-    	SmartDashboard.putNumber("Left Encoder Rate", leftEncoder.getRate());
-    	SmartDashboard.putNumber("Right Encoder Rate", rightEncoder.getRate());
-    	SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
-
     	double absSpeedRight = Math.abs(speedRight);
     	if(absSpeedRight < 0.1){
 
     		speedRight = 0; 
     	}
-    	
-
+    	driveSubsystem.setRightSpeed(speedRight);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -17,7 +17,6 @@ public class RobotMap {
 	public static final int motorPort2 = 1;
 	public static final int motorPort3 = 2;
 	public static final int motorPort4 = 3;
-	public static final int motorPort5 = 4;
 
 
 	// encoder ports for drive base

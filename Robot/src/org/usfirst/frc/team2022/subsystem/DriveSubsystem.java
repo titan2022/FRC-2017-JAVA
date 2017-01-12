@@ -44,19 +44,15 @@ public class DriveSubsystem extends Subsystem {
 		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
 	}
 	
-	public AnalogGyro getGyro(){
-		return gyro; 
-	}
-	
-	public double getGyroAngle(){
-		return gyro.getAngle();
+	public double getAngle(){
+		return gyro.getAngle(); 
 	}
 	
 	public void SetSensitivity(double sensitivity){
 		Kp = sensitivity; 
 	}
 	
-	public void resetGyro(){
+	public void reset(){
 		gyro.reset();
 	}
 	
@@ -72,8 +68,8 @@ public class DriveSubsystem extends Subsystem {
 		left2.set(speed);	
 	}	
 	public void setRightSpeed (double speed) {
-		right1.set(speed);
-		right2.set(speed);		
+		left1.set(speed);
+		left2.set(speed);		
 	}
 	
 	// Getter method for each side.
@@ -82,11 +78,6 @@ public class DriveSubsystem extends Subsystem {
 	}	
 	public double getRightSpeed() {		
 		return right1.getSpeed();		
-	}
-	
-	public void tankDrive(double leftSpeed, double rightSpeed){
-		setLeftSpeed(leftSpeed);
-		setRightSpeed(rightSpeed);
 	}
 	
 	//Get Encoder 
