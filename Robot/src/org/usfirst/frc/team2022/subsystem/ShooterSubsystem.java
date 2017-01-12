@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2022.subsystem;
 
+import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.RobotMap;
 import com.ctre.CANTalon;
 
@@ -17,7 +18,11 @@ public class ShooterSubsystem extends Subsystem {
 	private Encoder shooterEncoder;
 
 	public ShooterSubsystem(){
+		//Instantiate Encoder
 		shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, false);
+		
+		//Set Encoder distanceFromTower per pulse
+		shooterEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
 	}
 	
 	public void initDefaultCommand() {

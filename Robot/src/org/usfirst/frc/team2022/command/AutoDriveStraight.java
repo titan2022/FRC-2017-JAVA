@@ -63,7 +63,7 @@ public abstract class AutoDriveStraight extends Command {
     		double pidOutputValue = straightController.get();
     		
     		//adjust speed of each wheel
-    		driveSubsystem.tankDrive(speed - pidOutputValue, speed + pidOutputValue);
+    		driveSubsystem.tankDrive(speed + pidOutputValue, speed + pidOutputValue);
     	}
     	//Disable controller and end command
     	straightController.disable();

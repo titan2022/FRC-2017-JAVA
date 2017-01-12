@@ -3,18 +3,12 @@ package org.usfirst.frc.team2022.robot;
 
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
+import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
 
 
 /**
@@ -27,6 +21,7 @@ import edu.wpi.cscore.UsbCamera;
 public class Robot extends IterativeRobot {
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	
 	//Create References to commands
 	public DriveCommand driveCommand;
