@@ -25,5 +25,7 @@ public class RobotMap {
 	public static int leftEncoderB = 0;
 	public static int rightEncoderA = 0;
 	public static int rightEncoderB = 0;
+	public static int shooterEncoderA = 0;
+	public static int shooterEncoderB = 0; 
 
 }
