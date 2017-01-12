@@ -4,6 +4,7 @@ package org.usfirst.frc.team2022.robot;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -14,8 +15,7 @@ import org.opencv.imgproc.Imgproc;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.IterativeRobot;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,11 +35,15 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	//Initialization code ran when you turn on the robot
-    public void robotInit() {
+
+    public void robotInit() {    	
+
     	//Instantiate OI
     	oi = new OI();
+    	
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
+
   
     	//thread for Camera Server
     	Thread thread = new Thread() {
