@@ -16,8 +16,8 @@ public abstract class AutoDriveStraight extends Command {
 	private double speed = 0;
 	
 	//PID Objects
-		PIDController straightController;
-		DummyPIDOutput pidOutput;
+	PIDController straightController;
+	DummyPIDOutput pidOutput;
 		
 	//References to objects in Robot
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
