@@ -10,6 +10,8 @@ public class ConstantsMap {
 	public static final double SHOOTER_ENCODER_DIST_PER_TICK = 0;
 
 	public static final double SHOOTER_ENCODER_DIST_PER_TICK = 0;
+	
+	public static final double motorSpeed = 0; 
 
 	public static double kP = 0;
 	public static double kI = 0; 
@@ -19,5 +21,6 @@ public class ConstantsMap {
 	public static double P = 0;
 	public static double I = 0; 
 	public static double D = 0; 
-	public static double F = 0; 
+	public static double F = 0;
+
 }
