@@ -5,6 +5,7 @@ import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import com.ctre.CANTalon;
 
 
@@ -19,11 +20,13 @@ public class DriveSubsystem extends Subsystem {
     // here. Call these from Commands.
 	
 	private CANTalon left1,left2,right1,right2;
+	private Encoder leftEncoder, rightEncoder;
 	private AnalogGyro gyro; 
+	private Ultrasonic ultra;
 	double Kp = 0; 
 	
 
-	private Encoder leftEncoder, rightEncoder;
+	
 
 	
 	public DriveSubsystem() {
@@ -36,8 +39,12 @@ public class DriveSubsystem extends Subsystem {
 		//Instantiate Encoders
 		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, false);
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB, false);
-
+		
+		//Instantiate Gyro
 		gyro = new AnalogGyro(1);
+		
+		//Instantiate Ultrasonic 
+		ultra = new Ultrasonic(RobotMap.pingChannel, RobotMap.echoChannel);
 		
 		//Set Encoder distanceFromTower per pulse
 		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
@@ -48,7 +55,7 @@ public class DriveSubsystem extends Subsystem {
 		return gyro;
 	}
 	
-		public double getGyroAngle(){
+	public double getGyroAngle(){
 		return gyro.getAngle(); 
 	}
 	
@@ -64,8 +71,17 @@ public class DriveSubsystem extends Subsystem {
 		gyro.calibrate();
 	}
 		
+	public Ultrasonic getUltraSensor(){
+		return ultra;
+	}
 	
-		
+	public double getRangeInches(){
+		return ultra.getRangeInches();
+	}
+	public double getRangeMillimeters(){
+		return ultra.getRangeMM();
+	}
+	
 	// Setter methods for each side.
 	public void setLeftSpeed(double speed) {		
 		left1.set(speed);
@@ -126,6 +142,7 @@ public class DriveSubsystem extends Subsystem {
 		rightEncoder.reset();
 		leftEncoder.reset();
 	}
+	
 	public void stop() {
 		
 		this.left1.set(0);

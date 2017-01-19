@@ -49,6 +49,9 @@ public class DriveCommand extends Command {
     	SmartDashboard.putNumber("Left Encoder Rate = ", driveSubsystem.getLeftEncoderRate());
     	SmartDashboard.putNumber("Right Encoder Rate = ", driveSubsystem.getRightEncoderRate());
     	SmartDashboard.putNumber("Gyro Angle = ", driveSubsystem.getGyroAngle());
+    	SmartDashboard.putNumber("Range in inches = ", driveSubsystem.getRangeInches());
+    	SmartDashboard.putNumber("Range in millimeters = ", driveSubsystem.getRangeMillimeters());
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
