@@ -3,19 +3,13 @@ package org.usfirst.frc.team2022.robot;
 
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
+import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +21,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 public class Robot extends IterativeRobot {
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem(); 
+
 	
 	//Create References to commands
 	public DriveCommand driveCommand;
@@ -35,35 +31,20 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	//Initialization code ran when you turn on the robot
-    public void robotInit() {
+
+    public void robotInit() {    	
+
     	//Instantiate OI
     	oi = new OI();
+    	
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
-  
-    	//thread for Camera Server
-    	Thread thread = new Thread() {
-    		public void run(){
-    			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-                camera.setResolution(640, 480);
-                
-                CvSink cvSink = CameraServer.getInstance().getVideo();
-                CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
-                
-                Mat source = new Mat();
-                Mat output = new Mat();
-                
-                while(true) {
-                    cvSink.grabFrame(source);
-                    //Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-                    outputStream.putFrame(output);
-                } 
-    		}	
-    	};
-    		thread.start();  
+    	
+    	CameraServer.getInstance().startAutomaticCapture();
     }
     
 	
+    
     //This starts the methods for autonomous
     public void autonomousInit() {
     	

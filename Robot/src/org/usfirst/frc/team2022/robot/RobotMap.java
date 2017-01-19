@@ -17,5 +17,15 @@ public class RobotMap {
 	public static final int motorPort2 = 1;
 	public static final int motorPort3 = 2;
 	public static final int motorPort4 = 3;
+	public static final int motorPort5 = 4; 
+
+
+	// encoder ports for drive base
+	public static int leftEncoderA = 0;
+	public static int leftEncoderB = 0;
+	public static int rightEncoderA = 0;
+	public static int rightEncoderB = 0;
+	public static int shooterEncoderA = 0;
+	public static int shooterEncoderB = 0; 
 
 }
