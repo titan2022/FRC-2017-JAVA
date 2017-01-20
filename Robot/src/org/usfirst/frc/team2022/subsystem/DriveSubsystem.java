@@ -71,8 +71,8 @@ public class DriveSubsystem extends Subsystem {
 		gyro = new AnalogGyro(1);
 		
 		//Set Encoder distanceFromTower per pulse
-		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
-		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
+		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK_LEFT);
+		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK_RIGHT);
 	}
 	
 	public AnalogGyro getGyro(){
