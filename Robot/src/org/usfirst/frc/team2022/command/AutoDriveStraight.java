@@ -69,7 +69,6 @@ public class AutoDriveStraight extends Command implements PIDOutput{
     	speedController.setSetpoint(inchesToDrive);
     	speedController.enable();
     	
-    	driveSubsystem.enableBrakeMode();
     }
 
     // Called repeatedly when this Command is scheduled to run
