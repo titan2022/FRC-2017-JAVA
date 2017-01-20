@@ -12,13 +12,12 @@ public class ConstantsMap {
 	
 	public static final double motorSpeed = 0; 
 
-	public static double kP = 0.3;
-	public static double kI = 0;
-	public static double kD = 0; 
-	public static double kF = 0;
+	public static double kP = -0.2;
+	public static double kI = -0.1; 
+	public static double kD = -0.0001; 
+	public static double kF = -0.15;
 	
 	public static double P = 0.01;
-
 	public static double I = 0; 
 	public static double D = 0; 
 	public static double F = 0;
