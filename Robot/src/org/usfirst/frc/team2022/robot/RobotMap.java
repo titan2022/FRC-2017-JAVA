@@ -13,6 +13,11 @@ public class RobotMap {
 
 	// ports for drive base
 
+
+	
+	public static final int pingChannel = 0; 
+	public static final int echoChannel = 0; 
+
 	public static final int motorPort1 = 2;
 	public static final int motorPort2 = 5;
 	public static final int motorPort3 = 3;
@@ -28,5 +33,3 @@ public class RobotMap {
 	public static int rightEncoderA = 0;
 	public static int rightEncoderB = 1;
 	public static int shooterEncoderA = 0;
-	public static int shooterEncoderB = 0; 
-}

@@ -10,6 +10,7 @@ public class ConstantsMap {
 	public static final double DRIVE_ENCODER_DIST_PER_TICK_RIGHT = ((4* Math.PI)/(500)*1.5);
 
 	
+	
 	public static final double motorSpeed = 0; 
 
 	public static double kP = 0.3;
