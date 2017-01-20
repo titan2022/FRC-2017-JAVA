@@ -19,6 +19,37 @@ public class DriveSubsystem extends Subsystem {
     // here. Call these from Commands.
 	
 	private CANTalon left1,left2,right1,right2;
+	public CANTalon getLeft1() {
+		return left1;
+	}
+
+	public void setLeft1(CANTalon left1) {
+		this.left1 = left1;
+	}
+
+	public CANTalon getLeft2() {
+		return left2;
+	}
+
+	public void setLeft2(CANTalon left2) {
+		this.left2 = left2;
+	}
+
+	public CANTalon getRight1() {
+		return right1;
+	}
+
+	public void setRight1(CANTalon right1) {
+		this.right1 = right1;
+	}
+
+	public CANTalon getRight2() {
+		return right2;
+	}
+
+	public void setRight2(CANTalon right2) {
+		this.right2 = right2;
+	}
 	private AnalogGyro gyro; 
 	double Kp = 0; 
 	

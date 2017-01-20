@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveCommand extends Command {
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	OI oi = Robot.oi;
-	
+	boolean brakeState = true;
+	long lastPressed = 0;
     public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -49,6 +50,19 @@ public class DriveCommand extends Command {
     	SmartDashboard.putNumber("Left Encoder Rate = ", driveSubsystem.getLeftEncoderRate());
     	SmartDashboard.putNumber("Right Encoder Rate = ", driveSubsystem.getRightEncoderRate());
     	SmartDashboard.putNumber("Gyro Angle = ", driveSubsystem.getGyroAngle());
+    	
+    	
+    	//Brake
+    	//Brake
+    	driveSubsystem.getLeft1().enableBrakeMode(brakeState);
+		driveSubsystem.getLeft2().enableBrakeMode(brakeState);
+		driveSubsystem.getRight1().enableBrakeMode(brakeState);
+		driveSubsystem.getRight2().enableBrakeMode(brakeState);
+    	if(oi.xbox.GetRightBumperValue() && (lastPressed-System.currentTimeMillis()>20)){  
+    		brakeState = !brakeState;
+    		lastPressed = System.currentTimeMillis();
+    	}
+  
     }
 
     // Make this return true when this Command no longer needs to run execute()
