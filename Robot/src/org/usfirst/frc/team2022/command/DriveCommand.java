@@ -3,7 +3,7 @@ package org.usfirst.frc.team2022.command;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
 
 
@@ -19,25 +19,36 @@ public class DriveCommand extends Command {
         // eg. requires(chassis);
     	requires(driveSubsystem);
     }
+    
+    
 
     // Called just before this Command runs the first time
     protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	double absSpeedLeft = Math.abs(speedLeft);
-    	if(absSpeedLeft < 0.1){
+    protected void execute() {    	
+    	double speedLeft = oi.xbox.GetLeftY();   
+    	 
+    	if(Math.abs(speedLeft) < 0.1){
     		speedLeft = 0;
     	}
     	driveSubsystem.setLeftSpeed(speedLeft);
 
-    	double absSpeedRight = Math.abs(speedRight);
-    	if(absSpeedRight < 0.1){
+    	double speedRight = oi.xbox.GetRightY();
+    	if(Math.abs(speedRight) < 0.1){
 
     		speedRight = 0; 
     	}
     	driveSubsystem.setRightSpeed(speedRight);
+    	
+    	SmartDashboard.putNumber("Left Encoder Raw Count = ", driveSubsystem.getLeftEncoderCount());
+    	SmartDashboard.putNumber("Right Encoder Raw Count = ", driveSubsystem.getRightEncoderCount());
+    	SmartDashboard.putNumber("Left Encoder Distance = ", driveSubsystem.getLeftEncoderDistance());
+    	SmartDashboard.putNumber("Right Encoder Distance = ", driveSubsystem.getRightEncoderDistance());
+    	SmartDashboard.putNumber("Left Encoder Rate = ", driveSubsystem.getLeftEncoderRate());
+    	SmartDashboard.putNumber("Right Encoder Rate = ", driveSubsystem.getRightEncoderRate());
+    	SmartDashboard.putNumber("Gyro Angle = ", driveSubsystem.getGyroAngle());
     }
 
     // Make this return true when this Command no longer needs to run execute()
