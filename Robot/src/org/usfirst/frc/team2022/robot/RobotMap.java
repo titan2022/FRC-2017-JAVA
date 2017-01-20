@@ -13,23 +13,23 @@ public class RobotMap {
 
 	// ports for drive base
 
-	public static final int motorPort1 = 0;
-	public static final int motorPort2 = 1;
-	public static final int motorPort3 = 2;
-	public static final int motorPort4 = 3;
-	public static final int motorPort5 = 4; 
+
 	
 	public static final int pingChannel = 0; 
 	public static final int echoChannel = 0; 
 
+	public static final int motorPort1 = 2;
+	public static final int motorPort2 = 5;
+	public static final int motorPort3 = 3;
+	public static final int motorPort4 = 1;
+	
+	//ports for gyro
+	public static final int gyro = 0;
+
 
 	// encoder ports for drive base
-	public static int leftEncoderA = 0;
-	public static int leftEncoderB = 0;
+	public static int leftEncoderA = 2;
+	public static int leftEncoderB = 3;
 	public static int rightEncoderA = 0;
-	public static int rightEncoderB = 0;
+	public static int rightEncoderB = 1;
 	public static int shooterEncoderA = 0;
-	public static int shooterEncoderB = 0;
-	
-
-}
