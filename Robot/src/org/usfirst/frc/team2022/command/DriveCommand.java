@@ -42,13 +42,13 @@ public class DriveCommand extends Command {
     	}
     	driveSubsystem.setRightSpeed(speedRight);
     	
-    	SmartDashboard.putNumber("Left Encoder Raw Count", driveSubsystem.getLeftEncoderCount());
-    	SmartDashboard.putNumber("Right Encoder Raw Count", driveSubsystem.getRightEncoderCount());
-    	SmartDashboard.putNumber("Left Encoder Distance", driveSubsystem.getLeftEncoderDistance());
-    	SmartDashboard.putNumber("Right Encoder Distance", driveSubsystem.getRightEncoderDistance());
-    	SmartDashboard.putNumber("Left Encoder Rate", driveSubsystem.getLeftEncoderRate());
-    	SmartDashboard.putNumber("Right Encoder Rate", driveSubsystem.getRightEncoderRate());
-    	SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyroAngle());
+    	SmartDashboard.putNumber("Left Encoder Raw Count = ", driveSubsystem.getLeftEncoderCount());
+    	SmartDashboard.putNumber("Right Encoder Raw Count = ", driveSubsystem.getRightEncoderCount());
+    	SmartDashboard.putNumber("Left Encoder Distance = ", driveSubsystem.getLeftEncoderDistance());
+    	SmartDashboard.putNumber("Right Encoder Distance = ", driveSubsystem.getRightEncoderDistance());
+    	SmartDashboard.putNumber("Left Encoder Rate = ", driveSubsystem.getLeftEncoderRate());
+    	SmartDashboard.putNumber("Right Encoder Rate = ", driveSubsystem.getRightEncoderRate());
+    	SmartDashboard.putNumber("Gyro Angle = ", driveSubsystem.getGyroAngle());
     }
 
     // Make this return true when this Command no longer needs to run execute()
