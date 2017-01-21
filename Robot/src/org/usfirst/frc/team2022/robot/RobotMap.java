@@ -22,6 +22,7 @@ public class RobotMap {
 	public static final int motorPort2 = 5;
 	public static final int motorPort3 = 3;
 	public static final int motorPort4 = 1;
+	public static final int motorPort5 = 6;
 	
 	//ports for gyro
 	public static final int gyro = 0;
@@ -33,3 +34,5 @@ public class RobotMap {
 	public static int rightEncoderA = 0;
 	public static int rightEncoderB = 1;
 	public static int shooterEncoderA = 0;
+	public static int shooterEncoderB = 1;
+}
