@@ -78,7 +78,7 @@ public class DriveSubsystem extends Subsystem {
 		gyro = new AnalogGyro(1);
 		
 		//Instantiate Ultrasonic 
-		AnalogInput ultrasonic = new AnalogInput(RobotMap.kUltrasonicPort);
+		ultrasonic = new AnalogInput(RobotMap.kUltrasonicPort);
 		
 		//Set Encoder distanceFromTower per pulse
 		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK_LEFT);
