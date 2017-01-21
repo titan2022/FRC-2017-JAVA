@@ -5,6 +5,7 @@ import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import com.ctre.CANTalon;
 
@@ -77,7 +78,7 @@ public class DriveSubsystem extends Subsystem {
 		gyro = new AnalogGyro(1);
 		
 		//Instantiate Ultrasonic 
-		ultra = new Ultrasonic(RobotMap.pingChannel, RobotMap.echoChannel);
+		AnalogInput ultrasonic = new AnalogInput(RobotMap.kUltrasonicPort);
 		
 		//Set Encoder distanceFromTower per pulse
 		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK_LEFT);
