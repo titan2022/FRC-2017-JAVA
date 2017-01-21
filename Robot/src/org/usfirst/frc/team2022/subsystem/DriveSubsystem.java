@@ -56,9 +56,9 @@ public class DriveSubsystem extends Subsystem {
 		this.right2 = right2;
   }
 	private AnalogGyro gyro; 
-	private Ultrasonic ultra;
+
 	double Kp = 0; 
-	
+	private AnalogInput ultrasonic;
 
 	
 
@@ -105,15 +105,10 @@ public class DriveSubsystem extends Subsystem {
 		gyro.calibrate();
 	}
 		
-	public Ultrasonic getUltraSensor(){
-		return ultra;
-	}
 	
-	public double getRangeInches(){
-		return ultra.getRangeInches();
-	}
+
 	public double getRangeMillimeters(){
-		return ultra.getRangeMM();
+		return ultrasonic.getAverageBits()*5;
 	}
 	
 	// Setter methods for each side.
