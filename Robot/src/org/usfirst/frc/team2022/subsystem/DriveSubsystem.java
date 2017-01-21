@@ -190,6 +190,20 @@ public class DriveSubsystem extends Subsystem {
 		gyro.reset();
 		
 	}
+	public void enableBrake(){
+		getLeft1().enableBrakeMode(true);
+		getLeft2().enableBrakeMode(true);
+		getRight1().enableBrakeMode(true);
+		getRight2().enableBrakeMode(true);
+		
+	}
+	public void disableBrake(){
+		getLeft1().enableBrakeMode(false);
+		getLeft2().enableBrakeMode(false);
+		getRight1().enableBrakeMode(false);
+		getRight2().enableBrakeMode(false);
+		
+	}
     
 }
 

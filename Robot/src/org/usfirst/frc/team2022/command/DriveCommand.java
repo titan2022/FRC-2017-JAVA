@@ -14,6 +14,7 @@ public class DriveCommand extends Command {
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	OI oi = Robot.oi;
 	boolean brakeState = true;
+	
 	long lastPressed = 0;
     public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -51,24 +52,31 @@ public class DriveCommand extends Command {
     	//SmartDashboard.putNumber("Right Encoder Rate = ", driveSubsystem.getRightEncoderRate());
     	//SmartDashboard.putNumber("Gyro Angle = ", driveSubsystem.getGyroAngle());
 
+    	SmartDashboard.putBoolean("Brake Mode = ", brakeState);
+
     	SmartDashboard.putNumber("Range in Inches =  ", driveSubsystem.getRangeInInches());
     	SmartDashboard.putNumber("Range Average in Inches =  ", driveSubsystem.getAverageRangeInInches());
     	
     	
     	//Brake
     	//Brake
-    	driveSubsystem.getLeft1().enableBrakeMode(brakeState);
-		driveSubsystem.getLeft2().enableBrakeMode(brakeState);
-		driveSubsystem.getRight1().enableBrakeMode(brakeState);
-		driveSubsystem.getRight2().enableBrakeMode(brakeState);
-    	if(oi.xbox.GetRightBumperValue() && (lastPressed-System.currentTimeMillis()>20)){  
+    	if(brakeState){
+			driveSubsystem.enableBrake();
+		}
+		else if(!brakeState){
+			driveSubsystem.disableBrake();
+		}
+    	if(oi.xbox.GetRightBumperValue() && (System.currentTimeMillis()-lastPressed)>200){  
+    		
     		brakeState = !brakeState;
+    		
     		lastPressed = System.currentTimeMillis();
     	}
-  
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    
     protected boolean isFinished() {
         return false;
     }
