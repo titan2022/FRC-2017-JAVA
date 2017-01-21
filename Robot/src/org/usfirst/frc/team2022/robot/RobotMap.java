@@ -36,4 +36,3 @@ public class RobotMap {
 	//public static int shooterEncoderA = 0;
 }
 
-}
