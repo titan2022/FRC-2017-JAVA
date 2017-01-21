@@ -75,7 +75,7 @@ public class DriveSubsystem extends Subsystem {
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB, false);
 		
 		//Instantiate Gyro
-		gyro = new AnalogGyro(1);
+		gyro = new AnalogGyro(RobotMap.gyro);
 		
 		//Instantiate Ultrasonic 
 		ultrasonic = new AnalogInput(RobotMap.kUltrasonicPort);
@@ -97,20 +97,19 @@ public class DriveSubsystem extends Subsystem {
 		Kp = sensitivity; 
 	}
 	
-	public void resetGyro(){
-		gyro.reset();
+	public double getVoltage(){
+		return ultrasonic.getVoltage();
+	}
+	public double getAverageVoltage(){
+		return ultrasonic.getAverageVoltage();
 	}
 	
-	public void calibrate(){
-		gyro.calibrate();
+	public double getRangeInInches(){
+		return (getVoltage()/0.0247904);
 	}
-		
-	
-
-	public double getRangeMillimeters(){
-		return ultrasonic.getAverageBits()*5;
+	public double getAverageRangeInInches(){
+		return (getAverageVoltage()/0.0247904);
 	}
-	
 	// Setter methods for each side.
 	public void setLeftSpeed(double speed) {		
 		left1.set(speed);
@@ -185,6 +184,12 @@ public class DriveSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveCommand());
     }
+
+	public void resetGyro() {
+		// TODO Auto-generated method stub
+		gyro.reset();
+		
+	}
     
 }
 

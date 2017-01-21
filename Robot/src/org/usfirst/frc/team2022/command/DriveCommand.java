@@ -43,15 +43,16 @@ public class DriveCommand extends Command {
     	}
     	driveSubsystem.setRightSpeed(speedRight);
     	
-    	SmartDashboard.putNumber("Left Encoder Raw Count = ", driveSubsystem.getLeftEncoderCount());
-    	SmartDashboard.putNumber("Right Encoder Raw Count = ", driveSubsystem.getRightEncoderCount());
-    	SmartDashboard.putNumber("Left Encoder Distance = ", driveSubsystem.getLeftEncoderDistance());
-    	SmartDashboard.putNumber("Right Encoder Distance = ", driveSubsystem.getRightEncoderDistance());
-    	SmartDashboard.putNumber("Left Encoder Rate = ", driveSubsystem.getLeftEncoderRate());
-    	SmartDashboard.putNumber("Right Encoder Rate = ", driveSubsystem.getRightEncoderRate());
-    	SmartDashboard.putNumber("Gyro Angle = ", driveSubsystem.getGyroAngle());
+    	//SmartDashboard.putNumber("Left Encoder Raw Count = ", driveSubsystem.getLeftEncoderCount());
+    	//SmartDashboard.putNumber("Right Encoder Raw Count = ", driveSubsystem.getRightEncoderCount());
+    	//SmartDashboard.putNumber("Left Encoder Distance = ", driveSubsystem.getLeftEncoderDistance());
+    	//SmartDashboard.putNumber("Right Encoder Distance = ", driveSubsystem.getRightEncoderDistance());
+    	//SmartDashboard.putNumber("Left Encoder Rate = ", driveSubsystem.getLeftEncoderRate());
+    	//SmartDashboard.putNumber("Right Encoder Rate = ", driveSubsystem.getRightEncoderRate());
+    	//SmartDashboard.putNumber("Gyro Angle = ", driveSubsystem.getGyroAngle());
 
-    	SmartDashboard.putNumber("Range in millimeters = ", driveSubsystem.getRangeMillimeters());
+    	SmartDashboard.putNumber("Range in Inches =  ", driveSubsystem.getRangeInInches());
+    	SmartDashboard.putNumber("Range Average in Inches =  ", driveSubsystem.getAverageRangeInInches());
     	
     	
     	//Brake
