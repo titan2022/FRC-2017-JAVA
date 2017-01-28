@@ -6,20 +6,20 @@ import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.sensor.DummyPIDOutput;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 
-import com.sun.javafx.geom.transform.BaseTransform.Degree;
-
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public abstract class AutoDriveTurn extends Command {
+public class AutoDriveTurn extends Command {
 	
 	private boolean finished = false;
 	private double degreeToTurn = 0;
 	private double speed = 0;
+	private boolean clockwise = true;
 	
 	//PID Objects
-		PIDController turnController;
-		DummyPIDOutput pidOutput;
+	PIDController turnController;
+	DummyPIDOutput pidOutput;
 		
 	//References to objects in Robot
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
@@ -44,11 +44,23 @@ public abstract class AutoDriveTurn extends Command {
     	driveSubsystem.resetGyro();
     	
     	//Create PIDController and enable
-    	turnController = new PIDController(ConstantsMap.kP, ConstantsMap.kI, ConstantsMap.kD, ConstantsMap.kF, driveSubsystem.getGyro(), pidOutput);
-    	turnController.setOutputRange(-1,1);
-    	turnController.setInputRange(-90, 90);
+    	double dP	 = SmartDashboard.getNumber("P", 0.3);
+    	double dD = SmartDashboard.getNumber("D", 0.05);
+    	double dI = SmartDashboard.getNumber("I", 0.1);
+    	turnController = new PIDController(dP, dI, dD, ConstantsMap.kF, driveSubsystem.getGyro(), pidOutput);
+    	turnController.setOutputRange(-speed, speed);
+    	turnController.setContinuous(true);
+    	turnController.setInputRange(-360, 360);
+    	turnController.setAbsoluteTolerance(0.05);
     	turnController.setSetpoint(degreeToTurn);
     	turnController.enable();
+    	
+    	if(driveSubsystem.getGyroAngle() < degreeToTurn){
+    		clockwise = true;
+    	}
+    	else{
+    		clockwise = false;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -57,16 +69,28 @@ public abstract class AutoDriveTurn extends Command {
     	 * While the right encoder distance is less than inchesToDrive
     	 * and xbox right bumper is not pressed, use output to drive straight
     	 */
-    	while(driveSubsystem.getGyro().getAngle() < degreeToTurn || !oi.xbox.GetRightBumperValue()){
-    		//Get PIDController output
+    	if(clockwise){
+        		//Get PIDController output
+    		double pidOutputValue = turnController.get();
+    		SmartDashboard.putNumber("Output", pidOutputValue);
+    		
+    		//adjust speed of each wheel
+    		driveSubsystem.setLeftSpeed(-pidOutputValue);
+    		driveSubsystem.setRightSpeed(-pidOutputValue);
+//    		driveSubsystem.tankDrive(pidOutputValue, -pidOutputValue);
+    		if(turnController.onTarget() || oi.xbox.GetRightBumperValue()){
+    			finished = true;
+    		}
+    	}
+    	else{
     		double pidOutputValue = turnController.get();
     		
     		//adjust speed of each wheel
-    		driveSubsystem.tankDrive(speed, (-speed));
+    		driveSubsystem.tankDrive(pidOutputValue, pidOutputValue);
+    		if(turnController.onTarget() || oi.xbox.GetRightBumperValue()){
+    			finished = true;
+    		}
     	}
-    	//Disable controller and end command
-    	turnController.disable();
-    	finished = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -76,6 +100,7 @@ public abstract class AutoDriveTurn extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	turnController.disable();
     	driveSubsystem.stop();
     }
 

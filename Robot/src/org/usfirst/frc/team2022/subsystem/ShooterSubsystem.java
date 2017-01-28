@@ -14,17 +14,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 */
 public class ShooterSubsystem extends Subsystem {
 
-	CANTalon motor = new CANTalon(RobotMap.motorPort5);
+	//CANTalon motor = new CANTalon(RobotMap.motorPort5);
 	double speed = 0;
 	private Encoder shooterEncoder;
 
 	public ShooterSubsystem(){
 		//Instantiate Encoder
-		shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, false);
-		shooterEncoder.setPIDSourceType(PIDSourceType.kRate);
+		//shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, false);
+		//shooterEncoder.setPIDSourceType(PIDSourceType.kRate);
 		
 		//Set Encoder distanceFromTower per pulse
-		shooterEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
+		//shooterEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
 	}
 	
 	public void initDefaultCommand() {
@@ -34,7 +34,7 @@ public class ShooterSubsystem extends Subsystem {
 
 	public void setSpeed(double speed) {
 		this.speed = speed;
-		motor.set(speed);
+		//motor.set(speed);
 	}
   
 	public double getSpeed(){
@@ -42,7 +42,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
  
 	public void stop(double speed){
-		motor.set(0);
+		//motor.set(0);
 	 }
 	
 	//Get Encoder 

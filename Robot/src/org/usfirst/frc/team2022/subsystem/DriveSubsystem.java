@@ -5,6 +5,8 @@ import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import com.ctre.CANTalon;
 
 
@@ -19,6 +21,9 @@ public class DriveSubsystem extends Subsystem {
     // here. Call these from Commands.
 	
 	private CANTalon left1,left2,right1,right2;
+
+	private Encoder leftEncoder, rightEncoder;
+
 	public CANTalon getLeft1() {
 		return left1;
 	}
@@ -49,12 +54,13 @@ public class DriveSubsystem extends Subsystem {
 
 	public void setRight2(CANTalon right2) {
 		this.right2 = right2;
-	}
+  }
 	private AnalogGyro gyro; 
-	double Kp = 0; 
-	
 
-	private Encoder leftEncoder, rightEncoder;
+	double Kp = 0; 
+	private AnalogInput ultrasonic;
+
+	
 
 	
 	public DriveSubsystem() {
@@ -67,8 +73,12 @@ public class DriveSubsystem extends Subsystem {
 		//Instantiate Encoders
 		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, false);
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB, false);
-
-		gyro = new AnalogGyro(1);
+		
+		//Instantiate Gyro
+		gyro = new AnalogGyro(RobotMap.gyro);
+		
+		//Instantiate Ultrasonic 
+		ultrasonic = new AnalogInput(RobotMap.kUltrasonicPort);
 		
 		//Set Encoder distanceFromTower per pulse
 		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK_LEFT);
@@ -79,7 +89,7 @@ public class DriveSubsystem extends Subsystem {
 		return gyro;
 	}
 	
-		public double getGyroAngle(){
+	public double getGyroAngle(){
 		return gyro.getAngle(); 
 	}
 	
@@ -87,16 +97,19 @@ public class DriveSubsystem extends Subsystem {
 		Kp = sensitivity; 
 	}
 	
-	public void resetGyro(){
-		gyro.reset();
+	public double getVoltage(){
+		return ultrasonic.getVoltage();
+	}
+	public double getAverageVoltage(){
+		return ultrasonic.getAverageVoltage();
 	}
 	
-	public void calibrate(){
-		gyro.calibrate();
+	public double getRangeInInches(){
+		return (getVoltage()/0.0247904);
 	}
-		
-	
-		
+	public double getAverageRangeInInches(){
+		return (getAverageVoltage()/0.0247904);
+	}
 	// Setter methods for each side.
 	public void setLeftSpeed(double speed) {		
 		left1.set(speed);
@@ -157,6 +170,7 @@ public class DriveSubsystem extends Subsystem {
 		rightEncoder.reset();
 		leftEncoder.reset();
 	}
+	
 	public void stop() {
 		
 		this.left1.set(0);
@@ -170,6 +184,26 @@ public class DriveSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveCommand());
     }
+
+	public void resetGyro() {
+		// TODO Auto-generated method stub
+		gyro.reset();
+		
+	}
+	public void enableBrake(){
+		getLeft1().enableBrakeMode(true);
+		getLeft2().enableBrakeMode(true);
+		getRight1().enableBrakeMode(true);
+		getRight2().enableBrakeMode(true);
+		
+	}
+	public void disableBrake(){
+		getLeft1().enableBrakeMode(false);
+		getLeft2().enableBrakeMode(false);
+		getRight1().enableBrakeMode(false);
+		getRight2().enableBrakeMode(false);
+		
+	}
     
 }
 
