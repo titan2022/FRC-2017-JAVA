@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2022.robot;
 
+import edu.wpi.first.wpilibj.DigitalSource;
+
 /**
  * This class is initialized in the Robot class and is referenced
  * in the subsystem classes. This class holds the variables to port 
@@ -13,7 +15,7 @@ public class RobotMap {
 
 	// ports for drive base
 
-
+	public static final int motorPortSwitch = 1;
 	
 	public static final int kUltrasonicPort = 0;
 
@@ -34,5 +36,12 @@ public class RobotMap {
 	//public static int shooterEncoderA = 0;
 	//public static int shooterEncoderB = 1;
 	//public static int shooterEncoderA = 0;
+
+	public static int motorPortClimber = 0;
+
+	public static int motorPortShooter = 0;
+
+	public static DigitalSource shooterEncoderA;
+	public static DigitalSource shooterEncoderB;
 }
 
