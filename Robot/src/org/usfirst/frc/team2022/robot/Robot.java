@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2022.robot;
 
 import org.usfirst.frc.team2022.command.DriveCommand;
+import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
@@ -21,7 +22,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem(); 
+	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem(); 
+	
 
 	
 	//Create References to commands
