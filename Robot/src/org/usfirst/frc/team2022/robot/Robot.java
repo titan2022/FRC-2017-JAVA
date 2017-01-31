@@ -1,14 +1,19 @@
 
 package org.usfirst.frc.team2022.robot;
 
+import org.usfirst.frc.team2022.command.AutoShooterCenterCommandGroup;
+import org.usfirst.frc.team2022.command.AutoShooterCommandGroup;
+import org.usfirst.frc.team2022.command.AutoShooterLeftCommandGroup;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 
 /**
@@ -21,7 +26,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem(); 
+	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	
+	Command shooterCommandGroup;
+	SendableChooser autoChooser;
 
 	
 	//Create References to commands
@@ -41,13 +49,19 @@ public class Robot extends IterativeRobot {
     	driveCommand = new DriveCommand();
     	
     	CameraServer.getInstance().startAutomaticCapture();
+    	
+    	autoChooser = new SendableChooser();
+    	autoChooser.addDefault("Left starting position", new AutoShooterLeftCommandGroup());
+    	autoChooser.addObject("Center starting position", new AutoShooterCenterCommandGroup());
+    	autoChooser.addObject("Right starting position", new AutoShooterLeftCommandGroup());
     }
     
 	
     
     //This starts the methods for autonomous
     public void autonomousInit() {
-    	
+    	shooterCommandGroup = (Command) autoChooser.getSelected();
+    	shooterCommandGroup.start();
     }
     
     //This starts the methods for teleop and stops methods for autonomous
