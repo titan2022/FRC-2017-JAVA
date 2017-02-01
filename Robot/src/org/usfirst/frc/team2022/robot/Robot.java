@@ -8,8 +8,10 @@ import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 
 /**
@@ -25,7 +27,6 @@ public class Robot extends IterativeRobot {
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem(); 
 	
-
 	
 	//Create References to commands
 	public DriveCommand driveCommand;
@@ -44,9 +45,9 @@ public class Robot extends IterativeRobot {
     	driveCommand = new DriveCommand();
     	
     	CameraServer.getInstance().startAutomaticCapture();
+    	
     }
     
-	
     
     //This starts the methods for autonomous
     public void autonomousInit() {
