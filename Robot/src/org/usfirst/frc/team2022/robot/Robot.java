@@ -5,6 +5,7 @@ import org.usfirst.frc.team2022.command.AutoShooterCenterCommandGroup;
 import org.usfirst.frc.team2022.command.AutoShooterCommandGroup;
 import org.usfirst.frc.team2022.command.AutoShooterLeftCommandGroup;
 import org.usfirst.frc.team2022.command.DriveCommand;
+import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
@@ -14,6 +15,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 
 /**
@@ -30,6 +35,8 @@ public class Robot extends IterativeRobot {
 	
 	Command shooterCommandGroup;
 	SendableChooser autoChooser;
+
+	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem(); 
 
 	
 	//Create References to commands
@@ -54,9 +61,9 @@ public class Robot extends IterativeRobot {
     	autoChooser.addDefault("Left starting position", new AutoShooterLeftCommandGroup());
     	autoChooser.addObject("Center starting position", new AutoShooterCenterCommandGroup());
     	autoChooser.addObject("Right starting position", new AutoShooterLeftCommandGroup());
+
     }
     
-	
     
     //This starts the methods for autonomous
     public void autonomousInit() {
