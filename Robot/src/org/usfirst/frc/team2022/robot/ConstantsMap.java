@@ -15,6 +15,9 @@ public class ConstantsMap {
 
 	// factor to convert sensor values to a distance in inches
 	private static final double kValueToInches = 0.125;
+
+	public static final double ROBOT_LENGTH_INCHES = 36.5; 
+
 	
 	public static final double motorSpeed = 0;
 	
