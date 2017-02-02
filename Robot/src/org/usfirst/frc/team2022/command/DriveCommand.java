@@ -42,6 +42,12 @@ public class DriveCommand extends Command {
 
     		speedRight = 0; 
     	}
+    	
+    	if(oi.xbox.GetAValue()) {
+    		AutoDriveStraight command = new AutoDriveStraight(120, .5);
+    		command.start();
+    	}
+    	
     	driveSubsystem.setRightSpeed(speedRight);
     	
     	//SmartDashboard.putNumber("Left Encoder Raw Count = ", driveSubsystem.getLeftEncoderCount());
