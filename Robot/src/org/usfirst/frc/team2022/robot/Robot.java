@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2022.robot;
 
+import org.usfirst.frc.team2022.command.AutoGearCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
@@ -9,9 +10,12 @@ import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -27,10 +31,14 @@ public class Robot extends IterativeRobot {
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem(); 
 	
-	
 	//Create References to commands
 	public DriveCommand driveCommand;
 		
+	Command autonomousCommand;
+	SendableChooser autoChooserPosition;
+	double position;
+	double gear;
+	
 	//Create reference to OI
 	public static OI oi;
 	
@@ -46,12 +54,18 @@ public class Robot extends IterativeRobot {
     	
     	CameraServer.getInstance().startAutomaticCapture();
     	
+    	autoChooserPosition = new SendableChooser();
+    	autoChooserPosition.addDefault("Position Gear 1 (Right)", new AutoGearCommand(1));
+    	autoChooserPosition.addObject("Position Gear 2 (Middle)", new AutoGearCommand(2));
+    	autoChooserPosition.addObject("Position Gear 3 (Left)", new AutoGearCommand(3));
+    	SmartDashboard.putData("Auto Gear Positions", autoChooserPosition);
     }
     
     
     //This starts the methods for autonomous
     public void autonomousInit() {
-    	
+    	autonomousCommand = (Command) autoChooserPosition.getSelected();
+    	autonomousCommand.start();
     }
     
     //This starts the methods for teleop and stops methods for autonomous
