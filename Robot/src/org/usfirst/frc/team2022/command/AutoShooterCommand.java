@@ -31,12 +31,8 @@ public class AutoShooterCommand extends Command{
 	}
 	
 	protected void execute() {
-    	while(oi.xbox.GetAValue() == false){
-    		double pidOutputValue = shooterController.get();
-    		shooterSubsystem.setSpeed(pidOutputValue);
-    	}
-    	shooterSubsystem.setSpeed(0);
-    	isFinished = true; 
+		double pidOutputValue = shooterController.get();
+    	shooterSubsystem.setSpeed(pidOutputValue);
     }
 
 	@Override
