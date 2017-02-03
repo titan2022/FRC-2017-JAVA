@@ -27,9 +27,13 @@ public class ShooterCommand extends Command {
     protected void execute() { 
     	double manualSpeed = oi.xbox.GetRightTriggers();
     	shooterSubsystem.setSpeed(manualSpeed);
+    	if(oi.xbox.GetRightTriggers() > 0.05){
+        	shooterSubsystem.setMotorBallSpeed(0.2);
+    	}
     	
     	if(oi.xbox.GetAValue() == true)
     	{
+    		shooterSubsystem.setMotorBallSpeed(0.2);
     		AutoShooterCommand autoShooterCommand = new AutoShooterCommand(ConstantsMap.motorSpeed);
     		while(!isFinished()){
     			autoShooterCommand.start();

@@ -38,10 +38,13 @@ public class RobotMap {
 	//public static int shooterEncoderA = 0;
 
 	public static int motorPortClimber = 0;
-
+	public static int motorPortShooterBall = 0;
+	
 	public static int motorPortShooter = 0;
 
 	public static DigitalSource shooterEncoderA;
 	public static DigitalSource shooterEncoderB;
+
+	
 }
 

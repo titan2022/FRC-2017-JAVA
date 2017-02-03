@@ -15,7 +15,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ShooterSubsystem extends Subsystem {
 
 	CANTalon motor = new CANTalon(RobotMap.motorPortShooter);
-	double speed = 0;
+	CANTalon motorBall = new CANTalon(RobotMap.motorPortShooterBall); 
+	
 	private Encoder shooterEncoder;
 
 	public ShooterSubsystem(){
@@ -37,12 +38,24 @@ public class ShooterSubsystem extends Subsystem {
 	}
   
 	public double getSpeed(){
-		return speed;
+		return motor.get();
 	}
  
 	public void stop(double speed){
-		//motor.set(0);
-	 }
+		motor.set(0);
+	}
+	
+	public void setMotorBallSpeed(double speed) {
+		motorBall.set(speed);
+	}
+	
+	public double getMotorBallSpeed() {
+		return motorBall.get();
+	}
+	
+	public void stopMotorBall(double speed){
+		motorBall.set(0);
+	}
 	
 	//Get Encoder 
 	public Encoder getShooterEncoder(){
