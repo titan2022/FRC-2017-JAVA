@@ -42,27 +42,24 @@ public class DriveCommand extends Command {
 
     		speedRight = 0; 
     	}
-    	
-    	if(oi.xbox.GetAValue()) {
-    		AutoDriveStraight command = new AutoDriveStraight(120, .5);
-    		command.start();
-    	}
-    	
     	driveSubsystem.setRightSpeed(speedRight);
     	
-    	//SmartDashboard.putNumber("Left Encoder Raw Count = ", driveSubsystem.getLeftEncoderCount());
-    	//SmartDashboard.putNumber("Right Encoder Raw Count = ", driveSubsystem.getRightEncoderCount());
-    	//SmartDashboard.putNumber("Left Encoder Distance = ", driveSubsystem.getLeftEncoderDistance());
-    	//SmartDashboard.putNumber("Right Encoder Distance = ", driveSubsystem.getRightEncoderDistance());
-    	//SmartDashboard.putNumber("Left Encoder Rate = ", driveSubsystem.getLeftEncoderRate());
-    	//SmartDashboard.putNumber("Right Encoder Rate = ", driveSubsystem.getRightEncoderRate());
-    	//SmartDashboard.putNumber("Gyro Angle = ", driveSubsystem.getGyroAngle());
+    	if(oi.xbox.GetXValue()){
+    		new AutoGearCommand();
+    	}
+    	
+    	SmartDashboard.putNumber("Left Encoder Raw Count = ", driveSubsystem.getLeftEncoderCount());
+    	SmartDashboard.putNumber("Right Encoder Raw Count = ", driveSubsystem.getRightEncoderCount());
+    	SmartDashboard.putNumber("Left Encoder Distance = ", driveSubsystem.getLeftEncoderDistance());
+    	SmartDashboard.putNumber("Right Encoder Distance = ", driveSubsystem.getRightEncoderDistance());
+    	SmartDashboard.putNumber("Left Encoder Rate = ", driveSubsystem.getLeftEncoderRate());
+    	SmartDashboard.putNumber("Right Encoder Rate = ", driveSubsystem.getRightEncoderRate());
+    	SmartDashboard.putNumber("Gyro Angle = ", driveSubsystem.getGyroAngle());
 
     	SmartDashboard.putBoolean("Brake Mode = ", brakeState);
 
     	SmartDashboard.putNumber("Range in Inches =  ", driveSubsystem.getRangeInInches());
     	SmartDashboard.putNumber("Range Average in Inches =  ", driveSubsystem.getAverageRangeInInches());
-    	
     	
     	//Brake
     	//Brake
@@ -78,7 +75,6 @@ public class DriveCommand extends Command {
     		
     		lastPressed = System.currentTimeMillis();
     	}
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -9,6 +9,20 @@ public class AutoGearCommand extends CommandGroup {
 	//Create Reference to Network Table
 	NetworkTable table;
 	
+	public AutoGearCommand(){
+		table = NetworkTable.getTable("SmartDashboard");
+		
+		double speed = 0.5;
+		
+		Timer.delay(1);
+    	double pegDistance = table.getNumber("pegDistance", 0);
+    	double pegAngle = table.getNumber("pegAngle", 0);
+   		System.out.println("Distance: " + pegDistance + " Angle: " + pegAngle);
+		  		
+  		addSequential(new AutoDriveTurn(pegAngle, speed));
+  		addSequential(new AutoDriveStraight(pegDistance, speed));
+	}
+	
 	public AutoGearCommand(int position){	
 		table = NetworkTable.getTable("SmartDashboard");
 		
@@ -18,7 +32,7 @@ public class AutoGearCommand extends CommandGroup {
 		
 		if(position == 1){
 			command(220, -135); 
-		}		
+		}	
 		else if(position == 2){
 			command(50, 0);
 		}
