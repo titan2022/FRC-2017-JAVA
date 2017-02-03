@@ -3,6 +3,7 @@ package org.usfirst.frc.team2022.command;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
+import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimberCommand extends Command{
 	ClimberSubsystem climberSubsystem = Robot.climberSubsystem; 
 	
-	OI oi = Robot.oi;
+	XboxMap xboxMap = new XboxMap();
 	
 	public ClimberCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -24,12 +25,12 @@ public class ClimberCommand extends Command{
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { 
-    	double manualSpeed = oi.xbox.GetLeftTriggers();
+    	double manualSpeed = xboxMap.getManualClimberSpeed();
     	
-    	if (oi.xbox.GetLeftBumperValue() == true) {
+    	if (xboxMap.startAutoClimberSystem()) {
     		while(!climberSubsystem.getclimberPosition()) {
     			climberSubsystem.setClimbSpeed(ConstantsMap.climberSpeed);
-    			if(oi.xbox.GetLeftBumperValue() == true){
+    			if(xboxMap.stopSystem()){
     				break;
     			}
     		}
@@ -47,7 +48,5 @@ public class ClimberCommand extends Command{
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-   	
+	}	
 }

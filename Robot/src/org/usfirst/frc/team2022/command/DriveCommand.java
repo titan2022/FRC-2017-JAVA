@@ -2,6 +2,7 @@ package org.usfirst.frc.team2022.command;
 
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
+import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
@@ -12,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveCommand extends Command {
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
-	OI oi = Robot.oi;
+	XboxMap xboxMap = new XboxMap();
 	boolean brakeState = true;
 	
 	long lastPressed = 0;
@@ -30,21 +31,21 @@ public class DriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
-    	double speedLeft = oi.xbox.GetLeftY();   
+    	double speedLeft = xboxMap.getSpeedLeftWheel();   
     	 
     	if(Math.abs(speedLeft) < 0.1){
     		speedLeft = 0;
     	}
     	driveSubsystem.setLeftSpeed(speedLeft);
 
-    	double speedRight = oi.xbox.GetRightY();
+    	double speedRight = xboxMap.getSpeedRightWheel();
     	if(Math.abs(speedRight) < 0.1){
 
     		speedRight = 0; 
     	}
     	driveSubsystem.setRightSpeed(speedRight);
     	
-    	if(oi.xbox.GetXValue()){
+    	if(xboxMap.startAutoGearPlacement()){
     		new AutoGearCommand();
     	}
     	
@@ -69,7 +70,7 @@ public class DriveCommand extends Command {
 		else if(!brakeState){
 			driveSubsystem.disableBrake();
 		}
-    	if(oi.xbox.GetRightBumperValue() && (System.currentTimeMillis()-lastPressed)>200){  
+    	if(xboxMap.startAutoBrakerSystem() && (System.currentTimeMillis()-lastPressed)>200){  
     		
     		brakeState = !brakeState;
     		

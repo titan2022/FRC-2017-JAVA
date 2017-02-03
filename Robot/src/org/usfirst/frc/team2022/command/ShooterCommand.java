@@ -3,6 +3,7 @@ package org.usfirst.frc.team2022.command;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
+import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterCommand extends Command {
 	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
 	
-	OI oi = Robot.oi;
+	XboxMap xboxMap = new XboxMap();
 	
 	public ShooterCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -25,19 +26,22 @@ public class ShooterCommand extends Command {
 	
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { 
-    	double manualSpeed = oi.xbox.GetRightTriggers();
+    	double manualSpeed = xboxMap.getManualShooterSpeed();
     	shooterSubsystem.setSpeed(manualSpeed);
-    	if(oi.xbox.GetRightTriggers() > 0.05){
+    	if(xboxMap.getManualShooterSpeed() > 0.05){
         	shooterSubsystem.setMotorBallSpeed(0.2);
     	}
     	
-    	if(oi.xbox.GetAValue() == true)
+    	if(xboxMap.startAutoShooterSystem())
     	{
     		shooterSubsystem.setMotorBallSpeed(0.2);
+    		
     		AutoShooterCommand autoShooterCommand = new AutoShooterCommand(ConstantsMap.motorSpeed);
-    		while(!isFinished()){
-    			autoShooterCommand.start();
-    		}
+	   		autoShooterCommand.start();
+	   		 
+	   		if(xboxMap.stopSystem()){
+	   			autoShooterCommand.cancel();
+	   		}
     	}
     	
     	SmartDashboard.putNumber("Left Encoder Raw Count = ", shooterSubsystem.getShooterEncoderCount());
