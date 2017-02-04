@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2022.command;
+package org.usfirst.frc.team2022.command.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2022.command;
+package org.usfirst.frc.team2022.command.autonomous;
 
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;

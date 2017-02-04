@@ -1,9 +1,11 @@
 package org.usfirst.frc.team2022.command;
 
+import org.usfirst.frc.team2022.command.autonomous.AutoGearCommand;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
 

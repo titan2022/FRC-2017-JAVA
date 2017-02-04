@@ -1,13 +1,13 @@
-package org.usfirst.frc.team2022.command;
+package org.usfirst.frc.team2022.command.autonomous.group;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class AutoShooterCenterCommandGroup extends CommandGroup {
+public class AutoShooterRightCommandGroup extends CommandGroup {
     
-    public  AutoShooterCenterCommandGroup() {
+    public  AutoShooterRightCommandGroup() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

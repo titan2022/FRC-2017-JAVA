@@ -1,11 +1,10 @@
 
 package org.usfirst.frc.team2022.robot;
 
-import org.usfirst.frc.team2022.command.AutoGearCommand;
-import org.usfirst.frc.team2022.command.AutoShooterCenterCommandGroup;
-import org.usfirst.frc.team2022.command.AutoShooterCommandGroup;
-import org.usfirst.frc.team2022.command.AutoShooterLeftCommandGroup;
 import org.usfirst.frc.team2022.command.DriveCommand;
+import org.usfirst.frc.team2022.command.autonomous.AutoGearCommand;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
 import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
@@ -15,12 +14,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
