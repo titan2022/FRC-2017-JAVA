@@ -1,13 +1,10 @@
 
 package org.usfirst.frc.team2022.robot;
 
-<<<<<<< HEAD
 import org.usfirst.frc.team2022.command.AutoGearCommand;
-=======
 import org.usfirst.frc.team2022.command.AutoShooterCenterCommandGroup;
 import org.usfirst.frc.team2022.command.AutoShooterCommandGroup;
 import org.usfirst.frc.team2022.command.AutoShooterLeftCommandGroup;
->>>>>>> origin/master
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
@@ -40,15 +37,12 @@ public class Robot extends IterativeRobot {
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	
-<<<<<<< HEAD
-=======
 	Command shooterCommandGroup;
 	SendableChooser autoChooser;
 
 	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem(); 
 
 	
->>>>>>> origin/master
 	//Create References to commands
 	public DriveCommand driveCommand;
 		
@@ -72,31 +66,25 @@ public class Robot extends IterativeRobot {
     	
     	CameraServer.getInstance().startAutomaticCapture();
     	
-<<<<<<< HEAD
     	autoChooserPosition = new SendableChooser();
     	autoChooserPosition.addDefault("Position Gear 1 (Right)", new AutoGearCommand(1));
     	autoChooserPosition.addObject("Position Gear 2 (Middle)", new AutoGearCommand(2));
     	autoChooserPosition.addObject("Position Gear 3 (Left)", new AutoGearCommand(3));
     	SmartDashboard.putData("Auto Gear Positions", autoChooserPosition);
-=======
     	autoChooser = new SendableChooser();
     	autoChooser.addDefault("Left starting position", new AutoShooterLeftCommandGroup());
     	autoChooser.addObject("Center starting position", new AutoShooterCenterCommandGroup());
     	autoChooser.addObject("Right starting position", new AutoShooterLeftCommandGroup());
 
->>>>>>> origin/master
     }
     
     
     //This starts the methods for autonomous
     public void autonomousInit() {
-<<<<<<< HEAD
     	autonomousCommand = (Command) autoChooserPosition.getSelected();
     	autonomousCommand.start();
-=======
     	shooterCommandGroup = (Command) autoChooser.getSelected();
     	shooterCommandGroup.start();
->>>>>>> origin/master
     }
     
     //This starts the methods for teleop and stops methods for autonomous
