@@ -15,30 +15,32 @@ public class RobotMap {
 
 	// ports for drive base
 
-	public static final int motorPortSwitch = 1;
+	public static final int MOTOR_PORT_SWITCH = 1;
 	
-	public static final int kUltrasonicPort = 0;
+	public static final int K_ULTRASONIC_PORT = 0;
 
-	public static final int motorPort1 = 2;
-	public static final int motorPort2 = 5;
-	public static final int motorPort3 = 3;
-	public static final int motorPort4 = 1;
+	public static final int LEFT_DRIVE_PORT_1 = 2;
+	public static final int LEFT_DRIVE_PORT_2 = 5;
+	public static final int LEFT_DRIVE_PORT_3 = 4;
+	public static final int RIGHT_DRIVE_PORT_1 = 3;
+	public static final int RIGHT_DRIVE_PORT_2 = 1;
+	public static final int RIGHT_DRIVE_PORT_3 = 6;
 	
 	//ports for gyro
-	public static final int gyro = 1;
+	public static final int GYRO_PORT = 1;
 
 
 	// encoder ports for drive base
-	public static int leftEncoderA = 2;
-	public static int leftEncoderB = 3;
-	public static int rightEncoderA = 0;
-	public static int rightEncoderB = 1;
+	public static int LEFT_ENCODER_PORT_A = 2;
+	public static int LEFT_ENCODER_PORT_B = 3;
+	public static int RIGHT_ENCODER_PORT_A = 0;
+	public static int RIGHT_ENCODER_PORT_B = 1;
 	//public static int shooterEncoderA = 0;
 	//public static int shooterEncoderB = 1;
 	//public static int shooterEncoderA = 0;
 
-	public static int motorPortClimber = 0;
-	public static int motorPortShooterBall = 0;
+	public static int CLIMBER_AGITATOR_MOTOR_PORT = 0;
+	public static int SHOOTER_MOTOR_PORT = 0;
 	
 	public static int motorPortShooter = 0;
 
