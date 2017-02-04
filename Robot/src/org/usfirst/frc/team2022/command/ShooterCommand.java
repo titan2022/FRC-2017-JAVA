@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterCommand extends Command {
 	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
-	
+	AutoShooterCommand autoShooterCommand; 	
 	XboxMap xboxMap = new XboxMap();
 	
 	public ShooterCommand() {
@@ -22,27 +22,31 @@ public class ShooterCommand extends Command {
 	
 	// Called just before this Command runs the first time
     protected void initialize() {
+    	shooterSubsystem.resetEncoders();
     }
 	
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { 
     	double manualSpeed = xboxMap.getManualShooterSpeed();
-    	shooterSubsystem.setSpeed(manualSpeed);
+    	shooterSubsystem.setShooterSpeed(manualSpeed);
     	if(xboxMap.getManualShooterSpeed() > 0.05){
-        	shooterSubsystem.setMotorBallSpeed(0.2);
+        	shooterSubsystem.setClimberAgitatorSpeed(0.2);
+    	} else {
+    		shooterSubsystem.setClimberAgitatorSpeed(0);
     	}
     	
     	if(xboxMap.startAutoShooterSystem())
     	{
-    		shooterSubsystem.setMotorBallSpeed(0.2);
     		
     		AutoShooterSpeedCommand autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.motorSpeed);
+    		shooterSubsystem.setClimberAgitatorSpeed(0.2);
+
 	   		autoShooterCommand.start();
-	   		 
-	   		if(xboxMap.stopSystem()){
-	   			autoShooterCommand.cancel();
-	   		}
     	}
+	   		 
+	   	if(xboxMap.stopSystem()){
+	   		autoShooterCommand.cancel();
+	   	}
     	
     	SmartDashboard.putNumber("Left Encoder Raw Count = ", shooterSubsystem.getShooterEncoderCount());
     	SmartDashboard.putNumber("Left Encoder Distance = ", shooterSubsystem.getShooterEncoderDistance());
@@ -57,13 +61,15 @@ public class ShooterCommand extends Command {
 
 	 // Called once after isFinished returns true
     protected void end() {
-    	shooterSubsystem.setSpeed(0);
+    	shooterSubsystem.setShooterSpeed(0);
+    	shooterSubsystem.setClimberAgitatorSpeed(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	shooterSubsystem.setSpeed(0);
+    	shooterSubsystem.setShooterSpeed(0);
+    	shooterSubsystem.setClimberAgitatorSpeed(0);
     }
 
 }
