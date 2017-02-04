@@ -3,6 +3,7 @@ package org.usfirst.frc.team2022.command.autonomous;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
+import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -23,6 +24,7 @@ public class AutoDriveTurnCommand extends Command implements PIDOutput{
 	//References to objects in Robot
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	OI oi = Robot.oi;
+	XboxMap xboxMap = new XboxMap();
 
     public AutoDriveTurnCommand(double degreeToTurn, double speed) {
         // Use requires() here to declare subsystem dependencies
@@ -58,7 +60,7 @@ public class AutoDriveTurnCommand extends Command implements PIDOutput{
     		driveSubsystem.setLeftSpeed(-outputSpeed);
     		driveSubsystem.setRightSpeed(-outputSpeed);
 //    		driveSubsystem.tankDrive(pidOutputValue, -pidOutputValue);
-    		if(turnController.onTarget()){
+    		if(turnController.onTarget() || xboxMap.stopSystem()){
     			finished = true;
     			end();
     			cancel();
