@@ -18,6 +18,7 @@ public class ConstantsMap {
 
 	public static final double ROBOT_LENGTH_INCHES = 36.5; 
 
+	public static final double DIST_TO_SHOOT = 10;
 	
 	public static final double motorSpeed = 0;
 	
