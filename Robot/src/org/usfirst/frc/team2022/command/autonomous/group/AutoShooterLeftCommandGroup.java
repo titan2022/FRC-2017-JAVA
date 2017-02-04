@@ -2,6 +2,7 @@ package org.usfirst.frc.team2022.command.autonomous.group;
 
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraightCommand;
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurnCommand;
+import org.usfirst.frc.team2022.command.autonomous.AutoShooterSpeedCommand;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -10,6 +11,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoShooterLeftCommandGroup extends CommandGroup {
+	
+	private double degToTurn = -(180 - Math.atan(81/96));
+	private double distToShootPos = Math.sqrt(Math.pow(81, 2) + Math.pow(96, 2)) - 
+			ConstantsMap.DIST_TO_SHOOT;
     
     public  AutoShooterLeftCommandGroup() {
         // Add Commands here:
@@ -30,10 +35,10 @@ public class AutoShooterLeftCommandGroup extends CommandGroup {
         // arm.
     	
     	addSequential(new AutoDriveStraightCommand(96, 1));
-    	addSequential(new AutoDriveTurnCommand(180, 1));
-    	addSequential(new AutoDriveStraightCommand(36 + ConstantsMap.ROBOT_LENGTH_INCHES, 1));
+    	addSequential(new AutoDriveTurnCommand(degToTurn, 0.5));
+    	addSequential(new AutoDriveStraightCommand(distToShootPos, 1));
     	
-    	addSequential(new AutoShooterCommand)
+    	addSequential(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
     	
     }
 }

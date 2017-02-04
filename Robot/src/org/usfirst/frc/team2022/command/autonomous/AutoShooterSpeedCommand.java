@@ -35,7 +35,7 @@ public class AutoShooterSpeedCommand extends Command implements PIDOutput{
 	}
 	
 	protected void execute() {
-    	shooterSubsystem.setSpeed(outputSpeed);
+    	shooterSubsystem.setShooterSpeed(outputSpeed);
     	
     }
 

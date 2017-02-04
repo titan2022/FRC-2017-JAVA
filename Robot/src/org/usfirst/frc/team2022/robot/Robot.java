@@ -5,6 +5,7 @@ import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.command.ShooterCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;

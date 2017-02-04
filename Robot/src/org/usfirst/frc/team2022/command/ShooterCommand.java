@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterCommand extends Command {
 	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
-	AutoShooterCommand autoShooterCommand; 	
+	AutoShooterSpeedCommand autoShooterCommand; 	
 	XboxMap xboxMap = new XboxMap();
 	
 	public ShooterCommand() {
@@ -38,7 +38,7 @@ public class ShooterCommand extends Command {
     	if(xboxMap.startAutoShooterSystem())
     	{
     		
-    		AutoShooterSpeedCommand autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.motorSpeed);
+    		AutoShooterSpeedCommand autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
     		shooterSubsystem.setClimberAgitatorSpeed(0.2);
 
 	   		autoShooterCommand.start();
