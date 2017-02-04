@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2022.command.autonomous.group;
 
-import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraight;
-import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurn;
+import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraightCommand;
+import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurnCommand;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -29,9 +29,9 @@ public class AutoShooterLeftCommandGroup extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new AutoDriveStraight(96 + ConstantsMap.ROBOT_LENGTH_INCHES, 1));
-    	addSequential(new AutoDriveTurn(180, 1));
-    	addSequential(new AutoDriveStraight(36 + ConstantsMap.ROBOT_LENGTH_INCHES, 1));
+    	addSequential(new AutoDriveStraightCommand(96 + ConstantsMap.ROBOT_LENGTH_INCHES, 1));
+    	addSequential(new AutoDriveTurnCommand(180, 1));
+    	addSequential(new AutoDriveStraightCommand(36 + ConstantsMap.ROBOT_LENGTH_INCHES, 1));
     	
     	
     	

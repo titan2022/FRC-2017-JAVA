@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2022.command;
 
-import org.usfirst.frc.team2022.command.autonomous.AutoGearCommand;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
@@ -19,14 +19,13 @@ public class DriveCommand extends Command {
 	boolean brakeState = true;
 	
 	long lastPressed = 0;
+	
     public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(driveSubsystem);
     }
     
-    
-
     // Called just before this Command runs the first time
     protected void initialize() {
     }
@@ -48,23 +47,9 @@ public class DriveCommand extends Command {
     	driveSubsystem.setRightSpeed(speedRight);
     	
     	if(xboxMap.startAutoGearPlacement()){
-    		new AutoGearCommand();
+    		new AutoGearCommandGroup();
     	}
     	
-    	SmartDashboard.putNumber("Left Encoder Raw Count = ", driveSubsystem.getLeftEncoderCount());
-    	SmartDashboard.putNumber("Right Encoder Raw Count = ", driveSubsystem.getRightEncoderCount());
-    	SmartDashboard.putNumber("Left Encoder Distance = ", driveSubsystem.getLeftEncoderDistance());
-    	SmartDashboard.putNumber("Right Encoder Distance = ", driveSubsystem.getRightEncoderDistance());
-    	SmartDashboard.putNumber("Left Encoder Rate = ", driveSubsystem.getLeftEncoderRate());
-    	SmartDashboard.putNumber("Right Encoder Rate = ", driveSubsystem.getRightEncoderRate());
-    	SmartDashboard.putNumber("Gyro Angle = ", driveSubsystem.getGyroAngle());
-
-    	SmartDashboard.putBoolean("Brake Mode = ", brakeState);
-
-    	SmartDashboard.putNumber("Range in Inches =  ", driveSubsystem.getRangeInInches());
-    	SmartDashboard.putNumber("Range Average in Inches =  ", driveSubsystem.getAverageRangeInInches());
-    	
-    	//Brake
     	//Brake
     	if(brakeState){
 			driveSubsystem.enableBrake();
@@ -72,10 +57,10 @@ public class DriveCommand extends Command {
 		else if(!brakeState){
 			driveSubsystem.disableBrake();
 		}
+    	
     	if(xboxMap.startAutoBrakerSystem() && (System.currentTimeMillis()-lastPressed)>200){  
     		
     		brakeState = !brakeState;
-    		
     		lastPressed = System.currentTimeMillis();
     	}
     }

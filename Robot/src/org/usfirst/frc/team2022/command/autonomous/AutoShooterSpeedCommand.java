@@ -5,25 +5,29 @@ import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.sensor.DummyPIDOutput;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
+
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
 
 //parameter of speed motor (feet/second)
-public class AutoShooterCommand extends Command{
-	PIDController shooterController; 
-	DummyPIDOutput pidOutput;
-	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
-	double speed; 
-	OI oi = Robot.oi;
-	boolean isFinished = false; 
+public class AutoShooterSpeedCommand extends Command implements PIDOutput{
 	
-	public AutoShooterCommand(double desiredRate){
-		speed = desiredRate;
+	PIDController shooterController; 
+	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
+	OI oi = Robot.oi;
+
+	double speed = 0; 
+	boolean isFinished = false;
+	double outputSpeed = 0;
+	
+	public AutoShooterSpeedCommand(double desiredRate){
 		requires(shooterSubsystem);
+		speed = desiredRate;
 	}
 
 	protected void initialize() {
-		shooterController = new PIDController(ConstantsMap.P, ConstantsMap.I, ConstantsMap.D, ConstantsMap.F, shooterSubsystem.getShooterEncoder(), pidOutput);
+		shooterController = new PIDController(ConstantsMap.KP_SHOOTER_SPEED, ConstantsMap.KI_SHOOTER_SPEED, ConstantsMap.KD_SHOOTER_SPEED, ConstantsMap.KF_SHOOTER_SPEED, shooterSubsystem.getShooterEncoder(), this);
 		shooterController.setOutputRange(-1,1);
     	shooterController.setInputRange(-100, 100);
     	shooterController.setSetpoint(speed);
@@ -31,12 +35,17 @@ public class AutoShooterCommand extends Command{
 	}
 	
 	protected void execute() {
-		double pidOutputValue = shooterController.get();
-    	shooterSubsystem.setSpeed(pidOutputValue);
+    	shooterSubsystem.setSpeed(outputSpeed);
+    	
     }
 
 	@Override
 	protected boolean isFinished() {
 		return isFinished;
+	}
+	
+	public void pidWrite(double output) {
+		// TODO Auto-generated method stub
+		outputSpeed = output;
 	}
 }
