@@ -4,19 +4,19 @@ import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
-import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
+import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberCommand extends Command{
-	ClimberSubsystem climberSubsystem = Robot.climberSubsystem; 
+	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem; 
 	
 	XboxMap xboxMap = new XboxMap();
 	
 	public ClimberCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(climberSubsystem);
+    	requires(shooterSubsystem);
     }
 	
 	// Called just before this Command runs the first time
@@ -28,19 +28,19 @@ public class ClimberCommand extends Command{
     	double manualSpeed = xboxMap.getManualClimberSpeed();
     	
     	if (xboxMap.startAutoClimberSystem()) {
-    		while(!climberSubsystem.getclimberPosition()) {
-    			climberSubsystem.setClimbSpeed(ConstantsMap.climberSpeed);
+    		while(!shooterSubsystem.getclimberPosition()) {
+    			shooterSubsystem.setClimberAgitatorSpeed(ConstantsMap.climberSpeed);
     			if(xboxMap.stopSystem()){
     				break;
     			}
     		}
     	}
     	
-    	if (climberSubsystem.getclimberPosition() == false) {
-    		climberSubsystem.setClimbSpeed(manualSpeed);
+    	if (shooterSubsystem.getclimberPosition() == false) {
+    		shooterSubsystem.setClimberAgitatorSpeed(manualSpeed);
     	}
     	else {
-    		climberSubsystem.stop();
+    		shooterSubsystem.stopAgitatorClimber();;
     	}
     	
     }
