@@ -20,41 +20,10 @@ public class DriveSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	private CANTalon left1,left2,right1,right2;
+	private CANTalon left1,left2,left3,right1,right2, right3;
 
 	private Encoder leftEncoder, rightEncoder;
 
-	public CANTalon getLeft1() {
-		return left1;
-	}
-
-	public void setLeft1(CANTalon left1) {
-		this.left1 = left1;
-	}
-
-	public CANTalon getLeft2() {
-		return left2;
-	}
-
-	public void setLeft2(CANTalon left2) {
-		this.left2 = left2;
-	}
-
-	public CANTalon getRight1() {
-		return right1;
-	}
-
-	public void setRight1(CANTalon right1) {
-		this.right1 = right1;
-	}
-
-	public CANTalon getRight2() {
-		return right2;
-	}
-
-	public void setRight2(CANTalon right2) {
-		this.right2 = right2;
-  }
 	private AnalogGyro gyro; 
 
 	double Kp = 0; 
@@ -65,20 +34,22 @@ public class DriveSubsystem extends Subsystem {
 	
 	public DriveSubsystem() {
 		//Instantiate motors		
-		left1 = new CANTalon(RobotMap.motorPort1);
-		left2 = new CANTalon(RobotMap.motorPort2);
-		right1 = new CANTalon(RobotMap.motorPort3);		
-		right2 = new CANTalon(RobotMap.motorPort4);		
+		left1 = new CANTalon(RobotMap.LEFT_DRIVE_PORT_1);
+		left2 = new CANTalon(RobotMap.LEFT_DRIVE_PORT_2);
+		left3 = new CANTalon(RobotMap.LEFT_DRIVE_PORT_3);
+		right1 = new CANTalon(RobotMap.RIGHT_DRIVE_PORT_1);		
+		right2 = new CANTalon(RobotMap.RIGHT_DRIVE_PORT_2);
+		right3 = new CANTalon(RobotMap.RIGHT_DRIVE_PORT_3);
 
 		//Instantiate Encoders
-		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, false);
-		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB, false);
+		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_PORT_A, RobotMap.LEFT_ENCODER_PORT_B, false);
+		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORT_A, RobotMap.RIGHT_ENCODER_PORT_B, false);
 		
 		//Instantiate Gyro
-		gyro = new AnalogGyro(RobotMap.gyro);
+		gyro = new AnalogGyro(RobotMap.GYRO_PORT);
 		
 		//Instantiate Ultrasonic 
-		ultrasonic = new AnalogInput(RobotMap.kUltrasonicPort);
+		ultrasonic = new AnalogInput(RobotMap.K_ULTRASONIC_PORT);
 		
 		//Set Encoder distanceFromTower per pulse
 		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK_LEFT);
@@ -113,11 +84,13 @@ public class DriveSubsystem extends Subsystem {
 	// Setter methods for each side.
 	public void setLeftSpeed(double speed) {		
 		left1.set(speed);
-		left2.set(speed);	
+		left2.set(speed);
+		left3.set(speed);
 	}	
 	public void setRightSpeed (double speed) {
 		right1.set(speed);
 		right2.set(speed);		
+		right3.set(speed);
 	}
 	
 	// Getter method for each side.
@@ -173,10 +146,12 @@ public class DriveSubsystem extends Subsystem {
 	
 	public void stop() {
 		
-		this.left1.set(0);
-		this.left2.set(0);
-		this.right1.set(0);
-		this.right2.set(0);
+		left1.set(0);
+		left2.set(0);
+		left3.set(0);
+		right1.set(0);
+		right2.set(0);
+		right3.set(0);
 
 	}
     public void initDefaultCommand() {
@@ -191,17 +166,21 @@ public class DriveSubsystem extends Subsystem {
 		
 	}
 	public void enableBrake(){
-		getLeft1().enableBrakeMode(true);
-		getLeft2().enableBrakeMode(true);
-		getRight1().enableBrakeMode(true);
-		getRight2().enableBrakeMode(true);
+		left1.enableBrakeMode(true);
+		left2.enableBrakeMode(true);
+		left3.enableBrakeMode(true);
+		right1.enableBrakeMode(true);
+		right2.enableBrakeMode(true);
+		right3.enableBrakeMode(true);
 		
 	}
 	public void disableBrake(){
-		getLeft1().enableBrakeMode(false);
-		getLeft2().enableBrakeMode(false);
-		getRight1().enableBrakeMode(false);
-		getRight2().enableBrakeMode(false);
+		left1.enableBrakeMode(false);
+		left2.enableBrakeMode(false);
+		left3.enableBrakeMode(false);
+		right1.enableBrakeMode(false);
+		right2.enableBrakeMode(false);
+		right3.enableBrakeMode(false);
 		
 	}
     
