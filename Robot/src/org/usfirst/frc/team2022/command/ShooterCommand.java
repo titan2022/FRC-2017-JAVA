@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterCommand extends Command {
 	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
-	AutoShooterCommand autoShooterCommand; 	
+	AutoShooterSpeedCommand autoShooterCommand; 	
 	XboxMap xboxMap = new XboxMap();
 	
 	public ShooterCommand() {
@@ -38,7 +38,7 @@ public class ShooterCommand extends Command {
     	if(xboxMap.startAutoShooterSystem())
     	{
     		
-    		AutoShooterSpeedCommand autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.motorSpeed);
+    		autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.motorSpeed);
     		shooterSubsystem.setClimberAgitatorSpeed(0.2);
 
 	   		autoShooterCommand.start();
@@ -47,11 +47,7 @@ public class ShooterCommand extends Command {
 	   	if(xboxMap.stopSystem()){
 	   		autoShooterCommand.cancel();
 	   	}
-    	
-    	SmartDashboard.putNumber("Left Encoder Raw Count = ", shooterSubsystem.getShooterEncoderCount());
-    	SmartDashboard.putNumber("Left Encoder Distance = ", shooterSubsystem.getShooterEncoderDistance());
-    	SmartDashboard.putNumber("Left Encoder Rate = ", shooterSubsystem.getShooterEncoderRate());
-   }
+   	}
 	
 	@Override
 	protected boolean isFinished() {

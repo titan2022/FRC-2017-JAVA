@@ -3,6 +3,7 @@ package org.usfirst.frc.team2022.command.autonomous;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
+import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.sensor.DummyPIDOutput;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 
@@ -22,6 +23,8 @@ public class AutoDriveStraightCommand extends Command implements PIDOutput{
 	PIDController straightController;
 	PIDController speedController;
 	DummyPIDOutput pidOutput;
+	
+	XboxMap xboxMap = new XboxMap();
 		
 	//References to objects in Robot
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
@@ -76,7 +79,7 @@ public class AutoDriveStraightCommand extends Command implements PIDOutput{
 		
         //adjust speed of each wheel
 		driveSubsystem.tankDrive(-(directionFactor*speedController.get() + rotateToAngleRate), directionFactor*speedController.get()- rotateToAngleRate);
-		if(speedController.onTarget()){
+		if(speedController.onTarget() || xboxMap.stopSystem()){
 			finished = true;
 			end();
 			cancel();

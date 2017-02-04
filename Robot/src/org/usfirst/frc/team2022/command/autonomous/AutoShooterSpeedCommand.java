@@ -3,6 +3,7 @@ package org.usfirst.frc.team2022.command.autonomous;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
+import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.sensor.DummyPIDOutput;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
@@ -16,6 +17,7 @@ public class AutoShooterSpeedCommand extends Command implements PIDOutput{
 	PIDController shooterController; 
 	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
 	OI oi = Robot.oi;
+	XboxMap xboxMap = new XboxMap();
 
 	double speed = 0; 
 	boolean isFinished = false;
@@ -35,8 +37,13 @@ public class AutoShooterSpeedCommand extends Command implements PIDOutput{
 	}
 	
 	protected void execute() {
-    	shooterSubsystem.setSpeed(outputSpeed);
+    	shooterSubsystem.setShooterSpeed(outputSpeed);
     	
+    	if(xboxMap.stopSystem()){
+    		shooterController.disable();
+    		end();
+    		cancel();
+    	}
     }
 
 	@Override
