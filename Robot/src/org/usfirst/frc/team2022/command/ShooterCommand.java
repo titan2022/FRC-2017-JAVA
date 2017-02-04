@@ -1,8 +1,7 @@
 package org.usfirst.frc.team2022.command;
 
-import org.usfirst.frc.team2022.command.autonomous.AutoShooterCommand;
+import org.usfirst.frc.team2022.command.autonomous.AutoShooterSpeedCommand;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
-import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
@@ -37,7 +36,7 @@ public class ShooterCommand extends Command {
     	{
     		shooterSubsystem.setMotorBallSpeed(0.2);
     		
-    		AutoShooterCommand autoShooterCommand = new AutoShooterCommand(ConstantsMap.motorSpeed);
+    		AutoShooterSpeedCommand autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.motorSpeed);
 	   		autoShooterCommand.start();
 	   		 
 	   		if(xboxMap.stopSystem()){

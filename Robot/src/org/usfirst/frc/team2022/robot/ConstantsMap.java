@@ -23,10 +23,20 @@ public class ConstantsMap {
 	
 	public static final double climberSpeed = 0; 
 
-	public static double kP = 0.3;
-	public static double kI = 0;
-	public static double kD = 0; 
-	public static double kF = 0;
+	public static double KP_DRIVE_ANGLE = 0.3;
+	public static double KI_DRIVE_ANGLE = 0;
+	public static double KD_DRIVE_ANGLE = 0; 
+	public static double KF_DRIVE_ANGLE = 0;
+	
+	public static double KP_DRIVE_SPEED = 0;
+	public static double KI_DRIVE_SPEED = 0;
+	public static double KD_DRIVE_SPEED = 0;
+	public static double KF_DRIVE_SPEED = 0;
+	
+	public static double KP_SHOOTER_SPEED = 0;
+	public static double KI_SHOOTER_SPEED = 0;
+	public static double KD_SHOOTER_SPEED = 0;
+	public static double KF_SHOOTER_SPEED = 0;
 	
 	public static double P = 0.01;
 

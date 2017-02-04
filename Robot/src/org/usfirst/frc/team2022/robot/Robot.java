@@ -4,8 +4,7 @@ package org.usfirst.frc.team2022.robot;
 import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.command.ShooterCommand;
-import org.usfirst.frc.team2022.command.autonomous.AutoGearCommand;
-import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
 import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
@@ -13,7 +12,6 @@ import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -76,9 +74,9 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putData("Autonomous Mode", autoTypeChooser);
     	
     	autoGearChooser = new SendableChooser();
-    	autoGearChooser.addDefault("Position Gear 1 (Right)", new AutoGearCommand(1));
-    	autoGearChooser.addObject("Position Gear 2 (Middle)", new AutoGearCommand(2));
-    	autoGearChooser.addObject("Position Gear 3 (Left)", new AutoGearCommand(3));
+    	autoGearChooser.addDefault("Position Gear 1 (Right)", new AutoGearCommandGroup(1));
+    	autoGearChooser.addObject("Position Gear 2 (Middle)", new AutoGearCommandGroup(2));
+    	autoGearChooser.addObject("Position Gear 3 (Left)", new AutoGearCommandGroup(3));
     	SmartDashboard.putData("Auto Gear Positions", autoGearChooser);
     	
     	autoShooterChooser = new SendableChooser();

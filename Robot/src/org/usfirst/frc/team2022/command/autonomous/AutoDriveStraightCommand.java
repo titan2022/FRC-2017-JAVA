@@ -10,10 +10,8 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-/**
- *
- */
-public class AutoDriveStraightWithButton extends Command implements PIDOutput {
+
+public class AutoDriveStraightCommand extends Command implements PIDOutput{
 	
 	private boolean finished = false;
 	private double inchesToDrive = 0;
@@ -29,7 +27,7 @@ public class AutoDriveStraightWithButton extends Command implements PIDOutput {
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	OI oi = Robot.oi;
 
-    public AutoDriveStraightWithButton(double inchesToDrive, double speed) {
+    public AutoDriveStraightCommand(double inchesToDrive, double speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(driveSubsystem);
@@ -39,6 +37,9 @@ public class AutoDriveStraightWithButton extends Command implements PIDOutput {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
+    	driveSubsystem.enableBrake();
+    	
     	pidOutput = new DummyPIDOutput();
     	
     	//Reset gyro so reading is 0
@@ -46,10 +47,7 @@ public class AutoDriveStraightWithButton extends Command implements PIDOutput {
     	driveSubsystem.resetEncoders();
     	
     	//Create PIDController and enable
-    	double kP = SmartDashboard.getNumber("P", 0.3);
-    	double kD = SmartDashboard.getNumber("D", 0.05);
-    	double kI = SmartDashboard.getNumber("I", 0.1);
-    	straightController = new PIDController(kP, kI, kD, ConstantsMap.kF, driveSubsystem.getGyro(), this);
+    	straightController = new PIDController(ConstantsMap.KP_DRIVE_ANGLE, ConstantsMap.KI_DRIVE_ANGLE, ConstantsMap.KD_DRIVE_ANGLE, ConstantsMap.KF_DRIVE_ANGLE, driveSubsystem.getGyro(), this);
     	straightController.setOutputRange(-0.1, 0.1);
     	straightController.setInputRange(-180, 180);
     	straightController.setAbsoluteTolerance(0);
@@ -57,16 +55,14 @@ public class AutoDriveStraightWithButton extends Command implements PIDOutput {
     	straightController.setSetpoint(0);
     	straightController.enable();
     	
-    	double dP	 = SmartDashboard.getNumber("dP", 0.3);
-    	double dD = SmartDashboard.getNumber("dD", 0.05);
-    	double dI = SmartDashboard.getNumber("dI", 0.1);
-    	speedController = new PIDController(dP, dI, dD, ConstantsMap.kF, driveSubsystem.getRightEncoder(), pidOutput);
-    	speedController.setOutputRange(-0.25, 0.25);
+    	speedController = new PIDController(ConstantsMap.KP_DRIVE_SPEED, ConstantsMap.KI_DRIVE_SPEED, ConstantsMap.KD_DRIVE_SPEED, ConstantsMap.KF_DRIVE_SPEED, driveSubsystem.getRightEncoder(), pidOutput);
+    	speedController.setOutputRange(-0.5, 0.5);
     	speedController.setInputRange(-inchesToDrive - 5, inchesToDrive + 5);
-    	speedController.setAbsoluteTolerance(0.5);
+    	speedController.setAbsoluteTolerance(1);
     	speedController.setContinuous(false);
     	speedController.setSetpoint(inchesToDrive);
     	speedController.enable();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -76,22 +72,20 @@ public class AutoDriveStraightWithButton extends Command implements PIDOutput {
     	 * While the right encoder distance is less than inchesToDrive
     	 * and xbox right bumper is not pressed, use output to drive straight
     	 */
-    	if (oi.xbox.GetAValue()) {
-	        int directionFactor = ((inchesToDrive - driveSubsystem.getRightEncoderDistance())>=0) ? 1 : -1;
-			//Get PIDController output
-			SmartDashboard.putNumber("Drive speed", pidOutput.getOutput());
-			//adjust speed of each wheel
-			driveSubsystem.tankDrive(-(directionFactor*speedController.get() + rotateToAngleRate), directionFactor*speedController.get()- rotateToAngleRate);
-			if(driveSubsystem.getRightEncoderDistance() > inchesToDrive){
-				finished = true;
-			}
-    	} else if (oi.xbox.GetBValue()) {
-    		end();
-    	}
+        int directionFactor = ((inchesToDrive - driveSubsystem.getRightEncoderDistance())>=0) ? 1 : -1;
+		
+        //adjust speed of each wheel
+		driveSubsystem.tankDrive(-(directionFactor*speedController.get() + rotateToAngleRate), directionFactor*speedController.get()- rotateToAngleRate);
+		if(speedController.onTarget()){
+			finished = true;
+			end();
+			cancel();
+		}
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return finished;
     }
 
@@ -107,8 +101,9 @@ public class AutoDriveStraightWithButton extends Command implements PIDOutput {
     protected void interrupted() {
     	end();
     }
-    
-    public void pidWrite(double output) {
+
+	@Override
+	public void pidWrite(double output) {
 		// TODO Auto-generated method stub
 		rotateToAngleRate = output;
 	}
