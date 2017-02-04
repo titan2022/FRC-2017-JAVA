@@ -1,7 +1,9 @@
 
 package org.usfirst.frc.team2022.robot;
 
+import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
+import org.usfirst.frc.team2022.command.ShooterCommand;
 import org.usfirst.frc.team2022.command.autonomous.AutoGearCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
@@ -12,6 +14,7 @@ import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -29,18 +32,20 @@ public class Robot extends IterativeRobot {
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-	
-	Command shooterCommandGroup;
-	SendableChooser autoChooser;
-
 	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem(); 
 
 	
 	//Create References to commands
 	public DriveCommand driveCommand;
-		
-	Command autonomousCommand;
-	SendableChooser autoChooserPosition;
+	public ShooterCommand shooterCommand;
+	public ClimberCommand climberCommand;
+	
+	//Autonomous
+	CommandGroup autonomousCommand;
+
+	SendableChooser autoTypeChooser;
+	SendableChooser autoShooterChooser;
+	SendableChooser autoGearChooser;
 	double position;
 	double gear;
 	
@@ -58,41 +63,57 @@ public class Robot extends IterativeRobot {
     	
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
+    	shooterCommand = new ShooterCommand();
+    	climberCommand = new ClimberCommand();
     	
     	server = CameraServer.getInstance();
     	server.startAutomaticCapture("cam0", "cam0");
     	
-    	autoChooserPosition = new SendableChooser();
-    	autoChooserPosition.addDefault("Position Gear 1 (Right)", new AutoGearCommand(1));
-    	autoChooserPosition.addObject("Position Gear 2 (Middle)", new AutoGearCommand(2));
-    	autoChooserPosition.addObject("Position Gear 3 (Left)", new AutoGearCommand(3));
-    	SmartDashboard.putData("Auto Gear Positions", autoChooserPosition);
-    	autoChooser = new SendableChooser();
-    	autoChooser.addDefault("Left starting position", new AutoShooterLeftCommandGroup());
-    	autoChooser.addObject("Center starting position", new AutoShooterCenterCommandGroup());
-    	autoChooser.addObject("Right starting position", new AutoShooterLeftCommandGroup());
-
+    	
+    	autoTypeChooser = new SendableChooser();
+    	autoTypeChooser.addDefault("Gear Autonomous", "Gear");
+    	autoTypeChooser.addObject("Shooter Autonomous", "Shooter");
+    	SmartDashboard.putData("Autonomous Mode", autoTypeChooser);
+    	
+    	autoGearChooser = new SendableChooser();
+    	autoGearChooser.addDefault("Position Gear 1 (Right)", new AutoGearCommand(1));
+    	autoGearChooser.addObject("Position Gear 2 (Middle)", new AutoGearCommand(2));
+    	autoGearChooser.addObject("Position Gear 3 (Left)", new AutoGearCommand(3));
+    	SmartDashboard.putData("Auto Gear Positions", autoGearChooser);
+    	
+    	autoShooterChooser = new SendableChooser();
+    	autoShooterChooser.addDefault("Left starting position", new AutoShooterLeftCommandGroup());
+    	autoShooterChooser.addObject("Center starting position", new AutoShooterCenterCommandGroup());
+    	autoShooterChooser.addObject("Right starting position", new AutoShooterLeftCommandGroup());
+    	SmartDashboard.putData("Auto Field Position", autoShooterChooser);
     }
     
     
     //This starts the methods for autonomous
     public void autonomousInit() {
-    	autonomousCommand = (Command) autoChooserPosition.getSelected();
-    	autonomousCommand.start();
-    	shooterCommandGroup = (Command) autoChooser.getSelected();
-    	shooterCommandGroup.start();
+    	if(autoTypeChooser.getSelected().equals("Gear")){
+    		autonomousCommand = (CommandGroup) autoGearChooser.getSelected();
+    	}
+    	else{
+    		autonomousCommand = (CommandGroup) autoShooterChooser.getSelected();
+    	}
     }
     
     //This starts the methods for teleop and stops methods for autonomous
     @Override
 	public void teleopInit() {
+    	autonomousCommand.cancel();
     	driveCommand.start();
+    	shooterCommand.start();
+    	climberCommand.start();
     }
     
     //This stops the methods for autonomous
 	@Override
 	public void disabledInit() {
 		driveCommand.cancel();
+		shooterCommand.cancel();
+		climberCommand.cancel();
 	}
     
 	//Methods below this line do not need to be edited/////////////////////////////////////////////////////////////////////////
