@@ -44,6 +44,8 @@ public class Robot extends IterativeRobot {
 	double position;
 	double gear;
 	
+	CameraServer server;
+	
 	//Create reference to OI
 	public static OI oi;
 	
@@ -57,7 +59,8 @@ public class Robot extends IterativeRobot {
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
     	
-    	CameraServer.getInstance().startAutomaticCapture();
+    	server = CameraServer.getInstance();
+    	server.startAutomaticCapture("cam0", "cam0");
     	
     	autoChooserPosition = new SendableChooser();
     	autoChooserPosition.addDefault("Position Gear 1 (Right)", new AutoGearCommand(1));
@@ -104,6 +107,13 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	if(oi.xbox.getPOV() == 0){
+    		server.startAutomaticCapture("cam0", "cam0");
+    	}
+    	else if(oi.xbox.getPOV() == 180){
+    		server.startAutomaticCapture("cam1", "cam1");
+    	}
+    	
     	Scheduler.getInstance().run();
     }
     
