@@ -4,6 +4,7 @@ package org.usfirst.frc.team2022.robot;
 import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.command.ShooterCommand;
+import org.usfirst.frc.team2022.command.UltrasonicCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
 	public DriveCommand driveCommand;
 	public ShooterCommand shooterCommand;
 	public ClimberCommand climberCommand;
+	private UltrasonicCommand ultrasonicCommand;
 	
 	//Autonomous
 	CommandGroup autonomousCommand;
@@ -61,6 +63,7 @@ public class Robot extends IterativeRobot {
     	driveCommand = new DriveCommand();
     	shooterCommand = new ShooterCommand();
     	climberCommand = new ClimberCommand();
+    	ultrasonicCommand = new UltrasonicCommand();
     	
     	server = CameraServer.getInstance();
     	server.startAutomaticCapture("cam0", "cam0");
@@ -87,6 +90,8 @@ public class Robot extends IterativeRobot {
     
     //This starts the methods for autonomous
     public void autonomousInit() {
+    	ultrasonicCommand.start();
+    	
     	if(autoTypeChooser.getSelected().equals("Gear")){
     		autonomousCommand = (CommandGroup) autoGearChooser.getSelected();
     	}

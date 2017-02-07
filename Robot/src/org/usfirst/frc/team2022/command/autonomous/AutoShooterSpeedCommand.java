@@ -37,6 +37,7 @@ public class AutoShooterSpeedCommand extends Command implements PIDOutput{
 	}
 	
 	protected void execute() {
+		shooterSubsystem.activationServo();
     	shooterSubsystem.setShooterSpeed(outputSpeed);
     	
     	if(xboxMap.stopSystem()){
