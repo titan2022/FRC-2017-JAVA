@@ -38,7 +38,7 @@ public class ShooterCommand extends Command {
     	if(xboxMap.startAutoShooterSystem())
     	{
     		
-    		AutoShooterSpeedCommand autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
+    		autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
     		shooterSubsystem.setClimberAgitatorSpeed(0.2);
 
 	   		autoShooterCommand.start();
@@ -47,11 +47,7 @@ public class ShooterCommand extends Command {
 	   	if(xboxMap.stopSystem()){
 	   		autoShooterCommand.cancel();
 	   	}
-    	
-    	SmartDashboard.putNumber("Left Encoder Raw Count = ", shooterSubsystem.getShooterEncoderCount());
-    	SmartDashboard.putNumber("Left Encoder Distance = ", shooterSubsystem.getShooterEncoderDistance());
-    	SmartDashboard.putNumber("Left Encoder Rate = ", shooterSubsystem.getShooterEncoderRate());
-   }
+   	}
 	
 	@Override
 	protected boolean isFinished() {
