@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoShooterLeftCommandGroup extends CommandGroup {
+public class AutoShooterCenterCommandGroup extends CommandGroup {
 	
-	private double degToTurn = -(180 - Math.atan(81/96));
-	private double distToShootPos = Math.sqrt(Math.pow(81, 2) + Math.pow(96, 2)) - 
+	private double degToTurn = -(180 - Math.atan(162/96));
+	private double distToShootPos = Math.sqrt(Math.pow(162, 2) + Math.pow(96, 2)) - 
 			ConstantsMap.DIST_TO_SHOOT;
     
-    public  AutoShooterLeftCommandGroup() {
+    public  AutoShooterCenterCommandGroup() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

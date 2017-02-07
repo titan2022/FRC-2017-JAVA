@@ -38,7 +38,7 @@ public class ShooterCommand extends Command {
     	if(xboxMap.startAutoShooterSystem())
     	{
     		
-    		autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.motorSpeed);
+    		autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
     		shooterSubsystem.setClimberAgitatorSpeed(0.2);
 
 	   		autoShooterCommand.start();
