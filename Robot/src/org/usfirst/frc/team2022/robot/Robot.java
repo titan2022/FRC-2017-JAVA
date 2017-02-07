@@ -4,6 +4,8 @@ package org.usfirst.frc.team2022.robot;
 import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.command.ShooterCommand;
+import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraightCommand;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoDriveStraightCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
@@ -67,7 +69,8 @@ public class Robot extends IterativeRobot {
     	
     	
     	autoTypeChooser = new SendableChooser();
-    	autoTypeChooser.addDefault("Gear Autonomous", "Gear");
+    	autoTypeChooser.addDefault("Drive Straight", "Straight");
+    	autoTypeChooser.addObject("Gear Autonomous", "Gear");
     	autoTypeChooser.addObject("Shooter Autonomous", "Shooter");
     	SmartDashboard.putData("Autonomous Mode", autoTypeChooser);
     	
@@ -87,7 +90,10 @@ public class Robot extends IterativeRobot {
     
     //This starts the methods for autonomous
     public void autonomousInit() {
-    	if(autoTypeChooser.getSelected().equals("Gear")){
+    	if(autoTypeChooser.getSelected().equals("Straight")){
+    		autonomousCommand = new AutoDriveStraightCommandGroup(10*12, 0.25);
+    	}
+    	else if(autoTypeChooser.getSelected().equals("Gear")){
     		autonomousCommand = (CommandGroup) autoGearChooser.getSelected();
     	}
     	else{
@@ -107,6 +113,7 @@ public class Robot extends IterativeRobot {
     //This stops the methods for autonomous
 	@Override
 	public void disabledInit() {
+		autonomousCommand.cancel();
 		driveCommand.cancel();
 		shooterCommand.cancel();
 		climberCommand.cancel();
