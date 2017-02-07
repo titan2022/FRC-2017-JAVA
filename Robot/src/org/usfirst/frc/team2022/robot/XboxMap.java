@@ -38,6 +38,10 @@ public class XboxMap {
 	public boolean stopSystem() {
 		return oi.xbox.GetYValue();
 	}
+
+	public boolean openGate() {
+		return oi.xbox.GetBValue();
+	}
 }
 
 

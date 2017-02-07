@@ -8,6 +8,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
  
 
@@ -22,6 +23,8 @@ public class ShooterSubsystem extends Subsystem {
 	
 	private DigitalInput limitSwitch;
 	
+	private Servo servo;
+	
 	private Encoder shooterEncoder;
 
 	public ShooterSubsystem(){
@@ -33,6 +36,8 @@ public class ShooterSubsystem extends Subsystem {
 		shooterEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
 		
 		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH_PORT);
+		
+		servo = new Servo(RobotMap.SERVO_MOTOR_PORT);
 	}
 	
 	public void initDefaultCommand() {
@@ -95,4 +100,18 @@ public class ShooterSubsystem extends Subsystem {
 		// TODO Auto-generated method stub
 		return limitSwitch.get();
 	}
+
+	public double getServo() {
+		return servo.get();
+	}
+
+	public void activationServo() {
+		if(servo.get() > 0.9){
+			servo.set(0);
+		}
+		else{
+			servo.set(1);
+		}
+	}
+	
 }

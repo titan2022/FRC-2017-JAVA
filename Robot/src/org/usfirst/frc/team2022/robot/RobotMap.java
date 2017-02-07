@@ -29,6 +29,11 @@ public class RobotMap {
 	//ports for gyro
 	public static final int GYRO_PORT = 1;
 
+	//port for servo (gate that opens and closes for balls to go through)
+	public static final int SERVO_MOTOR_PORT = 0;
+	
+	//port for limit switch (returns if bot has reached top)
+	public static int LIMIT_SWITCH_PORT = 0;
 
 	// encoder ports for drive base
 	public static int LEFT_ENCODER_PORT_A = 2;
@@ -39,7 +44,6 @@ public class RobotMap {
 	//public static int shooterEncoderB = 1;
 	//public static int shooterEncoderA = 0;
 	
-	public static int LIMIT_SWITCH_PORT = 0;
 
 	public static int CLIMBER_AGITATOR_MOTOR_PORT = 0;
 	public static int SHOOTER_MOTOR_PORT_1 = 0;

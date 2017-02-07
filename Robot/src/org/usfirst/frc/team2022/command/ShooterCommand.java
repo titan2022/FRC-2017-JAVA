@@ -47,6 +47,10 @@ public class ShooterCommand extends Command {
 	   	if(xboxMap.stopSystem()){
 	   		autoShooterCommand.cancel();
 	   	}
+	   	
+	   	if(xboxMap.openGate()){
+	   		shooterSubsystem.activationServo();
+	   	}
    	}
 	
 	@Override
