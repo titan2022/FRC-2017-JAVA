@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2022.robot;
 
+import org.opencv.core.Mat;
 import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
 import org.usfirst.frc.team2022.command.ShooterCommand;
@@ -10,6 +11,9 @@ import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandG
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -45,10 +49,10 @@ public class Robot extends IterativeRobot {
 	double position;
 	double gear;
 	
-	CameraServer server;
 	
 	//Create reference to OI
 	public static OI oi;
+	public XboxMap xboxMap = new XboxMap();
 	
 	//Initialization code ran when you turn on the robot
 
@@ -62,10 +66,47 @@ public class Robot extends IterativeRobot {
     	shooterCommand = new ShooterCommand();
     	climberCommand = new ClimberCommand();
     	
-    	server = CameraServer.getInstance();
-    	server.startAutomaticCapture("cam0", "cam0");
-    	
-    	
+    	//Create thread for streaming cameras
+    	Thread t = new Thread(new Runnable(){
+    		public void run(){
+        		boolean allowCam1 = false;
+        		
+        		UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+        		camera1.setResolution(320, 240);
+                camera1.setFPS(30);
+                UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+                camera2.setResolution(320, 240);
+                camera2.setFPS(30);
+                
+                CvSink cvSink1 = CameraServer.getInstance().getVideo(camera1);    	
+                CvSink cvSink2 = CameraServer.getInstance().getVideo(camera2);
+                CvSource outputStream = CameraServer.getInstance().putVideo("Switcher", 320, 240);
+                
+                Mat image = new Mat();
+                
+                while(!Thread.interrupted()){
+                	if(xboxMap.switchCamera()) {
+                		allowCam1 = !allowCam1;
+                	}
+                	
+                    if(allowCam1){
+                      cvSink2.setEnabled(false);
+                      cvSink1.setEnabled(true);
+                      cvSink1.grabFrame(image);
+                    } else{
+                      cvSink1.setEnabled(false);
+                      cvSink2.setEnabled(true);
+                      cvSink2.grabFrame(image);     
+                    }
+                    
+                    outputStream.putFrame(image);
+                }
+                
+    		}
+    	});
+    	t.start();
+
+		
     	autoTypeChooser = new SendableChooser();
     	autoTypeChooser.addDefault("Gear Autonomous", "Gear");
     	autoTypeChooser.addObject("Shooter Autonomous", "Shooter");
@@ -123,14 +164,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic() {
-    	if(oi.xbox.getPOV() == 0){
-    		server.startAutomaticCapture("cam0", "cam0");
-    	}
-    	else if(oi.xbox.getPOV() == 180){
-    		server.startAutomaticCapture("cam1", "cam1");
-    	}
-    	
+    public void teleopPeriodic() {    	
     	Scheduler.getInstance().run();
     }
     
