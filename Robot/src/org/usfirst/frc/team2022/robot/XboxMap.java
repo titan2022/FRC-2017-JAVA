@@ -44,12 +44,7 @@ public class XboxMap {
 	}
 	
 	public boolean switchCamera(){
-		if(oi.xbox.getPOV() == 0){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return oi.xbox.GetStartValue();
 	}
 }
 

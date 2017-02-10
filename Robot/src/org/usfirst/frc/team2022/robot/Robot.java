@@ -2,15 +2,9 @@
 package org.usfirst.frc.team2022.robot;
 
 import org.opencv.core.Mat;
-import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
-import org.usfirst.frc.team2022.command.ShooterCommand;
-import org.usfirst.frc.team2022.command.UltrasonicCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
-import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
-import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
-import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -65,30 +59,31 @@ public class Robot extends IterativeRobot {
     	
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
-    	shooterCommand = new ShooterCommand();
-    	climberCommand = new ClimberCommand();
-    	ultrasonicCommand = new UltrasonicCommand();
-    	
+////    	shooterCommand = new ShooterCommand();
+////    	climberCommand = new ClimberCommand();
+////    	ultrasonicCommand = new UltrasonicCommand();
+//    	
     	//Create thread for streaming cameras
     	Thread t = new Thread(new Runnable(){
     		public void run(){
-        		boolean allowCam1 = false;
+    			boolean allowCam1 = false;
         		
         		UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-        		camera1.setResolution(320, 240);
-                camera1.setFPS(30);
+                camera1.setResolution(320, 240);
+                camera1.setFPS(15);
                 UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);
                 camera2.setResolution(320, 240);
-                camera2.setFPS(30);
+                camera2.setFPS(15);
                 
-                CvSink cvSink1 = CameraServer.getInstance().getVideo(camera1);    	
+                CvSink cvSink1 = CameraServer.getInstance().getVideo(camera1);
                 CvSink cvSink2 = CameraServer.getInstance().getVideo(camera2);
                 CvSource outputStream = CameraServer.getInstance().putVideo("Switcher", 320, 240);
                 
                 Mat image = new Mat();
                 
-                while(!Thread.interrupted()){
-                	if(xboxMap.switchCamera()) {
+                while(!Thread.interrupted()) {
+                	
+                	if(oi.xbox.GetStartValue()) {
                 		allowCam1 = !allowCam1;
                 	}
                 	
