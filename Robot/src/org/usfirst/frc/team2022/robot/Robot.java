@@ -2,9 +2,15 @@
 package org.usfirst.frc.team2022.robot;
 
 import org.opencv.core.Mat;
+import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
+import org.usfirst.frc.team2022.command.ShooterCommand;
+import org.usfirst.frc.team2022.command.UltrasonicCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
+import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
