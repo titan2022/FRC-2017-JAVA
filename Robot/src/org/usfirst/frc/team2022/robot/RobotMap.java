@@ -48,10 +48,5 @@ public class RobotMap {
 	public static int CLIMBER_AGITATOR_MOTOR_PORT = 0;
 	public static int SHOOTER_MOTOR_PORT_1 = 0;
 	public static int SHOOTER_MOTOR_PORT_2 = 0;
-
-	public static DigitalSource shooterEncoderA;
-	public static DigitalSource shooterEncoderB;
-
-	
 }
 

@@ -24,20 +24,13 @@ public class ShooterSubsystem extends Subsystem {
 	private DigitalInput limitSwitch;
 	
 	private Servo servo;
-	
-	private Encoder shooterEncoder;
 
 	public ShooterSubsystem(){
-		//Instantiate Encoder
-		shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, false);
-		shooterEncoder.setPIDSourceType(PIDSourceType.kRate);
-		
-		//Set Encoder distanceFromTower per pulse
-		shooterEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
 		
 		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH_PORT);
 		
 		servo = new Servo(RobotMap.SERVO_MOTOR_PORT);
+		
 	}
 	
 	public void initDefaultCommand() {
@@ -71,31 +64,16 @@ public class ShooterSubsystem extends Subsystem {
 		agitatorAndClimberMotor.set(0);
 	}
 	
-	//Get Encoder 
-	public Encoder getShooterEncoder(){
-		return shooterEncoder;
-	}
-	
 	//Get Encoder Distances
 	public double getShooterEncoderDistance(){
-		return shooterEncoder.getDistance();
-	}	
-
-	//Get Encoder counts
-	public int getShooterEncoderCount(){
-		return	shooterEncoder.get();
+		return shooterMotor1.getEncPosition();
 	}	
 	
 	//Get Encoder Rates
 	public double getShooterEncoderRate(){
-		return shooterEncoder.getRate();
+		return shooterMotor1.getEncVelocity();
 	}
-		
-	//reset encoders
-	public void resetEncoders(){
-		shooterEncoder.reset();
-	}
-
+	
 	public boolean getclimberPosition() {
 		// TODO Auto-generated method stub
 		return limitSwitch.get();
@@ -113,5 +91,4 @@ public class ShooterSubsystem extends Subsystem {
 			servo.set(1);
 		}
 	}
-	
 }
