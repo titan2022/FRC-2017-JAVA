@@ -5,46 +5,55 @@ import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.sensor.DummyPIDOutput;
+import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //parameter of speed motor (feet/second)
 public class AutoShooterSpeedCommand extends Command implements PIDOutput{
 	
-	PIDController shooterController; 
 	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
 	OI oi = Robot.oi;
 	XboxMap xboxMap = new XboxMap();
 
 	double speed = 0; 
+	double desiredRate = 0;
 	boolean isFinished = false;
 	double outputSpeed = 0;
 	
+	CustomPIDController pidController;
+	
 	public AutoShooterSpeedCommand(double desiredRate){
 		requires(shooterSubsystem);
-		speed = desiredRate;
+		this.desiredRate = desiredRate;
+		NetworkTable sd = NetworkTable.getTable("Preferences");
+		pidController = new CustomPIDController(sd.getNumber("P", ConstantsMap.KP_SHOOTER_SPEED), sd.getNumber("I", ConstantsMap.KI_SHOOTER_SPEED), sd.getNumber("D", ConstantsMap.KD_SHOOTER_SPEED));
+		pidController.setInputRange(0, 35000);
+    	pidController.setAbsoluteTolerance(0.0001);
+    	pidController.setOutputRange(0, 1);
+    	pidController.setSetpoint(0);
 	}
 
 	protected void initialize() {
-		shooterController = new PIDController(ConstantsMap.KP_SHOOTER_SPEED, ConstantsMap.KI_SHOOTER_SPEED, ConstantsMap.KD_SHOOTER_SPEED, ConstantsMap.KF_SHOOTER_SPEED, shooterSubsystem.getShooterEncoder(), this);
-		shooterController.setOutputRange(-1,1);
-    	shooterController.setInputRange(-100, 100);
-    	shooterController.setSetpoint(speed);
-    	shooterController.enable();
+		
 	}
 	
 	protected void execute() {
-		shooterSubsystem.activationServo();
-    	shooterSubsystem.setShooterSpeed(outputSpeed);
-    	
+//		shooterSubsystem.activationServo();
+		double speed = pidController.getOutput(shooterSubsystem.getShooterEncoderRate());
+    	shooterSubsystem.setShooterSpeed(speed);
+    	SmartDashboard.putNumber("Shooter Speed", speed);
+    	SmartDashboard.putNumber("Encoder Encoder Rate", shooterSubsystem.getShooterEncoderRate());
     	if(xboxMap.stopSystem()){
-    		shooterController.disable();
     		end();
     		cancel();
     	}
+    	//90
     }
 
 	@Override

@@ -21,8 +21,8 @@ public class AutoGearCommandGroup extends CommandGroup {
     	double pegDistance = table.getNumber("pegDistance", 0);
     	double pegAngle = table.getNumber("pegAngle", 0);
 		  		
-  		addSequential(new AutoDriveTurnCommand(pegAngle, speed));
-  		addSequential(new AutoDriveStraightCommand(pegDistance, speed));
+  		addSequential(new AutoDriveTurnCommand(pegAngle));
+  		addSequential(new AutoDriveStraightCommand(pegDistance));
 	}
 	
 	public AutoGearCommandGroup(int position){	
@@ -46,14 +46,14 @@ public class AutoGearCommandGroup extends CommandGroup {
 	public void run(double distance, double angle){
 		
 				
-		addSequential(new AutoDriveStraightCommand(distance, 0.5));
-		addSequential(new AutoDriveTurnCommand(angle, 0.5));
+		addSequential(new AutoDriveStraightCommand(distance));
+		addSequential(new AutoDriveTurnCommand(angle));
 				
 		Timer.delay(1);
     	double pegDistance = table.getNumber("pegDistance", 0);
     	double pegAngle = table.getNumber("pegAngle", 0);
 		  		
-  		addSequential(new AutoDriveTurnCommand(pegAngle, 0.5));
-  		addSequential(new AutoDriveStraightCommand(pegDistance, 0.5));
+  		addSequential(new AutoDriveTurnCommand(pegAngle));
+  		addSequential(new AutoDriveStraightCommand(pegDistance));
 	}
 }

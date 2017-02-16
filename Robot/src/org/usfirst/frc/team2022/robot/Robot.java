@@ -39,11 +39,11 @@ public class Robot extends IterativeRobot {
 	//Create References to commands
 	public DriveCommand driveCommand;
 	public ShooterCommand shooterCommand;
-	public ClimberCommand climberCommand;
+//	public ClimberCommand climberCommand;
 	private UltrasonicCommand ultrasonicCommand;
 	
 	//Autonomous
-	CommandGroup autonomousCommand;
+	CommandGroup autonomousCommand = new CommandGroup();
 
 	SendableChooser autoTypeChooser;
 	SendableChooser autoShooterChooser;
@@ -65,10 +65,10 @@ public class Robot extends IterativeRobot {
     	
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
-////    	shooterCommand = new ShooterCommand();
-////    	climberCommand = new ClimberCommand();
-////    	ultrasonicCommand = new UltrasonicCommand();
-//    	
+    	shooterCommand = new ShooterCommand();
+//    	climberCommand = new ClimberCommand();
+    	ultrasonicCommand = new UltrasonicCommand();
+    	
     	//Create thread for streaming cameras
     	Thread t = new Thread(new Runnable(){
     		public void run(){
@@ -145,10 +145,12 @@ public class Robot extends IterativeRobot {
     //This starts the methods for teleop and stops methods for autonomous
     @Override
 	public void teleopInit() {
-    	autonomousCommand.cancel();
+    	if(autonomousCommand.isRunning()){
+        	autonomousCommand.cancel();
+    	}
     	driveCommand.start();
     	shooterCommand.start();
-    	climberCommand.start();
+//    	climberCommand.start();
     }
     
     //This stops the methods for autonomous
@@ -156,7 +158,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		driveCommand.cancel();
 		shooterCommand.cancel();
-		climberCommand.cancel();
+//		climberCommand.cancel();
 	}
     
 	//Methods below this line do not need to be edited/////////////////////////////////////////////////////////////////////////

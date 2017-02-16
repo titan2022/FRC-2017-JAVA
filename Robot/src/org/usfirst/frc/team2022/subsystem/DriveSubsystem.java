@@ -40,6 +40,13 @@ public class DriveSubsystem extends Subsystem {
 		right1 = new CANTalon(RobotMap.RIGHT_DRIVE_PORT_1);		
 		right2 = new CANTalon(RobotMap.RIGHT_DRIVE_PORT_2);
 		right3 = new CANTalon(RobotMap.RIGHT_DRIVE_PORT_3);
+		
+		left1.setInverted(true);
+		left2.setInverted(true);
+		left3.setInverted(true);
+		right1.setInverted(true);
+		right2.setInverted(true);
+		right3.setInverted(true);
 
 		//Instantiate Encoders
 		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_PORT_A, RobotMap.LEFT_ENCODER_PORT_B, false);
@@ -49,8 +56,8 @@ public class DriveSubsystem extends Subsystem {
 		gyro = new AnalogGyro(RobotMap.GYRO_PORT);
 		
 		//Set Encoder distanceFromTower per pulse
-		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK_LEFT);
-		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK_RIGHT);
+		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
+		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
 	}
 	
 	public AnalogGyro getGyro(){

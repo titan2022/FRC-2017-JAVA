@@ -2,6 +2,7 @@ package org.usfirst.frc.team2022.command;
 
 import org.usfirst.frc.team2022.command.autonomous.AutoShooterSpeedCommand;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
+import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
@@ -11,8 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterCommand extends Command {
 	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
-	AutoShooterSpeedCommand autoShooterCommand; 	
+	AutoShooterSpeedCommand autoShooterCommand = new AutoShooterSpeedCommand(31000);
 	XboxMap xboxMap = new XboxMap();
+	OI oi = Robot.oi;
 	
 	public ShooterCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -22,35 +24,42 @@ public class ShooterCommand extends Command {
 	
 	// Called just before this Command runs the first time
     protected void initialize() {
-    	shooterSubsystem.resetEncoders();
+//    	shooterSubsystem.resetEncoders();
     }
 	
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { 
-    	double manualSpeed = xboxMap.getManualShooterSpeed();
+    	double diffSpeed = SmartDashboard.getNumber("ShooterSpeed", 1);
+    	double manualSpeed = oi.xbox.GetRightTriggers();
     	shooterSubsystem.setShooterSpeed(manualSpeed);
+//    	System.out.println("Running");
+    	SmartDashboard.putNumber("Shooter Speed", shooterSubsystem.getShooterSpeed());
+    	SmartDashboard.putNumber("Manual Speed", manualSpeed);
+
+
     	if(xboxMap.getManualShooterSpeed() > 0.05){
         	shooterSubsystem.setClimberAgitatorSpeed(0.2);
     	} else {
     		shooterSubsystem.setClimberAgitatorSpeed(0);
     	}
     	
-    	if(xboxMap.startAutoShooterSystem())
+    	if(oi.xbox.GetBValue())
     	{
-    		
     		autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
-    		shooterSubsystem.setClimberAgitatorSpeed(0.2);
-
 	   		autoShooterCommand.start();
     	}
-	   		 
+//	   		 
 	   	if(xboxMap.stopSystem()){
-	   		autoShooterCommand.cancel();
+	   		if(!autoShooterCommand.isCanceled()){
+		   		autoShooterCommand.cancel();
+	   		}
 	   	}
+//	   	
+//	   	if(xboxMap.openGate()){
+//	   		shooterSubsystem.activationServo();
+//	   	}
 	   	
-	   	if(xboxMap.openGate()){
-	   		shooterSubsystem.activationServo();
-	   	}
+	   	SmartDashboard.putNumber("Shooter Encoder Rate", shooterSubsystem.getShooterEncoderRate());
    	}
 	
 	@Override
