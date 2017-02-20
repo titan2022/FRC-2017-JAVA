@@ -12,11 +12,9 @@ import edu.wpi.first.wpilibj.DigitalSource;
  */
 
 public class RobotMap {
-
-	// ports for drive base
 	
-	public static final int K_ULTRASONIC_PORT = 4;
-
+	//Motors
+	//Drive motor ports
 	public static final int LEFT_DRIVE_PORT_1 = 4;
 	public static final int LEFT_DRIVE_PORT_2 = 5;
 	public static final int LEFT_DRIVE_PORT_3 = 6;
@@ -24,29 +22,30 @@ public class RobotMap {
 	public static final int RIGHT_DRIVE_PORT_2 = 8;
 	public static final int RIGHT_DRIVE_PORT_3 = 9;
 	
-	//ports for gyro
+	//Shooter motor ports
+	public static int AGITATOR_MOTOR_PORT = 1;
+	public static int SHOOTER_MOTOR_PORT = 2;
+	
+	//Climber motor ports
+	public static int CLIMBER_MOTOR_PORT = 10;
+	
+	//Sensors
+	//Drive base sensors
 	public static final int GYRO_PORT = 0;
+	public static final int K_ULTRASONIC_PORT = 1;
 
 	//port for servo (gate that opens and closes for balls to go through)
 	public static final int SERVO_MOTOR_PORT = 1;
-	
-	//port for limit switch (returns if bot has reached top)
-	public static int LIMIT_SWITCH_PORT = 2;
 
 	// encoder ports for drive base
 	public static int LEFT_ENCODER_PORT_A = 7;
 	public static int LEFT_ENCODER_PORT_B = 6;
 	public static int RIGHT_ENCODER_PORT_A = 9;
 	public static int RIGHT_ENCODER_PORT_B = 8;
-	public static int shooterEncoderA = 0;
-	public static int shooterEncoderB = 1;
 	
-
-	public static int CLIMBER_AGITATOR_MOTOR_PORT = 10;
-	public static int SHOOTER_MOTOR_PORT_1 = 2;
-	public static int SHOOTER_MOTOR_PORT_2 = 3;
-
-
+	//Encoder ports for shooter
+	public static int SHOOTER_ENCODER_A = 0;
+	public static int SHOOTER_ENCODER_B = 1;
 	
 }
 

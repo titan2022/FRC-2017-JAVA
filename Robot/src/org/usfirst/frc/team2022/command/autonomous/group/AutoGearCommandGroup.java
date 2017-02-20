@@ -14,14 +14,15 @@ public class AutoGearCommandGroup extends CommandGroup {
 	
 	public AutoGearCommandGroup(){
 		table = NetworkTable.getTable("SmartDashboard");
-		
-		double speed = 0.5;
-		
+				
 		Timer.delay(1);
     	double pegDistance = table.getNumber("pegDistance", 0);
     	double pegAngle = table.getNumber("pegAngle", 0);
 		  		
   		addSequential(new AutoDriveTurnCommand(pegAngle));
+  		
+  		Timer.delay(1);
+  		pegDistance = table.getNumber("pegDistance", 0);
   		addSequential(new AutoDriveStraightCommand(pegDistance));
 	}
 	
@@ -54,6 +55,9 @@ public class AutoGearCommandGroup extends CommandGroup {
     	double pegAngle = table.getNumber("pegAngle", 0);
 		  		
   		addSequential(new AutoDriveTurnCommand(pegAngle));
+  		
+  		Timer.delay(1);
+  		pegDistance = table.getNumber("pegDistance", 0);
   		addSequential(new AutoDriveStraightCommand(pegDistance));
 	}
 }

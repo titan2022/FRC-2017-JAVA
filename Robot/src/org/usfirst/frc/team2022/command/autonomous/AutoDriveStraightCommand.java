@@ -4,13 +4,9 @@ import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
-import org.usfirst.frc.team2022.sensor.DummyPIDOutput;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoDriveStraightCommand extends Command{
@@ -43,19 +39,18 @@ public class AutoDriveStraightCommand extends Command{
     	
     	driveSubsystem.enableBrake();
     	
-    	
     	//Reset gyro so reading is 0
     	driveSubsystem.resetGyro();
     	driveSubsystem.resetEncoders();
     	
     	//Create PIDController and enable
-    	pidController = new CustomPIDController(ConstantsMap.KP_DRIVE_ANGLE, ConstantsMap.KI_DRIVE_ANGLE, ConstantsMap.KD_DRIVE_ANGLE);
+    	pidController = new CustomPIDController(ConstantsMap.KP_DRIVE_ANGLE, ConstantsMap.KI_DRIVE_ANGLE, ConstantsMap.KD_DRIVE_ANGLE, ConstantsMap.KF_DRIVE_ANGLE);
     	pidController.setInputRange(-180, 180);
     	pidController.setAbsoluteTolerance(0.5);
     	pidController.setOutputRange(-0.2, 0.2);
     	pidController.setSetpoint(0);    
     	
-    	speedController = new CustomPIDController(ConstantsMap.KP_DRIVE_TURN, ConstantsMap.KI_DRIVE_TURN, ConstantsMap.KD_DRIVE_TURN);
+    	speedController = new CustomPIDController(ConstantsMap.KP_DRIVE_TURN, ConstantsMap.KI_DRIVE_TURN, ConstantsMap.KD_DRIVE_TURN, ConstantsMap.KF_DRIVE_TURN);
     	speedController.setInputRange(-1.5 * inchesToDrive, 1.5 * inchesToDrive);
     	speedController.setAbsoluteTolerance(0.1);
     	speedController.setOutputRange(-ConstantsMap.KSPEED_DRIVE_SPEED, ConstantsMap.KSPEED_DRIVE_SPEED);
@@ -70,7 +65,6 @@ public class AutoDriveStraightCommand extends Command{
     	 * and xbox right bumper is not pressed, use output to drive straight
     	 */
     	rotateToAngleRate = pidController.getOutput(driveSubsystem.getGyroAngle());
-        int directionFactor = ((inchesToDrive - driveSubsystem.getRightEncoderDistance())>=0) ? 1 : -1;
 		
         SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyroAngle());
 		

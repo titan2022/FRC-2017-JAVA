@@ -1,11 +1,14 @@
 package org.usfirst.frc.team2022.command.autonomous;
 
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class CustomPIDController {
 
-	private double kp, ki, kd = 0;
+	private double kp, ki, kd, kf = 0;
 	
 	private double inputMin = -1;
-	private double inputMax = -1;
+	private double inputMax = 1;
 	private double outputMin = -1;
 	private double outputMax = 1;
 	
@@ -18,12 +21,12 @@ public class CustomPIDController {
 	private double output = 0;
 	private double absoluteTolerance = 0;
 	
-	private double toleranceTime = 0;
 	
-	public CustomPIDController(double kp, double ki, double kd){
+	public CustomPIDController(double kp, double ki, double kd, double kf){
 		this.kp = kp;
 		this.ki = ki;
 		this.kd = kd;
+		this.kf = kf;
 	}
 	
 	public double getOutput(double input){
@@ -37,7 +40,7 @@ public class CustomPIDController {
 			totalError = 0;
 		}
 		
-		output = (kp * error + ki * totalError + kd * (error - lastError));
+		output = (kp * error + ki * totalError + kd * (error - lastError)) + kf;
 		lastError = error;
 		
 		if(output > outputMax){
@@ -62,7 +65,7 @@ public class CustomPIDController {
 	
 	public void setOutputRange(double min, double max){
 		outputMin = min;
-		inputMax = max;
+		outputMax = max;
 	}
 	
 	public void setAbsoluteTolerance(double absoluteTolerance){
@@ -72,16 +75,6 @@ public class CustomPIDController {
 	public boolean onTarget(){
 		
 		if(Math.abs(lastInput - setpoint) < absoluteTolerance){
-			if(toleranceTime == 0){
-				toleranceTime = System.currentTimeMillis();
-			}
-//			
-//			if(Math.abs(System.currentTimeMillis() - toleranceTime) > 50 && toleranceTime != 0){
-//				return true;
-//			}
-//			else{
-//				return false;
-//			}
 			return true;
 		}
 		else{

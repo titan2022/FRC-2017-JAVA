@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AutoDriveTurnCommand extends Command implements PIDOutput{
+public class AutoDriveTurnCommand extends Command{
 	
 	private boolean finished = false;
 	private double degreeToTurn = 0;
@@ -39,7 +39,7 @@ public class AutoDriveTurnCommand extends Command implements PIDOutput{
     	driveSubsystem.resetGyro();
     	driveSubsystem.enableBrake();
 
-    	pidController = new CustomPIDController(ConstantsMap.KP_DRIVE_TURN, ConstantsMap.KI_DRIVE_TURN, ConstantsMap.KD_DRIVE_TURN);
+    	pidController = new CustomPIDController(ConstantsMap.KP_DRIVE_TURN, ConstantsMap.KI_DRIVE_TURN, ConstantsMap.KD_DRIVE_TURN, ConstantsMap.KF_DRIVE_TURN);
     	pidController.setInputRange(-180, 180);
     	pidController.setAbsoluteTolerance(0.5);
     	pidController.setOutputRange(-ConstantsMap.KSPEED_DRIVE_TURN, ConstantsMap.KSPEED_DRIVE_TURN);
@@ -81,9 +81,5 @@ public class AutoDriveTurnCommand extends Command implements PIDOutput{
     protected void interrupted() {
     	end();
     }
-    
-    public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		outputSpeed = output;
-	}
+
 }

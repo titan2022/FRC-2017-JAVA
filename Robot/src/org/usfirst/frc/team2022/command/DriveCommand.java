@@ -1,12 +1,12 @@
 package org.usfirst.frc.team2022.command;
 
-import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraightCommand;
-import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurnCommand;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -14,12 +14,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveCommand extends Command {
+	
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	XboxMap xboxMap = new XboxMap();
-	boolean brakeState = true;
-	AutoDriveStraightCommand autoDriveStraightCommand;
-	AutoDriveTurnCommand autoDriveTurnCommand;
+		
+	CommandGroup commandGroup = new CommandGroup();
 	
+	boolean brakeState = true;
 	long lastPressed = 0;
 	
     public DriveCommand() {
@@ -48,15 +49,15 @@ public class DriveCommand extends Command {
     	}
     	driveSubsystem.setRightSpeed(speedRight);
     	
+    	//Autonomous gear
     	if(xboxMap.startAutoGearPlacement()){
-//    		new AutoGearCommandGroup();
-    		autoDriveStraightCommand = new AutoDriveStraightCommand(120);
-    		autoDriveStraightCommand.start();
-//    		autoDriveTurnCommand = new AutoDriveTurnCommand(90, 0.2);
-//    		autoDriveTurnCommand.start();
-//    		autoDriveTurnCommand = new RealAutoDriveTurnCommand(90, 0.4);
-//    		autoDriveTurnCommand.start();
-    		
+    		commandGroup = new AutoGearCommandGroup();    		
+    	}
+    	
+    	if(xboxMap.stopSystem()){
+    		if(commandGroup.isRunning()){
+    			commandGroup.cancel();
+    		}
     	}
     	
     	//Brake
@@ -90,14 +91,12 @@ public class DriveCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	driveSubsystem.setLeftSpeed(0);
-		driveSubsystem.setRightSpeed(0);
+    	driveSubsystem.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	driveSubsystem.setLeftSpeed(0);
-		driveSubsystem.setRightSpeed(0);
+    	driveSubsystem.stop();
     }
 }

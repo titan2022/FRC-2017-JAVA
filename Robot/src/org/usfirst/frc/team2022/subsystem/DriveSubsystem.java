@@ -26,12 +26,6 @@ public class DriveSubsystem extends Subsystem {
 
 	private AnalogGyro gyro; 
 
-	double Kp = 0; 
-	
-
-	
-
-	
 	public DriveSubsystem() {
 		//Instantiate motors		
 		left1 = new CANTalon(RobotMap.LEFT_DRIVE_PORT_1);
@@ -60,18 +54,12 @@ public class DriveSubsystem extends Subsystem {
 		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
 	}
 	
-	public AnalogGyro getGyro(){
-		return gyro;
-	}
-	
-	public double getGyroAngle(){
-		return gyro.getAngle(); 
-	}
-	
-	public void SetSensitivity(double sensitivity){
-		Kp = sensitivity; 
-	}
-	
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new DriveCommand());
+    }
+
 	// Setter methods for each side.
 	public void setLeftSpeed(double speed) {		
 		left1.set(speed);
@@ -96,6 +84,25 @@ public class DriveSubsystem extends Subsystem {
 		setLeftSpeed(leftSpeed);
 		setRightSpeed(rightSpeed);
 	}
+	
+	public void enableBrake(){
+		left1.enableBrakeMode(true);
+		left2.enableBrakeMode(true);
+		left3.enableBrakeMode(true);
+		right1.enableBrakeMode(true);
+		right2.enableBrakeMode(true);
+		right3.enableBrakeMode(true);
+		
+	}
+	public void disableBrake(){
+		left1.enableBrakeMode(false);
+		left2.enableBrakeMode(false);
+		left3.enableBrakeMode(false);
+		right1.enableBrakeMode(false);
+		right2.enableBrakeMode(false);
+		right3.enableBrakeMode(false);
+	}
+	
 	
 	//Get Encoder 
 	public Encoder getRightEncoder(){
@@ -135,44 +142,26 @@ public class DriveSubsystem extends Subsystem {
 		leftEncoder.reset();
 	}
 	
+	//Gyro methods
+	public AnalogGyro getGyro(){
+		return gyro;
+	}
+	
+	public double getGyroAngle(){
+		return gyro.getAngle(); 
+	}
+
+	public void resetGyro() {
+		gyro.reset();
+	}
+
 	public void stop() {
-		
 		left1.set(0);
 		left2.set(0);
 		left3.set(0);
 		right1.set(0);
 		right2.set(0);
 		right3.set(0);
-
-	}
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new DriveCommand());
-    }
-
-	public void resetGyro() {
-		// TODO Auto-generated method stub
-		gyro.reset();
-		
-	}
-	public void enableBrake(){
-		left1.enableBrakeMode(true);
-		left2.enableBrakeMode(true);
-		left3.enableBrakeMode(true);
-		right1.enableBrakeMode(true);
-		right2.enableBrakeMode(true);
-		right3.enableBrakeMode(true);
-		
-	}
-	public void disableBrake(){
-		left1.enableBrakeMode(false);
-		left2.enableBrakeMode(false);
-		left3.enableBrakeMode(false);
-		right1.enableBrakeMode(false);
-		right2.enableBrakeMode(false);
-		right3.enableBrakeMode(false);
-		
 	}
     
 }
