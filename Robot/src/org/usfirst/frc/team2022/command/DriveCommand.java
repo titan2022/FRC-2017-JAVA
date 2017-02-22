@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2022.command;
 
+import org.usfirst.frc.team2022.command.autonomous.VisionTable;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
@@ -55,9 +56,9 @@ public class DriveCommand extends Command {
     	}
     	
     	if(xboxMap.stopSystem()){
-    		if(commandGroup.isRunning()){
-    			commandGroup.cancel();
-    		}
+			commandGroup.cancel();
+			VisionTable.setPegDone(true);
+	  		VisionTable.setProcessPeg(false);    		
     	}
     	
     	//Brake

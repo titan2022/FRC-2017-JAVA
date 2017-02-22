@@ -35,6 +35,7 @@ public class AutoDriveTurnCommand extends Command{
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("Initialized!!!!!!!!!!!!!!!!!!!");
     	//Reset gyro so reading is 0
     	driveSubsystem.resetGyro();
     	driveSubsystem.enableBrake();
@@ -55,7 +56,7 @@ public class AutoDriveTurnCommand extends Command{
     	
     		//adjust speed of each wheel
     	double newSpeed = pidController.getOutput(driveSubsystem.getGyroAngle());
-    		
+    	SmartDashboard.putNumber("Speedssss",  newSpeed);
 		driveSubsystem.setLeftSpeed(-newSpeed);
 		driveSubsystem.setRightSpeed(-newSpeed);
 		if(pidController.onTarget() || xboxMap.stopSystem()){
@@ -67,7 +68,7 @@ public class AutoDriveTurnCommand extends Command{
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return finished;
     }
 

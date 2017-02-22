@@ -1,6 +1,9 @@
 package org.usfirst.frc.team2022.command;
 
 import org.usfirst.frc.team2022.command.autonomous.AutoShooterSpeedCommand;
+import org.usfirst.frc.team2022.command.autonomous.BangBangShooterCommand;
+import org.usfirst.frc.team2022.command.autonomous.CSVShooterCommand;
+import org.usfirst.frc.team2022.command.autonomous.VisionTable;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCommandGroup;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;
@@ -40,6 +43,9 @@ public class ShooterCommand extends Command {
     	
 //		SHOOT 57 INCHES AWAY
     	//Manual shooting
+//    	shooterSubsystem.setShooterSpeed(1);
+//    	SmartDashboard.putNumber("Voltage", shooterSubsystem.getVoltage());
+//    	SmartDashboard.putNumber("Current", shooterSubsystem.getCurrent());
     	if(xboxMap.startManualShooterCommand())
     	{
     		autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
@@ -56,12 +62,10 @@ public class ShooterCommand extends Command {
 	   	}
 	   	
 	   	if(xboxMap.stopSystem()){
-	   		if(autoShooterCommand.isRunning()){
 		   		autoShooterCommand.cancel();
-	   		}
-	   		if(autoShooterCommandGroup.isRunning()){
 	   			autoShooterCommandGroup.cancel();
-	   		}
+	   			VisionTable.setProcessBoiler(false);
+	   	  		VisionTable.setBoilerDone(true);
 	   	}
 	   	
 	   	SmartDashboard.putNumber("Shooter Encoder Rate", shooterSubsystem.getShooterSpeed());

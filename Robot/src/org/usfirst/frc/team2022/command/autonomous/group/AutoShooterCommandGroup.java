@@ -3,18 +3,18 @@ package org.usfirst.frc.team2022.command.autonomous.group;
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraightCommand;
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurnCommand;
 import org.usfirst.frc.team2022.command.autonomous.AutoShooterSpeedCommand;
+import org.usfirst.frc.team2022.command.autonomous.VisionTable;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class AutoShooterCommandGroup extends CommandGroup {
-
-	NetworkTable table;
 	
     public AutoShooterCommandGroup() {
         // Add Commands here:
@@ -34,20 +34,30 @@ public class AutoShooterCommandGroup extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	table = NetworkTable.getTable("SmartDashboard");
+    	VisionTable.setProcessBoiler(true);
+
 		
-		Timer.delay(1);
-    	double boilerDistance = table.getNumber("UltrasonicDistance", 0);
-    	double boilerAngle = table.getNumber("boilerAngle", 0);
-		  		
-  		addSequential(new AutoDriveTurnCommand(boilerAngle));
+		Timer.delay(2);
+		
+    	double boilerDistance = VisionTable.getUltrasonicDistance();
+    	double boilerAngle = VisionTable.getBoilerAngle();
+    	SmartDashboard.putNumber("Angle", boilerAngle);
+		
+    	addSequential(new AutoDriveTurnCommand(20));
+//  		AutoDriveTurnCommand autoDriveTurnCommand = new AutoDriveTurnCommand(20);
+//  		autoDriveTurnCommand.start();
+//  		while(!autoDriveTurnCommand.isFinished()){
+//  			
+//  		}
+
+  		boilerDistance = VisionTable.getUltrasonicDistance();
   		
-  		Timer.delay(0.2);
-  		boilerDistance = table.getNumber("boilerDistance", 0);
-  		addSequential(new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT));
-  		
+//  		addSequential(new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT));
+//  		new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT).start();
   		AutoShooterSpeedCommand autoShooterSpeedCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
   		autoShooterSpeedCommand.start();
+  		VisionTable.setProcessBoiler(false);
+  		VisionTable.setBoilerDone(true);
     	
     }
 }

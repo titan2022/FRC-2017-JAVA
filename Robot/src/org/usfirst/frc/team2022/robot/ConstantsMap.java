@@ -13,7 +13,7 @@ public class ConstantsMap {
 	public static final double DRIVE_ENCODER_DIST_PER_TICK = ((4* Math.PI)/(360));
 
 	//Distance and speeds
-	public static final double DIST_TO_SHOOT = 55;
+	public static final double DIST_TO_SHOOT = 57;
 	public static final double SHOOTING_SPEED = 31000;
 	public static final double CLIMBER_SPEED = 0; 
 

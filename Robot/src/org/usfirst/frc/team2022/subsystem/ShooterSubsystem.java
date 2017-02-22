@@ -53,6 +53,10 @@ public class ShooterSubsystem extends Subsystem {
 		return shooterMotor1.getBusVoltage();
 	}
 	
+	public double getCurrent(){
+		return shooterMotor1.getOutputCurrent();
+	}
+	
 	public void setAgitatorSpeed(double speed) {
 		agitatorMotor.set(speed);
 	}

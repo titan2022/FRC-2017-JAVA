@@ -27,6 +27,8 @@ public class AutoShooterSpeedCommand extends Command{
 	CustomPIDController pidController;
 	
 	NetworkTable sd = NetworkTable.getTable("Preferences");
+	long firstTime;
+//	PrintWriter pw;
 	
 	public AutoShooterSpeedCommand(double desiredRate){
 		requires(shooterSubsystem);
@@ -40,7 +42,23 @@ public class AutoShooterSpeedCommand extends Command{
 	}
 
 	protected void initialize() {
-		
+		VisionTable.setProcessBoiler(false);
+//		try {
+//			pw = new PrintWriter(new File("/media/sda1/FullSpeed/" + sd.getString("FileName", "DefaultName")));
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    	
+//    	firstTime = System.currentTimeMillis();
+//    	StringBuilder sb = new StringBuilder();
+//		sb.append("Time");
+//		sb.append(',');
+//		sb.append("Encoder Rate");
+//		sb.append(',');
+//		sb.append("Shooter Speed");
+//		sb.append("\n");
+//		pw.write(sb.toString());
 	}
 	
 	protected void execute() {
@@ -90,9 +108,20 @@ public class AutoShooterSpeedCommand extends Command{
     	SmartDashboard.putNumber("Vision", NetworkTable.getTable("SmartDashboard").getNumber("boilerAngle", 100));
     	SmartDashboard.putNumber("Voltage", shooterSubsystem.getVoltage());
     	SmartDashboard.putNumber("Encoder Encoder Rate", shooterSubsystem.getShooterEncoderRate());
+    	
+//    	StringBuilder sb = new StringBuilder();
+//		sb.append(Double.toString((System.currentTimeMillis() - firstTime) / 1000));
+//		sb.append(',');
+//		sb.append(Double.toString(shooterSubsystem.getShooterEncoderRate()));
+//		sb.append(',');
+//		sb.append(Double.toString(shooterSubsystem.getShooterSpeed()));
+//		sb.append("\n");
+
     	if(xboxMap.stopSystem()){
-    		end();
+//    		pw.close();
+    		shooterSubsystem.stop();
     		cancel();
+    		end();
     	}
     	//90
     	//44.5 inches to shoot

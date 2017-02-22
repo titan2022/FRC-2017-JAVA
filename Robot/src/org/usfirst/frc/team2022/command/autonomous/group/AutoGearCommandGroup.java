@@ -2,6 +2,7 @@ package org.usfirst.frc.team2022.command.autonomous.group;
 
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraightCommand;
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurnCommand;
+import org.usfirst.frc.team2022.command.autonomous.VisionTable;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -10,24 +11,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoGearCommandGroup extends CommandGroup {
 	//Create Reference to Network Table
-	NetworkTable table;
 	
 	public AutoGearCommandGroup(){
-		table = NetworkTable.getTable("SmartDashboard");
-				
+		
+		VisionTable.setPegDone(false);
+		VisionTable.setProcessPeg(true);
 		Timer.delay(1);
-    	double pegDistance = table.getNumber("pegDistance", 0);
-    	double pegAngle = table.getNumber("pegAngle", 0);
+		while(!VisionTable.getPegDone()){
+			
+		}
+    	double pegDistance = VisionTable.getPegDistance();
+    	double pegAngle = VisionTable.getPegAngle();
 		  		
   		addSequential(new AutoDriveTurnCommand(pegAngle));
   		
   		Timer.delay(1);
-  		pegDistance = table.getNumber("pegDistance", 0);
+  		pegDistance = VisionTable.getPegDistance();
   		addSequential(new AutoDriveStraightCommand(pegDistance));
+  		
+  		VisionTable.setPegDone(true);
+  		VisionTable.setProcessPeg(false);
 	}
 	
 	public AutoGearCommandGroup(int position){	
-		table = NetworkTable.getTable("SmartDashboard");
 		
 		// position 1 is from the right side 
 		// position 2 is from the middle 
@@ -46,18 +52,21 @@ public class AutoGearCommandGroup extends CommandGroup {
 	
 	public void run(double distance, double angle){
 		
-				
+		VisionTable.setPegDone(false);
+		VisionTable.setProcessPeg(true);
 		addSequential(new AutoDriveStraightCommand(distance));
 		addSequential(new AutoDriveTurnCommand(angle));
 				
 		Timer.delay(1);
-    	double pegDistance = table.getNumber("pegDistance", 0);
-    	double pegAngle = table.getNumber("pegAngle", 0);
+		double pegDistance = VisionTable.getPegDistance();
+    	double pegAngle = VisionTable.getPegAngle();
 		  		
   		addSequential(new AutoDriveTurnCommand(pegAngle));
   		
   		Timer.delay(1);
-  		pegDistance = table.getNumber("pegDistance", 0);
+  		pegDistance = VisionTable.getPegDistance();
   		addSequential(new AutoDriveStraightCommand(pegDistance));
+  		VisionTable.setPegDone(true);
+  		VisionTable.setProcessPeg(false);
 	}
 }
