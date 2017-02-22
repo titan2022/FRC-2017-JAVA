@@ -22,7 +22,7 @@ public class AutoGearCommandGroup extends CommandGroup {
 		}
     	double pegDistance = VisionTable.getPegDistance();
     	double pegAngle = VisionTable.getPegAngle();
-		  		
+		System.out.println("Should not be here");
   		addSequential(new AutoDriveTurnCommand(pegAngle));
   		
   		Timer.delay(1);
@@ -51,7 +51,7 @@ public class AutoGearCommandGroup extends CommandGroup {
 	}
 	
 	public void run(double distance, double angle){
-		
+		System.out.println("Should not be here 4");
 		VisionTable.setPegDone(false);
 		VisionTable.setProcessPeg(true);
 		addSequential(new AutoDriveStraightCommand(distance));

@@ -33,6 +33,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
+
+
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -118,17 +121,17 @@ public class Robot extends IterativeRobot {
     	autoTypeChooser.addObject("Shooter Autonomous", "Shooter");
     	SmartDashboard.putData("Autonomous Mode", autoTypeChooser);
     	
-    	autoGearChooser = new SendableChooser<CommandGroup>();
-    	autoGearChooser.addDefault("Position Gear 1 (Right)", new AutoGearCommandGroup(1));
-    	autoGearChooser.addObject("Position Gear 2 (Middle)", new AutoGearCommandGroup(2));
-    	autoGearChooser.addObject("Position Gear 3 (Left)", new AutoGearCommandGroup(3));
-    	SmartDashboard.putData("Auto Gear Positions", autoGearChooser);
-    	
-    	autoShooterChooser = new SendableChooser<CommandGroup>();
-    	autoShooterChooser.addDefault("Left starting position", new AutoShooterLeftCommandGroup());
-    	autoShooterChooser.addObject("Center starting position", new AutoShooterCenterCommandGroup());
-    	autoShooterChooser.addObject("Right starting position", new AutoShooterLeftCommandGroup());
-    	SmartDashboard.putData("Auto Field Position", autoShooterChooser);
+//    	autoGearChooser = new SendableChooser<CommandGroup>();
+//    	autoGearChooser.addDefault("Position Gear 1 (Right)", new AutoGearCommandGroup(1));
+//    	autoGearChooser.addObject("Position Gear 2 (Middle)", new AutoGearCommandGroup(2));
+//    	autoGearChooser.addObject("Position Gear 3 (Left)", new AutoGearCommandGroup(3));
+//    	SmartDashboard.putData("Auto Gear Positions", autoGearChooser);
+//    	
+//    	autoShooterChooser = new SendableChooser<CommandGroup>();
+//    	autoShooterChooser.addDefault("Left starting position", new AutoShooterLeftCommandGroup());
+//    	autoShooterChooser.addObject("Center starting position", new AutoShooterCenterCommandGroup());
+//    	autoShooterChooser.addObject("Right starting position", new AutoShooterLeftCommandGroup());
+//    	SmartDashboard.putData("Auto Field Position", autoShooterChooser);
     }
     
     
@@ -174,6 +177,12 @@ public class Robot extends IterativeRobot {
     	Scheduler.getInstance().run();
     }
 
+    @Override
+	public void robotPeriodic() {
+		// TODO Auto-generated method stub
+    	Scheduler.getInstance().run();
+	}
+    
     /**
      * This function is called periodically during operator control
      */

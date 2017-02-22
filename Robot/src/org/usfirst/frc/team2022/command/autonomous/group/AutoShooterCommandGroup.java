@@ -8,7 +8,6 @@ import org.usfirst.frc.team2022.robot.ConstantsMap;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -33,7 +32,7 @@ public class AutoShooterCommandGroup extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
+    	System.out.println("Running Command Group");
     	VisionTable.setProcessBoiler(true);
 
 		
@@ -43,17 +42,17 @@ public class AutoShooterCommandGroup extends CommandGroup {
     	double boilerAngle = VisionTable.getBoilerAngle();
     	SmartDashboard.putNumber("Angle", boilerAngle);
 		
-    	addSequential(new AutoDriveTurnCommand(20));
-//  		AutoDriveTurnCommand autoDriveTurnCommand = new AutoDriveTurnCommand(20);
-//  		autoDriveTurnCommand.start();
-//  		while(!autoDriveTurnCommand.isFinished()){
-//  			
-//  		}
-
+//    	addSequential(new AutoDriveTurnCommand(20));
+  		AutoDriveTurnCommand autoDriveTurnCommand = new AutoDriveTurnCommand(boilerAngle-3);
+  		autoDriveTurnCommand.start();
+    	System.out.println("Running Command Group 2");
+    	
+//    	Timer.delay(3);
   		boilerDistance = VisionTable.getUltrasonicDistance();
   		
 //  		addSequential(new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT));
-//  		new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT).start();
+  		
+  		new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT).start();
   		AutoShooterSpeedCommand autoShooterSpeedCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
   		autoShooterSpeedCommand.start();
   		VisionTable.setProcessBoiler(false);

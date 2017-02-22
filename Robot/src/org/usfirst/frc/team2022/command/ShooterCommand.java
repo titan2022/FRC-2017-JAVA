@@ -58,6 +58,7 @@ public class ShooterCommand extends Command {
 	   	
 	   	//Autonomous shooting
 	   	if(xboxMap.startAutoShooterSystem()){
+	   		System.out.println("Clicked button");
 	   		autoShooterCommandGroup = new AutoShooterCommandGroup();
 	   	}
 	   	

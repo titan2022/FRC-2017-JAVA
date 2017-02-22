@@ -33,7 +33,7 @@ public class ConstantsMap {
 	public static double KI_DRIVE_TURN = 0.7;//0.18;
 	public static double KD_DRIVE_TURN = 0;//0.23;
 	public static double KF_DRIVE_TURN = 0.7;
-	public static double KSPEED_DRIVE_TURN = 0.25;
+	public static double KSPEED_DRIVE_TURN = 0.2;
 	
 	public static double KP_SHOOTER_SPEED = 0.0001;
 	public static double KI_SHOOTER_SPEED = 0;

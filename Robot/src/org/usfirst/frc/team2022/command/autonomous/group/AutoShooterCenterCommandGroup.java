@@ -33,7 +33,7 @@ public class AutoShooterCenterCommandGroup extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
+    	System.out.println("Should not be here 1");
     	addSequential(new AutoDriveStraightCommand(96));
     	addSequential(new AutoDriveTurnCommand(degToTurn));
     	addSequential(new AutoDriveStraightCommand(distToShootPos));
