@@ -1,12 +1,11 @@
 package org.usfirst.frc.team2022.command;
 
-import org.usfirst.frc.team2022.command.autonomous.AutoShooterSpeedCommand;
-import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class UltrasonicCommand extends Command{
 
@@ -28,10 +27,11 @@ public class UltrasonicCommand extends Command{
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { 
     	addData();
+    	SmartDashboard.putNumber("UltrasonicDistance", getAverageRangeInInches());
    	}
 
 	public void addData(){
-		table.putNumber("Ultrasonic Distance", getAverageRangeInInches());
+		table.putNumber("UltrasonicDistance", getAverageRangeInInches());
 	}
 	
 	public double getVoltage(){

@@ -9,6 +9,7 @@ import org.usfirst.frc.team2022.command.UltrasonicCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
+import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
@@ -32,22 +33,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
+
+
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 	
 	//Create References to commands
 	public DriveCommand driveCommand;
 	public ShooterCommand shooterCommand;
-	public ClimberCommand climberCommand;
 	private UltrasonicCommand ultrasonicCommand;
+	public ClimberCommand climberCommand;
 	
 	//Autonomous
-	CommandGroup autonomousCommand;
+	CommandGroup autonomousCommand = new CommandGroup();
 
-	SendableChooser autoTypeChooser;
-	SendableChooser autoShooterChooser;
-	SendableChooser autoGearChooser;
+	SendableChooser<String> autoTypeChooser;
+	SendableChooser<CommandGroup> autoShooterChooser;
+	SendableChooser<CommandGroup> autoGearChooser;
 	double position;
 	double gear;
 	
@@ -65,25 +70,25 @@ public class Robot extends IterativeRobot {
     	
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
-////    	shooterCommand = new ShooterCommand();
-////    	climberCommand = new ClimberCommand();
-////    	ultrasonicCommand = new UltrasonicCommand();
-//    	
+    	shooterCommand = new ShooterCommand();
+    	climberCommand = new ClimberCommand();
+    	ultrasonicCommand = new UltrasonicCommand();
+    	
     	//Create thread for streaming cameras
     	Thread t = new Thread(new Runnable(){
     		public void run(){
     			boolean allowCam1 = false;
         		
         		UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-                camera1.setResolution(320, 240);
+                camera1.setResolution(640, 480);
                 camera1.setFPS(15);
                 UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-                camera2.setResolution(320, 240);
+                camera2.setResolution(640, 480);
                 camera2.setFPS(15);
                 
                 CvSink cvSink1 = CameraServer.getInstance().getVideo(camera1);
                 CvSink cvSink2 = CameraServer.getInstance().getVideo(camera2);
-                CvSource outputStream = CameraServer.getInstance().putVideo("Switcher", 320, 240);
+                CvSource outputStream = CameraServer.getInstance().putVideo("Switcher", 640, 480);
                 
                 Mat image = new Mat();
                 
@@ -111,22 +116,22 @@ public class Robot extends IterativeRobot {
     	t.start();
 
 		
-    	autoTypeChooser = new SendableChooser();
+    	autoTypeChooser = new SendableChooser<String>();
     	autoTypeChooser.addDefault("Gear Autonomous", "Gear");
     	autoTypeChooser.addObject("Shooter Autonomous", "Shooter");
     	SmartDashboard.putData("Autonomous Mode", autoTypeChooser);
     	
-    	autoGearChooser = new SendableChooser();
-    	autoGearChooser.addDefault("Position Gear 1 (Right)", new AutoGearCommandGroup(1));
-    	autoGearChooser.addObject("Position Gear 2 (Middle)", new AutoGearCommandGroup(2));
-    	autoGearChooser.addObject("Position Gear 3 (Left)", new AutoGearCommandGroup(3));
-    	SmartDashboard.putData("Auto Gear Positions", autoGearChooser);
-    	
-    	autoShooterChooser = new SendableChooser();
-    	autoShooterChooser.addDefault("Left starting position", new AutoShooterLeftCommandGroup());
-    	autoShooterChooser.addObject("Center starting position", new AutoShooterCenterCommandGroup());
-    	autoShooterChooser.addObject("Right starting position", new AutoShooterLeftCommandGroup());
-    	SmartDashboard.putData("Auto Field Position", autoShooterChooser);
+//    	autoGearChooser = new SendableChooser<CommandGroup>();
+//    	autoGearChooser.addDefault("Position Gear 1 (Right)", new AutoGearCommandGroup(1));
+//    	autoGearChooser.addObject("Position Gear 2 (Middle)", new AutoGearCommandGroup(2));
+//    	autoGearChooser.addObject("Position Gear 3 (Left)", new AutoGearCommandGroup(3));
+//    	SmartDashboard.putData("Auto Gear Positions", autoGearChooser);
+//    	
+//    	autoShooterChooser = new SendableChooser<CommandGroup>();
+//    	autoShooterChooser.addDefault("Left starting position", new AutoShooterLeftCommandGroup());
+//    	autoShooterChooser.addObject("Center starting position", new AutoShooterCenterCommandGroup());
+//    	autoShooterChooser.addObject("Right starting position", new AutoShooterLeftCommandGroup());
+//    	SmartDashboard.putData("Auto Field Position", autoShooterChooser);
     }
     
     
@@ -145,7 +150,12 @@ public class Robot extends IterativeRobot {
     //This starts the methods for teleop and stops methods for autonomous
     @Override
 	public void teleopInit() {
-    	autonomousCommand.cancel();
+    	if(autonomousCommand.isRunning()){
+        	autonomousCommand.cancel();
+    	}
+    	if(!ultrasonicCommand.isRunning()){
+    		ultrasonicCommand.start();
+    	}
     	driveCommand.start();
     	shooterCommand.start();
     	climberCommand.start();
@@ -167,6 +177,12 @@ public class Robot extends IterativeRobot {
     	Scheduler.getInstance().run();
     }
 
+    @Override
+	public void robotPeriodic() {
+		// TODO Auto-generated method stub
+    	Scheduler.getInstance().run();
+	}
+    
     /**
      * This function is called periodically during operator control
      */

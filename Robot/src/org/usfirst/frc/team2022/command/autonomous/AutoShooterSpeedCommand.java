@@ -4,56 +4,132 @@ import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
-import org.usfirst.frc.team2022.sensor.DummyPIDOutput;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //parameter of speed motor (feet/second)
-public class AutoShooterSpeedCommand extends Command implements PIDOutput{
+public class AutoShooterSpeedCommand extends Command{
 	
-	PIDController shooterController; 
 	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
 	OI oi = Robot.oi;
 	XboxMap xboxMap = new XboxMap();
 
 	double speed = 0; 
+	double desiredRate = 0;
 	boolean isFinished = false;
 	double outputSpeed = 0;
 	
+	long lastPressed = 0;
+	
+	CustomPIDController pidController;
+	
+	NetworkTable sd = NetworkTable.getTable("Preferences");
+	long firstTime;
+//	PrintWriter pw;
+	
 	public AutoShooterSpeedCommand(double desiredRate){
 		requires(shooterSubsystem);
-		speed = desiredRate;
+		this.desiredRate = desiredRate;
+		
+    	pidController = new CustomPIDController(sd.getNumber("P", ConstantsMap.KP_SHOOTER_SPEED), sd.getNumber("I", ConstantsMap.KI_SHOOTER_SPEED), sd.getNumber("D", ConstantsMap.KD_SHOOTER_SPEED), sd.getNumber("F", ConstantsMap.KF_SHOOTER_SPEED));
+    	pidController.setInputRange(0, 31000);
+    	pidController.setOutputRange(0, 1);
+    	pidController.setSetpoint(sd.getNumber("EncoderRate", 31000));
+    	
 	}
 
 	protected void initialize() {
-		shooterController = new PIDController(ConstantsMap.KP_SHOOTER_SPEED, ConstantsMap.KI_SHOOTER_SPEED, ConstantsMap.KD_SHOOTER_SPEED, ConstantsMap.KF_SHOOTER_SPEED, shooterSubsystem.getShooterEncoder(), this);
-		shooterController.setOutputRange(-1,1);
-    	shooterController.setInputRange(-100, 100);
-    	shooterController.setSetpoint(speed);
-    	shooterController.enable();
+		VisionTable.setProcessBoiler(false);
+//		try {
+//			pw = new PrintWriter(new File("/media/sda1/FullSpeed/" + sd.getString("FileName", "DefaultName")));
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    	
+//    	firstTime = System.currentTimeMillis();
+//    	StringBuilder sb = new StringBuilder();
+//		sb.append("Time");
+//		sb.append(',');
+//		sb.append("Encoder Rate");
+//		sb.append(',');
+//		sb.append("Shooter Speed");
+//		sb.append("\n");
+//		pw.write(sb.toString());
 	}
 	
 	protected void execute() {
-		shooterSubsystem.activationServo();
-    	shooterSubsystem.setShooterSpeed(outputSpeed);
+		//Set speed from pid controller
+		double speed = pidController.getOutput(shooterSubsystem.getShooterEncoderRate());
+    	shooterSubsystem.setShooterSpeed(speed);
     	
-    	if(xboxMap.stopSystem()){
-    		shooterController.disable();
-    		end();
-    		cancel();
+    	//Activate agitator
+	    if(shooterSubsystem.getServo() == 0) {	
+    		if(xboxMap.runAgitator()){
+	    		shooterSubsystem.setAgitatorSpeed(0.4);
+	    	}
+	    	else{
+	    		shooterSubsystem.setAgitatorSpeed(0);
+	    	}
+	    }
+	    
+	    //Open gate
+    	if(xboxMap.openGate() && System.currentTimeMillis() - lastPressed > 500){
+    		lastPressed = System.currentTimeMillis();
+    		if(shooterSubsystem.getServo() > 0.5){
+    			shooterSubsystem.setServo(0);
+    		}
+    		else{
+    			shooterSubsystem.setServo(1);
+    		}
     	}
+
+//	    if((System.currentTimeMillis()-lastPressed)>200){  
+//    		
+//    		
+//	    	if(shooterSubsystem.getShooterEncoderRate() < sd.getNumber("EncoderRate", 31000) + 300 && 
+//	    			sd.getNumber("EncoderRate", 31000) - 300 < shooterSubsystem.getShooterEncoderRate()){
+//	    	
+//	    		shooterSubsystem.setServo(0);
+//	    		
+//	    	} else {
+//	    		
+//	    		shooterSubsystem.setServo(1);
+//	    	}
+//	    	
+//	    	lastPressed = System.currentTimeMillis();	
+//	    	
+//	    }
+    	
+    	SmartDashboard.putNumber("Shooter Speed", speed);
+    	SmartDashboard.putNumber("Vision", NetworkTable.getTable("SmartDashboard").getNumber("boilerAngle", 100));
+    	SmartDashboard.putNumber("Voltage", shooterSubsystem.getVoltage());
+    	SmartDashboard.putNumber("Encoder Encoder Rate", shooterSubsystem.getShooterEncoderRate());
+    	
+//    	StringBuilder sb = new StringBuilder();
+//		sb.append(Double.toString((System.currentTimeMillis() - firstTime) / 1000));
+//		sb.append(',');
+//		sb.append(Double.toString(shooterSubsystem.getShooterEncoderRate()));
+//		sb.append(',');
+//		sb.append(Double.toString(shooterSubsystem.getShooterSpeed()));
+//		sb.append("\n");
+
+    	if(xboxMap.stopSystem()){
+//    		pw.close();
+    		shooterSubsystem.stop();
+    		cancel();
+    		end();
+    	}
+    	//90
+    	//44.5 inches to shoot
     }
 
 	@Override
 	protected boolean isFinished() {
 		return isFinished;
 	}
-	
-	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		outputSpeed = output;
-	}
+
 }

@@ -9,44 +9,57 @@ import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AutoDriveTurnCommand extends Command implements PIDOutput{
+public class AutoDriveTurnCommand extends Command{
 	
 	private boolean finished = false;
 	private double degreeToTurn = 0;
-	private double speed = 0;
 	double outputSpeed = 0;
 	
-	//PID Objects
-	PIDController turnController;
-		
+
 	//References to objects in Robot
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	OI oi = Robot.oi;
 	XboxMap xboxMap = new XboxMap();
+	
+	CustomPIDController pidController;
 
-    public AutoDriveTurnCommand(double degreeToTurn, double speed) {
+    public AutoDriveTurnCommand(double degreeToTurn) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	System.out.println("Initialized!!!!!!!!!!!!!!!!!!!");
     	requires(driveSubsystem);
     	this.degreeToTurn = degreeToTurn;
-    	this.speed = speed;
+    	System.out.println("Initialize");
+
+    	driveSubsystem.resetGyro();
+    	driveSubsystem.enableBrake();
+
+    	pidController = new CustomPIDController(ConstantsMap.KP_DRIVE_TURN, ConstantsMap.KI_DRIVE_TURN, ConstantsMap.KD_DRIVE_TURN, ConstantsMap.KF_DRIVE_TURN);
+    	pidController.setInputRange(-180, 180);
+    	pidController.setAbsoluteTolerance(1);
+    	pidController.setOutputRange(-ConstantsMap.KSPEED_DRIVE_TURN, ConstantsMap.KSPEED_DRIVE_TURN);
+    	pidController.setSetpoint(degreeToTurn);
+    	System.out.println("Initialized!!!!!!!");
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Reset gyro so reading is 0
-    	driveSubsystem.resetGyro();
-    	
-    	//Create PIDController and enable
-    	turnController = new PIDController(ConstantsMap.KP_SHOOTER_SPEED, ConstantsMap.KI_SHOOTER_SPEED, ConstantsMap.KD_SHOOTER_SPEED, ConstantsMap.KF_SHOOTER_SPEED, driveSubsystem.getGyro(), this);
-    	turnController.setOutputRange(-speed, speed);
-    	turnController.setContinuous(true);
-    	turnController.setInputRange(-360, 360);
-    	turnController.setAbsoluteTolerance(0.05);
-    	turnController.setSetpoint(degreeToTurn);
-    	turnController.enable();
+//    	System.out.println("Initialize");
+//
+//    	driveSubsystem.resetGyro();
+//    	driveSubsystem.enableBrake();
+//
+//    	pidController = new CustomPIDController(ConstantsMap.KP_DRIVE_TURN, ConstantsMap.KI_DRIVE_TURN, ConstantsMap.KD_DRIVE_TURN, ConstantsMap.KF_DRIVE_TURN);
+//    	pidController.setInputRange(-180, 180);
+//    	pidController.setAbsoluteTolerance(0.5);
+//    	pidController.setOutputRange(-ConstantsMap.KSPEED_DRIVE_TURN, ConstantsMap.KSPEED_DRIVE_TURN);
+//    	pidController.setSetpoint(degreeToTurn);
+//    	System.out.println("Initialized!!!!!!!");
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -55,28 +68,29 @@ public class AutoDriveTurnCommand extends Command implements PIDOutput{
     	 * While the right encoder distance is less than inchesToDrive
     	 * and xbox right bumper is not pressed, use output to drive straight
     	 */
-    		
+    	
     		//adjust speed of each wheel
-    		driveSubsystem.setLeftSpeed(-outputSpeed);
-    		driveSubsystem.setRightSpeed(-outputSpeed);
-//    		driveSubsystem.tankDrive(pidOutputValue, -pidOutputValue);
-    		if(turnController.onTarget() || xboxMap.stopSystem()){
-    			finished = true;
-    			end();
-    			cancel();
-    		}
-    		
-   
+    	System.out.println("Running!!!!!!!");
+
+    	double newSpeed = pidController.getOutput(driveSubsystem.getGyroAngle());
+    	SmartDashboard.putNumber("Speedssss",  newSpeed);
+		driveSubsystem.setLeftSpeed(-newSpeed);
+		driveSubsystem.setRightSpeed(-newSpeed);
+		if(xboxMap.stopSystem()){
+			finished = true;
+    		cancel();
+    		end();
+    	}
+    
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return finished;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	turnController.disable();
     	driveSubsystem.stop();
     }
 
@@ -85,9 +99,5 @@ public class AutoDriveTurnCommand extends Command implements PIDOutput{
     protected void interrupted() {
     	end();
     }
-    
-    public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		outputSpeed = output;
-	}
+
 }

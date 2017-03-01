@@ -2,6 +2,7 @@ package org.usfirst.frc.team2022.command.autonomous.group;
 
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraightCommand;
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurnCommand;
+import org.usfirst.frc.team2022.command.autonomous.VisionTable;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -10,23 +11,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoGearCommandGroup extends CommandGroup {
 	//Create Reference to Network Table
-	NetworkTable table;
 	
 	public AutoGearCommandGroup(){
-		table = NetworkTable.getTable("SmartDashboard");
 		
-		double speed = 0.5;
-		
+		VisionTable.setPegDone(false);
+		VisionTable.setProcessPeg(true);
 		Timer.delay(1);
-    	double pegDistance = table.getNumber("pegDistance", 0);
-    	double pegAngle = table.getNumber("pegAngle", 0);
-		  		
-  		addSequential(new AutoDriveTurnCommand(pegAngle, speed));
-  		addSequential(new AutoDriveStraightCommand(pegDistance, speed));
+		
+    	double pegDistance = VisionTable.getPegDistance();
+    	double pegAngle = VisionTable.getPegAngle();
+		System.out.println("Should not be here");
+  		addSequential(new AutoDriveTurnCommand(pegAngle));
+  		
+  		Timer.delay(1);
+  		pegDistance = VisionTable.getPegDistance();
+  		addSequential(new AutoDriveStraightCommand(pegDistance));
+  		
+  		VisionTable.setPegDone(true);
+  		VisionTable.setProcessPeg(false);
 	}
 	
 	public AutoGearCommandGroup(int position){	
-		table = NetworkTable.getTable("SmartDashboard");
 		
 		// position 1 is from the right side 
 		// position 2 is from the middle 
@@ -44,16 +49,22 @@ public class AutoGearCommandGroup extends CommandGroup {
 	}
 	
 	public void run(double distance, double angle){
-		
-				
-		addSequential(new AutoDriveStraightCommand(distance, 0.5));
-		addSequential(new AutoDriveTurnCommand(angle, 0.5));
+		System.out.println("Should not be here 4");
+		VisionTable.setPegDone(false);
+		VisionTable.setProcessPeg(true);
+		addSequential(new AutoDriveStraightCommand(distance));
+		addSequential(new AutoDriveTurnCommand(angle));
 				
 		Timer.delay(1);
-    	double pegDistance = table.getNumber("pegDistance", 0);
-    	double pegAngle = table.getNumber("pegAngle", 0);
+		double pegDistance = VisionTable.getPegDistance();
+    	double pegAngle = VisionTable.getPegAngle();
 		  		
-  		addSequential(new AutoDriveTurnCommand(pegAngle, 0.5));
-  		addSequential(new AutoDriveStraightCommand(pegDistance, 0.5));
+  		addSequential(new AutoDriveTurnCommand(pegAngle));
+  		
+  		Timer.delay(1);
+  		pegDistance = VisionTable.getPegDistance();
+  		addSequential(new AutoDriveStraightCommand(pegDistance));
+  		VisionTable.setPegDone(true);
+  		VisionTable.setProcessPeg(false);
 	}
 }
