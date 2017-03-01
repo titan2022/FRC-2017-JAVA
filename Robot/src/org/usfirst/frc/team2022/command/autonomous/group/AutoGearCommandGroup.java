@@ -17,9 +17,7 @@ public class AutoGearCommandGroup extends CommandGroup {
 		VisionTable.setPegDone(false);
 		VisionTable.setProcessPeg(true);
 		Timer.delay(1);
-		while(!VisionTable.getPegDone()){
-			
-		}
+		
     	double pegDistance = VisionTable.getPegDistance();
     	double pegAngle = VisionTable.getPegAngle();
 		System.out.println("Should not be here");

@@ -1,11 +1,14 @@
 package org.usfirst.frc.team2022.command;
 
+import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraightCommand;
+import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurnCommand;
 import org.usfirst.frc.team2022.command.autonomous.VisionTable;
-import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
+import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +21,8 @@ public class DriveCommand extends Command {
 	
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	XboxMap xboxMap = new XboxMap();
-		
+	OI oi = Robot.oi;
+	
 	CommandGroup commandGroup = new CommandGroup();
 	
 	boolean brakeState = true;
@@ -52,7 +56,26 @@ public class DriveCommand extends Command {
     	
     	//Autonomous gear
     	if(xboxMap.startAutoGearPlacement()){
-    		commandGroup = new AutoGearCommandGroup();    		
+//    		commandGroup = new AutoGearCommandGroup();  
+    		VisionTable.setPegDone(false);
+    		VisionTable.setProcessPeg(true);
+    		Timer.delay(1);
+    		
+        	double pegDistance = VisionTable.getPegDistance();
+        	double pegAngle = VisionTable.getPegAngle();
+    		System.out.println("Should not be here");
+      		AutoDriveTurnCommand autoDriveTurnCommand = new AutoDriveTurnCommand(pegAngle-6);
+      		autoDriveTurnCommand.start();
+    	}
+    	
+    	if(oi.xbox.getPOV()==180){
+    		Timer.delay(1);
+      		double pegDistance = VisionTable.getPegDistance();
+      		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(pegDistance - 5);
+      		autoDriveStraightCommand.start();
+      		
+      		VisionTable.setPegDone(true);
+      		VisionTable.setProcessPeg(false);
     	}
     	
     	if(xboxMap.stopSystem()){
