@@ -46,6 +46,5 @@ public class RobotMap {
 	//Encoder ports for shooter
 	public static int SHOOTER_ENCODER_A = 0;
 	public static int SHOOTER_ENCODER_B = 1;
-	
 }
 

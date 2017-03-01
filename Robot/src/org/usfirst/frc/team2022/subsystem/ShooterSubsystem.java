@@ -25,8 +25,7 @@ public class ShooterSubsystem extends Subsystem {
 	
 	private DigitalInput limitSwitch;
 	
-	private Servo servo;
-	
+	private Servo servo;	
 
 	public ShooterSubsystem(){
 		shooterMotor1 = new CANTalon(RobotMap.SHOOTER_MOTOR_PORT);
@@ -78,6 +77,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 	
 	//Sensor Methods
+
 	//Get Encoder Distances
 	public double getShooterEncoderDistance(){
 		return shooterMotor1.getEncPosition();
@@ -101,5 +101,4 @@ public class ShooterSubsystem extends Subsystem {
 		stopShooter();
 		stopAgitator();
 	}
-	
 }
