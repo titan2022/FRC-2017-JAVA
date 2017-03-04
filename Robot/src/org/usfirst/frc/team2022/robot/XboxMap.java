@@ -16,6 +16,10 @@ public class XboxMap {
 		return oi.xbox.GetRightBumperValue();
 	}
 	
+	public boolean switchySwitch(){
+		return oi.xbox.GetLeftBumperValue();
+	}
+	
 	public boolean startAutoGearPlacement(){
 		return oi.xbox.GetXValue();
 	}
@@ -28,10 +32,6 @@ public class XboxMap {
 	
 	public boolean startManualShooterCommand(){
 		return oi.xbox.GetBValue();
-	}
-
-	public boolean runAgitator(){
-		return oi.xbox.GetLeftBumperValue();
 	}
 
 	public boolean openGate() {

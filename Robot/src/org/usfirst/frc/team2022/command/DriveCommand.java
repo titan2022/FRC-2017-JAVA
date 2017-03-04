@@ -23,7 +23,7 @@ public class DriveCommand extends Command {
 	XboxMap xboxMap = new XboxMap();
 	OI oi = Robot.oi;
 	
-	CommandGroup commandGroup = new CommandGroup();
+//	CommandGroup commandGroup = new CommandGroup();
 	
 	boolean brakeState = true;
 	long lastPressed = 0;
@@ -54,9 +54,12 @@ public class DriveCommand extends Command {
     	}
     	driveSubsystem.setRightSpeed(speedRight);
     	
+    	if(xboxMap.switchySwitch()) {
+    		driveSubsystem.switchTheSwitchySwitch();
+    	}
+    	
     	//Autonomous gear
     	if(xboxMap.startAutoGearPlacement()){
-//    		commandGroup = new AutoGearCommandGroup();  
     		VisionTable.setPegDone(false);
     		VisionTable.setProcessPeg(true);
     		Timer.delay(1);
@@ -79,7 +82,7 @@ public class DriveCommand extends Command {
     	}
     	
     	if(xboxMap.stopSystem()){
-			commandGroup.cancel();
+//			commandGroup.cancel();
 			VisionTable.setPegDone(true);
 	  		VisionTable.setProcessPeg(false);    		
     	}
@@ -97,8 +100,7 @@ public class DriveCommand extends Command {
     		brakeState = !brakeState;
     		lastPressed = System.currentTimeMillis();
     	}
-    	
-    	
+    	    	    	
     	SmartDashboard.putNumber("Right Encoder Distance", driveSubsystem.getRightEncoderDistance());
     	SmartDashboard.putNumber("Left Encoder Distance", driveSubsystem.getLeftEncoderDistance());
     	SmartDashboard.putNumber("Right Encoder", driveSubsystem.getRightEncoderCount());

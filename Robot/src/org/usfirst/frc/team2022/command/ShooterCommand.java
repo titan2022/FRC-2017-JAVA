@@ -23,7 +23,7 @@ public class ShooterCommand extends Command {
 	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
 	AutoShooterSpeedCommand autoShooterCommand = new AutoShooterSpeedCommand(31000);
 	
-	CommandGroup autoShooterCommandGroup = new CommandGroup();
+//	CommandGroup autoShooterCommandGroup = new CommandGroup();
 	
 	XboxMap xboxMap = new XboxMap();
 	OI oi = Robot.oi;
@@ -88,12 +88,12 @@ public class ShooterCommand extends Command {
 	   	}
 	   	
 	   	if(xboxMap.stopSystem()){
-		   		autoShooterCommand.cancel();
-	   			autoShooterCommandGroup.cancel();
-	   			VisionTable.setProcessBoiler(false);
-	   	  		VisionTable.setBoilerDone(true);
+		   	autoShooterCommand.cancel();
+//	   		autoShooterCommandGroup.cancel();
+	   		VisionTable.setProcessBoiler(false);
+	   	  	VisionTable.setBoilerDone(true);
 	   	}
-	   	
+	   		   		   	
 	   	SmartDashboard.putNumber("Shooter Encoder Rate", shooterSubsystem.getShooterSpeed());
 	   	
 	  
