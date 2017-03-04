@@ -25,6 +25,8 @@ public class DriveSubsystem extends Subsystem {
 	private Encoder leftEncoder, rightEncoder;
 
 	private AnalogGyro gyro; 
+	
+	private boolean switchUrMom = false;
 
 	public DriveSubsystem() {
 		//Instantiate motors		
@@ -61,15 +63,31 @@ public class DriveSubsystem extends Subsystem {
     }
 
 	// Setter methods for each side.
-	public void setLeftSpeed(double speed) {		
-		left1.set(speed);
-		left2.set(speed);
-		left3.set(speed);
+	public void setLeftSpeed(double speed) {
+		if(switchUrMom == false) {
+			left1.set(speed);
+			left2.set(speed);
+			left3.set(speed);
+		} else {
+			right1.set(-speed);
+			right2.set(-speed);
+			right3.set(-speed);
+		}		
 	}	
 	public void setRightSpeed (double speed) {
-		right1.set(speed);
-		right2.set(speed);		
-		right3.set(speed);
+		if(switchUrMom) {
+			right1.set(speed);
+			right2.set(speed);		
+			right3.set(speed);
+		} else {
+			left1.set(-speed);
+			left2.set(-speed);
+			left3.set(-speed);
+		}
+	}
+	
+	public void switchTheSwitchySwitch () {
+		switchUrMom = !switchUrMom;
 	}
 	
 	// Getter method for each side.

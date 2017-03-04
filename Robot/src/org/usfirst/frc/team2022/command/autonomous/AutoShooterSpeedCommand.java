@@ -67,13 +67,20 @@ public class AutoShooterSpeedCommand extends Command{
     	shooterSubsystem.setShooterSpeed(speed);
     	
     	//Activate agitator
-	    if(shooterSubsystem.getServo() == 0) {	
-    		if(xboxMap.runAgitator()){
-	    		shooterSubsystem.setAgitatorSpeed(0.4);
-	    	}
-	    	else{
-	    		shooterSubsystem.setAgitatorSpeed(0);
-	    	}
+//	    if(shooterSubsystem.getServo() == 0) {	
+//    		if(xboxMap.runAgitator()){
+//	    		shooterSubsystem.setAgitatorSpeed(0.4);
+//	    	}
+//	    	else{
+//	    		shooterSubsystem.setAgitatorSpeed(0);
+//	    	}
+//	    }
+	    
+	    if(shooterSubsystem.getShooterEncoderRate() > speed - 200 && 
+	    		shooterSubsystem.getShooterEncoderRate() < speed + 200) {
+	    	shooterSubsystem.setFeederWheelSpeed(1);
+	    } else {
+	    	shooterSubsystem.setFeederWheelSpeed(-1);
 	    }
 	    
 	    //Open gate
