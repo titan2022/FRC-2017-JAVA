@@ -43,55 +43,35 @@ public class ShooterCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { 
     	
-//		SHOOT 57 INCHES AWAY
     	//Manual shooting
-//    	shooterSubsystem.setShooterSpeed(1);
-//    	SmartDashboard.putNumber("Voltage", shooterSubsystem.getVoltage());
-//    	SmartDashboard.putNumber("Current", shooterSubsystem.getCurrent());
     	if(xboxMap.startManualShooterCommand())
     	{
     		autoShooterCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
 	   		autoShooterCommand.start();
     	}
 	   	
-	   	if(xboxMap.openGate()){
-	   		shooterSubsystem.setServo(1);
-	   	}
-	   	
 	   	//Autonomous shooting
 	   	if(xboxMap.startAutoShooterSystem()){
-//	   		System.out.println("Clicked button");
-//	   		autoShooterCommandGroup = new AutoShooterCommandGroup();
-//	   		Scheduler.getInstance().add(autoShooterCommand);
-	   		VisionTable.setProcessBoiler(true);
 			Timer.delay(1);
 			
 	    	double boilerDistance = VisionTable.getUltrasonicDistance();
 	    	double boilerAngle = VisionTable.getBoilerAngle();
 	    	SmartDashboard.putNumber("Angle", boilerAngle);
 			
-//	    	addSequential(new AutoDriveTurnCommand(20));
 	  		AutoDriveTurnCommand autoDriveTurnCommand = new AutoDriveTurnCommand(boilerAngle-3);
 	  		autoDriveTurnCommand.start();
 	   	}
 	   	
-	   	if(oi.xbox.getPOV() == 0){
+	   	if(xboxMap.moveToShooter()){
 	   		double boilerDistance = VisionTable.getUltrasonicDistance();
-	  		
-//  		addSequential(new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT));
-  		
+	  		  		
 	  		new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT).start();
 	  		AutoShooterSpeedCommand autoShooterSpeedCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
 	  		autoShooterSpeedCommand.start();
-	  		VisionTable.setProcessBoiler(false);
-	  		VisionTable.setBoilerDone(true);
 	   	}
 	   	
 	   	if(xboxMap.stopSystem()){
 		   	autoShooterCommand.cancel();
-//	   		autoShooterCommandGroup.cancel();
-	   		VisionTable.setProcessBoiler(false);
-	   	  	VisionTable.setBoilerDone(true);
 	   	}
 	   		   		   	
 	   	SmartDashboard.putNumber("Shooter Encoder Rate", shooterSubsystem.getShooterSpeed());

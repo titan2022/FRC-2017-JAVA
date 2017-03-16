@@ -9,6 +9,7 @@ import org.usfirst.frc.team2022.command.UltrasonicCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterRightCommandGroup;
 import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
@@ -51,8 +52,8 @@ public class Robot extends IterativeRobot {
 	CommandGroup autonomousCommand = new CommandGroup();
 
 	SendableChooser<String> autoTypeChooser;
-	SendableChooser<CommandGroup> autoShooterChooser;
-	SendableChooser<CommandGroup> autoGearChooser;
+	SendableChooser<String> autoShooterChooser;
+	SendableChooser<String> autoGearChooser;
 	double position;
 	double gear;
 	
@@ -119,19 +120,20 @@ public class Robot extends IterativeRobot {
     	autoTypeChooser = new SendableChooser<String>();
     	autoTypeChooser.addDefault("Gear Autonomous", "Gear");
     	autoTypeChooser.addObject("Shooter Autonomous", "Shooter");
+    	autoTypeChooser.addObject("Straight Autonomus", "Straight");
     	SmartDashboard.putData("Autonomous Mode", autoTypeChooser);
     	
-//    	autoGearChooser = new SendableChooser<CommandGroup>();
-//    	autoGearChooser.addDefault("Position Gear 1 (Right)", new AutoGearCommandGroup(1));
-//    	autoGearChooser.addObject("Position Gear 2 (Middle)", new AutoGearCommandGroup(2));
-//    	autoGearChooser.addObject("Position Gear 3 (Left)", new AutoGearCommandGroup(3));
-//    	SmartDashboard.putData("Auto Gear Positions", autoGearChooser);
-//    	
-//    	autoShooterChooser = new SendableChooser<CommandGroup>();
-//    	autoShooterChooser.addDefault("Left starting position", new AutoShooterLeftCommandGroup());
-//    	autoShooterChooser.addObject("Center starting position", new AutoShooterCenterCommandGroup());
-//    	autoShooterChooser.addObject("Right starting position", new AutoShooterLeftCommandGroup());
-//    	SmartDashboard.putData("Auto Field Position", autoShooterChooser);
+    	autoGearChooser = new SendableChooser<String>();
+    	autoGearChooser.addDefault("Position Gear 1 (Right)", "gearOption1"); 
+    	autoGearChooser.addObject("Position Gear 2 (Middle)", "gearOption2"); 
+    	autoGearChooser.addObject("Position Gear 3 (Left)", "gearOption3"); 
+    	SmartDashboard.putData("Auto Gear Positions", autoGearChooser);
+    	
+    	autoShooterChooser = new SendableChooser<String>();
+    	autoShooterChooser.addDefault("Left starting position", "shooterOption1"); 
+    	autoShooterChooser.addObject("Center starting position", "shooterOption2"); 
+    	autoShooterChooser.addObject("Right starting position", "shooterOption3"); 
+    	SmartDashboard.putData("Auto Field Position", autoShooterChooser);  	
     }
     
     
@@ -140,10 +142,29 @@ public class Robot extends IterativeRobot {
     	ultrasonicCommand.start();
     	
     	if(autoTypeChooser.getSelected().equals("Gear")){
-    		autonomousCommand = (CommandGroup) autoGearChooser.getSelected();
+    		if(autoGearChooser.getSelected().equals("gearOption1")){
+    			autonomousCommand = new AutoGearCommandGroup(1);
+    		}
+    		else if(autoGearChooser.getSelected().equals("gearOption2")){
+    			autonomousCommand = new AutoGearCommandGroup(2);
+    		}
+    		else if(autoGearChooser.getSelected().equals("gearOption3")){
+    			autonomousCommand = new AutoGearCommandGroup(3);
+    		}
     	}
-    	else{
-    		autonomousCommand = (CommandGroup) autoShooterChooser.getSelected();
+    	else if(autoTypeChooser.getSelected().equals("Shooter")){
+    		if(autoShooterChooser.getSelected().equals("shooterOption1")){
+    			autonomousCommand = new AutoShooterLeftCommandGroup();
+    		}
+    		else if(autoShooterChooser.getSelected().equals("shooterOption2")){
+    			autonomousCommand = new AutoShooterCenterCommandGroup();
+    		}
+    		else if(autoShooterChooser.getSelected().equals("shooterOption3")){
+    			autonomousCommand = new AutoShooterRightCommandGroup();
+    		}
+    	}
+    	else if(autoTypeChooser.getSelected().equals("Straight")){
+    		autonomousCommand = new CommandGroup();
     	}
     }
     
@@ -164,6 +185,7 @@ public class Robot extends IterativeRobot {
     //This stops the methods for autonomous
 	@Override
 	public void disabledInit() {
+		ultrasonicCommand.cancel();
 		driveCommand.cancel();
 		shooterCommand.cancel();
 		climberCommand.cancel();

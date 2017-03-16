@@ -22,9 +22,7 @@ public class DriveCommand extends Command {
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	XboxMap xboxMap = new XboxMap();
 	OI oi = Robot.oi;
-	
-//	CommandGroup commandGroup = new CommandGroup();
-	
+		
 	boolean brakeState = true;
 	long lastPressed = 0;
 	
@@ -41,7 +39,7 @@ public class DriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
     	double speedLeft = xboxMap.getSpeedLeftWheel();   
-    	 
+    	
     	if(Math.abs(speedLeft) < 0.1){
     		speedLeft = 0;
     	}
@@ -49,7 +47,6 @@ public class DriveCommand extends Command {
 
     	double speedRight = xboxMap.getSpeedRightWheel();
     	if(Math.abs(speedRight) < 0.1){
-
     		speedRight = 0; 
     	}
     	driveSubsystem.setRightSpeed(speedRight);
@@ -59,47 +56,39 @@ public class DriveCommand extends Command {
     	}
     	
     	//Autonomous gear
-    	if(xboxMap.startAutoGearPlacement()){
-    		VisionTable.setPegDone(false);
-    		VisionTable.setProcessPeg(true);
+    	if(xboxMap.startAutoGearAlignment()){
     		Timer.delay(1);
     		
-        	double pegDistance = VisionTable.getPegDistance();
         	double pegAngle = VisionTable.getPegAngle();
-    		System.out.println("Should not be here");
       		AutoDriveTurnCommand autoDriveTurnCommand = new AutoDriveTurnCommand(pegAngle-6);
       		autoDriveTurnCommand.start();
     	}
     	
-    	if(oi.xbox.getPOV()==180){
+    	if(xboxMap.moveTowardsGear()){
     		Timer.delay(1);
       		double pegDistance = VisionTable.getPegDistance();
       		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(pegDistance - 5);
       		autoDriveStraightCommand.start();
       		
-      		VisionTable.setPegDone(true);
-      		VisionTable.setProcessPeg(false);
     	}
     	
     	if(xboxMap.stopSystem()){
-//			commandGroup.cancel();
-			VisionTable.setPegDone(true);
-	  		VisionTable.setProcessPeg(false);    		
+ 		
     	}
     	
     	//Brake
-    	if(brakeState){
-			driveSubsystem.enableBrake();
-		}
-		else if(!brakeState){
-			driveSubsystem.disableBrake();
-		}
+//    	if(brakeState){
+//			driveSubsystem.enableBrake();
+//		}
+//		else if(!brakeState){
+//			driveSubsystem.disableBrake();
+//		}
     	
-    	if(xboxMap.startAutoBrakerSystem() && (System.currentTimeMillis()-lastPressed)>200){  
-    		
-    		brakeState = !brakeState;
-    		lastPressed = System.currentTimeMillis();
-    	}
+//    	if(xboxMap.startAutoBrakerSystem() && (System.currentTimeMillis()-lastPressed)>200){  
+//    		
+//    		brakeState = !brakeState;
+//    		lastPressed = System.currentTimeMillis();
+//    	}
     	    	    	
     	SmartDashboard.putNumber("Right Encoder Distance", driveSubsystem.getRightEncoderDistance());
     	SmartDashboard.putNumber("Left Encoder Distance", driveSubsystem.getLeftEncoderDistance());

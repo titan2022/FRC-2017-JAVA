@@ -12,31 +12,36 @@ public class XboxMap {
 		return oi.xbox.GetLeftY();
 	}
 	
-	public boolean startAutoBrakerSystem(){
+//	public boolean startAutoBrakerSystem(){
+//		return oi.xbox.GetRightBumperValue();
+//	}
+	
+	public boolean switchySwitch(){
 		return oi.xbox.GetRightBumperValue();
 	}
 	
-	public boolean switchySwitch(){
-		return oi.xbox.GetLeftBumperValue();
-	}
-	
-	public boolean startAutoGearPlacement(){
-		return oi.xbox.GetXValue();
+	public boolean startAutoGearAlignment(){
+		if(oi.xbox.getPOV() == 180){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	
 	
 	//Shooter commands	
 	public boolean startAutoShooterSystem(){
-		return oi.xbox.GetAValue();
+		return oi.xbox.GetXValue();
 	}
 	
 	public boolean startManualShooterCommand(){
 		return oi.xbox.GetBValue();
 	}
 
-	public boolean openGate() {
-		return oi.xbox.GetBackValue();
-	}
+//	public boolean openGate() {
+//		return oi.xbox.GetBackValue();
+//	}
 	
 	//Climber commands
 	public double getManualClimberSpeed(){
@@ -53,6 +58,31 @@ public class XboxMap {
 	//Universal stop command
 	public boolean stopSystem() {
 		return oi.xbox.GetYValue();
+	}
+
+	public boolean runAgitator() {
+		// TODO Auto-generated method stub
+		if(oi.xbox.GetRightTriggers() > 0.4){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public boolean moveTowardsGear() {
+		// TODO Auto-generated method stub
+		if(oi.xbox.getPOV() == 0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public boolean moveToShooter() {
+		// TODO Auto-generated method stub
+		return oi.xbox.GetAValue();
 	}
 }
 
