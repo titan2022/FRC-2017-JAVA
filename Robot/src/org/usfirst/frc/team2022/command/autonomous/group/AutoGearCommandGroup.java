@@ -14,21 +14,15 @@ public class AutoGearCommandGroup extends CommandGroup {
 	
 	public AutoGearCommandGroup(){
 		
-		VisionTable.setPegDone(false);
-		VisionTable.setProcessPeg(true);
 		Timer.delay(1);
 		
     	double pegDistance = VisionTable.getPegDistance();
     	double pegAngle = VisionTable.getPegAngle();
-		System.out.println("Should not be here");
   		addSequential(new AutoDriveTurnCommand(pegAngle));
   		
   		Timer.delay(1);
   		pegDistance = VisionTable.getPegDistance();
   		addSequential(new AutoDriveStraightCommand(pegDistance));
-  		
-  		VisionTable.setPegDone(true);
-  		VisionTable.setProcessPeg(false);
 	}
 	
 	public AutoGearCommandGroup(int position){	
@@ -49,9 +43,6 @@ public class AutoGearCommandGroup extends CommandGroup {
 	}
 	
 	public void run(double distance, double angle){
-		System.out.println("Should not be here 4");
-		VisionTable.setPegDone(false);
-		VisionTable.setProcessPeg(true);
 		addSequential(new AutoDriveStraightCommand(distance));
 		addSequential(new AutoDriveTurnCommand(angle));
 				
@@ -64,7 +55,5 @@ public class AutoGearCommandGroup extends CommandGroup {
   		Timer.delay(1);
   		pegDistance = VisionTable.getPegDistance();
   		addSequential(new AutoDriveStraightCommand(pegDistance));
-  		VisionTable.setPegDone(true);
-  		VisionTable.setProcessPeg(false);
 	}
 }

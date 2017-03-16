@@ -26,39 +26,20 @@ public class AutoShooterSpeedCommand extends Command{
 	
 	CustomPIDController pidController;
 	
-	NetworkTable sd = NetworkTable.getTable("Preferences");
 	long firstTime;
-//	PrintWriter pw;
 	
 	public AutoShooterSpeedCommand(double desiredRate){
 		requires(shooterSubsystem);
 		this.desiredRate = desiredRate;
 		
-    	pidController = new CustomPIDController(sd.getNumber("P", ConstantsMap.KP_SHOOTER_SPEED), sd.getNumber("I", ConstantsMap.KI_SHOOTER_SPEED), sd.getNumber("D", ConstantsMap.KD_SHOOTER_SPEED), sd.getNumber("F", ConstantsMap.KF_SHOOTER_SPEED));
-    	pidController.setInputRange(0, 31000);
+    	pidController = new CustomPIDController(ConstantsMap.KP_SHOOTER_SPEED, ConstantsMap.KI_SHOOTER_SPEED, ConstantsMap.KD_SHOOTER_SPEED, ConstantsMap.KF_SHOOTER_SPEED);
+    	pidController.setInputRange(0, 33000);
     	pidController.setOutputRange(0, 1);
-    	pidController.setSetpoint(sd.getNumber("EncoderRate", 31000));
+    	pidController.setSetpoint(31000);
     	
 	}
 
 	protected void initialize() {
-		VisionTable.setProcessBoiler(false);
-//		try {
-//			pw = new PrintWriter(new File("/media/sda1/FullSpeed/" + sd.getString("FileName", "DefaultName")));
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//    	
-//    	firstTime = System.currentTimeMillis();
-//    	StringBuilder sb = new StringBuilder();
-//		sb.append("Time");
-//		sb.append(',');
-//		sb.append("Encoder Rate");
-//		sb.append(',');
-//		sb.append("Shooter Speed");
-//		sb.append("\n");
-//		pw.write(sb.toString());
 	}
 	
 	protected void execute() {
@@ -66,72 +47,21 @@ public class AutoShooterSpeedCommand extends Command{
 		double speed = pidController.getOutput(shooterSubsystem.getShooterEncoderRate());
     	shooterSubsystem.setShooterSpeed(speed);
     	
-    	//Activate agitator
-//	    if(shooterSubsystem.getServo() == 0) {	
-//    		if(xboxMap.runAgitator()){
-//	    		shooterSubsystem.setAgitatorSpeed(0.4);
-//	    	}
-//	    	else{
-//	    		shooterSubsystem.setAgitatorSpeed(0);
-//	    	}
-//	    }
-	    
-	    if(shooterSubsystem.getShooterEncoderRate() > speed - 200 && 
-	    		shooterSubsystem.getShooterEncoderRate() < speed + 200) {
-	    	shooterSubsystem.setFeederWheelSpeed(1);
-	    } else {
-	    	shooterSubsystem.setFeederWheelSpeed(-1);
-	    }
-	    
-	    //Open gate
-    	if(xboxMap.openGate() && System.currentTimeMillis() - lastPressed > 500){
-    		lastPressed = System.currentTimeMillis();
-    		if(shooterSubsystem.getServo() > 0.5){
-    			shooterSubsystem.setServo(0);
-    		}
-    		else{
-    			shooterSubsystem.setServo(1);
-    		}
+//    	Activate agitator
+		if(xboxMap.runAgitator()){
+    		shooterSubsystem.setAgitatorSpeed(0.4);
     	}
-
-//	    if((System.currentTimeMillis()-lastPressed)>200){  
-//    		
-//    		
-//	    	if(shooterSubsystem.getShooterEncoderRate() < sd.getNumber("EncoderRate", 31000) + 300 && 
-//	    			sd.getNumber("EncoderRate", 31000) - 300 < shooterSubsystem.getShooterEncoderRate()){
-//	    	
-//	    		shooterSubsystem.setServo(0);
-//	    		
-//	    	} else {
-//	    		
-//	    		shooterSubsystem.setServo(1);
-//	    	}
-//	    	
-//	    	lastPressed = System.currentTimeMillis();	
-//	    	
-//	    }
-    	
-    	SmartDashboard.putNumber("Shooter Speed", speed);
-    	SmartDashboard.putNumber("Vision", NetworkTable.getTable("SmartDashboard").getNumber("boilerAngle", 100));
-    	SmartDashboard.putNumber("Voltage", shooterSubsystem.getVoltage());
-    	SmartDashboard.putNumber("Encoder Encoder Rate", shooterSubsystem.getShooterEncoderRate());
-    	
-//    	StringBuilder sb = new StringBuilder();
-//		sb.append(Double.toString((System.currentTimeMillis() - firstTime) / 1000));
-//		sb.append(',');
-//		sb.append(Double.toString(shooterSubsystem.getShooterEncoderRate()));
-//		sb.append(',');
-//		sb.append(Double.toString(shooterSubsystem.getShooterSpeed()));
-//		sb.append("\n");
+    	else{
+    		shooterSubsystem.setAgitatorSpeed(0);
+    	}
+	    
 
     	if(xboxMap.stopSystem()){
-//    		pw.close();
     		shooterSubsystem.stop();
+    		isFinished = true;
     		cancel();
     		end();
     	}
-    	//90
-    	//44.5 inches to shoot
     }
 
 	@Override

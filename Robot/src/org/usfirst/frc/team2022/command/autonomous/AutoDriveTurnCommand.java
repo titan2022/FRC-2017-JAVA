@@ -29,10 +29,8 @@ public class AutoDriveTurnCommand extends Command{
     public AutoDriveTurnCommand(double degreeToTurn) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	System.out.println("Initialized!!!!!!!!!!!!!!!!!!!");
     	requires(driveSubsystem);
     	this.degreeToTurn = degreeToTurn;
-    	System.out.println("Initialize");
 
     	driveSubsystem.resetGyro();
     	driveSubsystem.enableBrake();
@@ -42,24 +40,10 @@ public class AutoDriveTurnCommand extends Command{
     	pidController.setAbsoluteTolerance(1);
     	pidController.setOutputRange(-ConstantsMap.KSPEED_DRIVE_TURN, ConstantsMap.KSPEED_DRIVE_TURN);
     	pidController.setSetpoint(degreeToTurn);
-    	System.out.println("Initialized!!!!!!!");
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Reset gyro so reading is 0
-//    	System.out.println("Initialize");
-//
-//    	driveSubsystem.resetGyro();
-//    	driveSubsystem.enableBrake();
-//
-//    	pidController = new CustomPIDController(ConstantsMap.KP_DRIVE_TURN, ConstantsMap.KI_DRIVE_TURN, ConstantsMap.KD_DRIVE_TURN, ConstantsMap.KF_DRIVE_TURN);
-//    	pidController.setInputRange(-180, 180);
-//    	pidController.setAbsoluteTolerance(0.5);
-//    	pidController.setOutputRange(-ConstantsMap.KSPEED_DRIVE_TURN, ConstantsMap.KSPEED_DRIVE_TURN);
-//    	pidController.setSetpoint(degreeToTurn);
-//    	System.out.println("Initialized!!!!!!!");
-
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -70,10 +54,8 @@ public class AutoDriveTurnCommand extends Command{
     	 */
     	
     		//adjust speed of each wheel
-    	System.out.println("Running!!!!!!!");
 
     	double newSpeed = pidController.getOutput(driveSubsystem.getGyroAngle());
-    	SmartDashboard.putNumber("Speedssss",  newSpeed);
 		driveSubsystem.setLeftSpeed(-newSpeed);
 		driveSubsystem.setRightSpeed(-newSpeed);
 		if(xboxMap.stopSystem()){

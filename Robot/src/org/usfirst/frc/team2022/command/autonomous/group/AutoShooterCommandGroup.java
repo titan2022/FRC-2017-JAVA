@@ -33,25 +33,17 @@ public class AutoShooterCommandGroup extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-	addSequential(new AutoDriveTurnCommand(20));
+    	addSequential(new AutoDriveTurnCommand(20));
 
-    	
-    	System.out.println("Running Command Group");
-    	VisionTable.setProcessBoiler(true);
-
-		
-		Timer.delay(2);
+		Timer.delay(1);
 		
     	double boilerDistance = VisionTable.getUltrasonicDistance();
     	double boilerAngle = VisionTable.getBoilerAngle();
-    	SmartDashboard.putNumber("Angle", boilerAngle);
 		
 //    	addSequential(new AutoDriveTurnCommand(20));
   		AutoDriveTurnCommand autoDriveTurnCommand = new AutoDriveTurnCommand(boilerAngle-3);
   		autoDriveTurnCommand.start();
-    	System.out.println("Running Command Group 2");
     	
-//    	Timer.delay(3);
   		boilerDistance = VisionTable.getUltrasonicDistance();
   		
 //  		addSequential(new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT));
