@@ -26,7 +26,10 @@ public class DriveCommand extends Command {
 //	CommandGroup commandGroup = new CommandGroup();
 	
 	boolean brakeState = true;
-	long lastPressed = 0;
+	boolean inverted = true;
+	long lastPressedBrake = 0;
+	long lastPressedInvert = 0;
+
 	
     public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -54,9 +57,13 @@ public class DriveCommand extends Command {
     	}
     	driveSubsystem.setRightSpeed(speedRight);
     	
-    	if(xboxMap.switchySwitch()) {
+    	
+    	//invert drive
+    	if(xboxMap.switchySwitch() && (System.currentTimeMillis()-lastPressedInvert)>200) {    		
     		driveSubsystem.switchTheSwitchySwitch();
+    		lastPressedInvert = System.currentTimeMillis();   		
     	}
+    
     	
     	//Autonomous gear
     	if(xboxMap.startAutoGearPlacement()){
@@ -88,17 +95,18 @@ public class DriveCommand extends Command {
     	}
     	
     	//Brake
-    	if(brakeState){
-			driveSubsystem.enableBrake();
-		}
-		else if(!brakeState){
-			driveSubsystem.disableBrake();
-		}
     	
-    	if(xboxMap.startAutoBrakerSystem() && (System.currentTimeMillis()-lastPressed)>200){  
+    	
+    	if(xboxMap.startAutoBrakerSystem() && (System.currentTimeMillis()-lastPressedBrake)>200){  
     		
     		brakeState = !brakeState;
-    		lastPressed = System.currentTimeMillis();
+    		lastPressedBrake = System.currentTimeMillis();
+    		if(brakeState){
+    			driveSubsystem.enableBrake();
+    		}
+    		else if(!brakeState){
+    			driveSubsystem.disableBrake();
+    		}
     	}
     	    	    	
     	SmartDashboard.putNumber("Right Encoder Distance", driveSubsystem.getRightEncoderDistance());

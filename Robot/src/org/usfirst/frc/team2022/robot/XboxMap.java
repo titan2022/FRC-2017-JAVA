@@ -31,7 +31,7 @@ public class XboxMap {
 	}
 	
 	public boolean startManualShooterCommand(){
-		return oi.xbox.GetBValue();
+		return oi.xbox.GetBValue() && oi.attack3.getTrigger();
 	}
 
 	public boolean openGate() {
