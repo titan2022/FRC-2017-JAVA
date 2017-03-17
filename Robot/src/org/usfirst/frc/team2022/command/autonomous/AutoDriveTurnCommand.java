@@ -40,6 +40,8 @@ public class AutoDriveTurnCommand extends Command{
     	pidController.setAbsoluteTolerance(1);
     	pidController.setOutputRange(-ConstantsMap.KSPEED_DRIVE_TURN, ConstantsMap.KSPEED_DRIVE_TURN);
     	pidController.setSetpoint(degreeToTurn);
+    	System.out.println("Inside turn autonomous command");
+
     }
 
     // Called just before this Command runs the first time

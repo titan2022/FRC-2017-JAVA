@@ -31,28 +31,30 @@ public class AutoGearCommandGroup extends CommandGroup {
 		// position 2 is from the middle 
 		// position 3 is from the left side 
 		
+		System.out.println("Position:" + position);
 		if(position == 1){
-			run(220, -135); 
+			runCommand(83.879, -60); 
 		}	
 		else if(position == 2){
-			run(50, 0);
+			runCommand(70, 0);
 		}
 		else if(position == 3){
-			run(220, 135); 
+			runCommand(83.879, 60); 
 		}
 	}
-	
-	public void run(double distance, double angle){
+	//11.7
+	public void runCommand(double distance, double angle){
+		System.out.println("run");
 		addSequential(new AutoDriveStraightCommand(distance));
 		addSequential(new AutoDriveTurnCommand(angle));
 				
-		Timer.delay(1);
+		//Timer.delay(1);
 		double pegDistance = VisionTable.getPegDistance();
     	double pegAngle = VisionTable.getPegAngle();
 		  		
   		addSequential(new AutoDriveTurnCommand(pegAngle));
   		
-  		Timer.delay(1);
+  		//Timer.delay(1);
   		pegDistance = VisionTable.getPegDistance();
   		addSequential(new AutoDriveStraightCommand(pegDistance));
 	}

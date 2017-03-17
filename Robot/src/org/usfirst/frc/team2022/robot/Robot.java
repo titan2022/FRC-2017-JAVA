@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team2022.robot;
 
 import org.opencv.core.Mat;
@@ -75,65 +74,93 @@ public class Robot extends IterativeRobot {
     	climberCommand = new ClimberCommand();
     	ultrasonicCommand = new UltrasonicCommand();
     	
+    	CameraServer.getInstance().startAutomaticCapture();
+    	
     	//Create thread for streaming cameras
-    	Thread t = new Thread(new Runnable(){
-    		public void run(){
-    			boolean allowCam1 = false;
-        		
-        		UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-                camera1.setResolution(640, 480);
-                camera1.setFPS(15);
-                UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-                camera2.setResolution(640, 480);
-                camera2.setFPS(15);
-                
-                CvSink cvSink1 = CameraServer.getInstance().getVideo(camera1);
-                CvSink cvSink2 = CameraServer.getInstance().getVideo(camera2);
-                CvSource outputStream = CameraServer.getInstance().putVideo("Switcher", 640, 480);
-                
-                Mat image = new Mat();
-                
-                while(!Thread.interrupted()) {
-                	
-                	if(oi.xbox.GetStartValue()) {
-                		allowCam1 = !allowCam1;
-                	}
-                	
-                    if(allowCam1){
-                      cvSink2.setEnabled(false);
-                      cvSink1.setEnabled(true);
-                      cvSink1.grabFrame(image);
-                    } else{
-                      cvSink1.setEnabled(false);
-                      cvSink2.setEnabled(true);
-                      cvSink2.grabFrame(image);     
-                    }
-                    
-                    outputStream.putFrame(image);
-                }
-                
-    		}
-    	});
-    	t.start();
+//    	Thread t = new Thread(new Runnable(){
+//    		public void run(){
+//    			boolean allowCam1 = false;
+//        		
+//        		UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+//                camera1.setResolution(640, 480);
+//                camera1.setFPS(15);
+//                UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+//                camera2.setResolution(640, 480);
+//                camera2.setFPS(15);
+//                
+//                CvSink cvSink1 = CameraServer.getInstance().getVideo(camera1);
+//                CvSink cvSink2 = CameraServer.getInstance().getVideo(camera2);
+//                CvSource outputStream = CameraServer.getInstance().putVideo("Switcher", 640, 480);
+//                
+//                Mat image = new Mat();
+//                
+//                while(!Thread.interrupted()) {
+//                	
+//                	if(oi.xbox.GetStartValue()) {
+//                		allowCam1 = !allowCam1;
+//                	}
+//                	
+//                    if(allowCam1){
+//                      cvSink2.setEnabled(false);
+//                      cvSink1.setEnabled(true);
+//                      cvSink1.grabFrame(image);
+//                    } else{
+//                      cvSink1.setEnabled(false);
+//                      cvSink2.setEnabled(true);
+//                      cvSink2.grabFrame(image);     
+//                    }
+//                    
+//                    outputStream.putFrame(image);
+//                }
+//                
+//    		}
+//    	});
+//    	t.start();
 
 		
     	autoTypeChooser = new SendableChooser<String>();
-    	autoTypeChooser.addDefault("Gear Autonomous", "Gear");
-    	autoTypeChooser.addObject("Shooter Autonomous", "Shooter");
-    	autoTypeChooser.addObject("Straight Autonomus", "Straight");
+    	autoTypeChooser.addDefault("Position Gear 2 (Middle)", "gearOption2"); 
+    	autoTypeChooser.addObject("Position Gear 1 (Right)", "gearOption1"); 
+    	autoTypeChooser.addObject("Position Gear 3 (Left)", "gearOption3");
+    	autoTypeChooser.addObject("Left starting position", "shooterOption1"); 
+    	autoTypeChooser.addObject("Center starting position", "shooterOption2"); 
+    	autoTypeChooser.addObject("Right starting position", "shooterOption3"); 
     	SmartDashboard.putData("Autonomous Mode", autoTypeChooser);
-    	
-    	autoGearChooser = new SendableChooser<String>();
-    	autoGearChooser.addDefault("Position Gear 1 (Right)", "gearOption1"); 
-    	autoGearChooser.addObject("Position Gear 2 (Middle)", "gearOption2"); 
-    	autoGearChooser.addObject("Position Gear 3 (Left)", "gearOption3"); 
-    	SmartDashboard.putData("Auto Gear Positions", autoGearChooser);
-    	
-    	autoShooterChooser = new SendableChooser<String>();
-    	autoShooterChooser.addDefault("Left starting position", "shooterOption1"); 
-    	autoShooterChooser.addObject("Center starting position", "shooterOption2"); 
-    	autoShooterChooser.addObject("Right starting position", "shooterOption3"); 
-    	SmartDashboard.putData("Auto Field Position", autoShooterChooser);  	
+//    	
+//    	autoGearChooser = new SendableChooser<String>();
+//    	autoGearChooser.addDefault("Position Gear 1 (Right)", "gearOption1"); 
+//    	autoGearChooser.addObject("Position Gear 2 (Middle)", "gearOption2"); 
+//    	autoGearChooser.addObject("Position Gear 3 (Left)", "gearOption3"); 
+//    	SmartDashboard.putData("Auto Gear Positions", autoGearChooser);
+//    	
+//    	autoShooterChooser = new SendableChooser<String>();
+//    	autoShooterChooser.addDefault("Left starting position", "shooterOption1"); 
+//    	autoShooterChooser.addObject("Center starting position", "shooterOption2"); 
+//    	autoShooterChooser.addObject("Right starting position", "shooterOption3"); 
+//    	SmartDashboard.putData("Auto Field Position", autoShooterChooser);  	
+    	try{
+    		if(autoTypeChooser.getSelected().equals("gearOption1")){
+        		autonomousCommand = new AutoGearCommandGroup(1);
+        	}
+        	else if(autoTypeChooser.getSelected().equals("gearOption2")){
+        		autonomousCommand = new AutoGearCommandGroup(2);
+        	}
+        	else if(autoTypeChooser.getSelected().equals("gearOption3")){
+        		autonomousCommand = new AutoGearCommandGroup(3);
+        	}
+        	else if(autoTypeChooser.getSelected().equals("shooterOption1")){
+        		autonomousCommand = new AutoShooterLeftCommandGroup();
+        	}
+        	else if(autoTypeChooser.getSelected().equals("shooterOption2")){
+        		autonomousCommand = new AutoShooterCenterCommandGroup();
+        	}
+        	else if(autoTypeChooser.getSelected().equals("shooterOption3")){
+        		autonomousCommand = new AutoShooterRightCommandGroup();
+        	}
+    	}
+    	catch(Exception ex){
+    		System.out.println(ex);
+    	}
     }
     
     
@@ -141,31 +168,21 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
     	ultrasonicCommand.start();
     	
-    	if(autoTypeChooser.getSelected().equals("Gear")){
-    		if(autoGearChooser.getSelected().equals("gearOption1")){
-    			autonomousCommand = new AutoGearCommandGroup(1);
-    		}
-    		else if(autoGearChooser.getSelected().equals("gearOption2")){
-    			autonomousCommand = new AutoGearCommandGroup(2);
-    		}
-    		else if(autoGearChooser.getSelected().equals("gearOption3")){
-    			autonomousCommand = new AutoGearCommandGroup(3);
-    		}
-    	}
-    	else if(autoTypeChooser.getSelected().equals("Shooter")){
-    		if(autoShooterChooser.getSelected().equals("shooterOption1")){
-    			autonomousCommand = new AutoShooterLeftCommandGroup();
-    		}
-    		else if(autoShooterChooser.getSelected().equals("shooterOption2")){
-    			autonomousCommand = new AutoShooterCenterCommandGroup();
-    		}
-    		else if(autoShooterChooser.getSelected().equals("shooterOption3")){
-    			autonomousCommand = new AutoShooterRightCommandGroup();
-    		}
-    	}
-    	else if(autoTypeChooser.getSelected().equals("Straight")){
-    		autonomousCommand = new CommandGroup();
-    	}
+    	autonomousCommand.start();
+//    	else if(autoTypeChooser.getSelected().equals("Shooter")){
+//    		if(autoShooterChooser.getSelected().equals("shooterOption1")){
+//    			autonomousCommand = new AutoShooterLeftCommandGroup();
+//    		}
+//    		else if(autoShooterChooser.getSelected().equals("shooterOption2")){
+//    			autonomousCommand = new AutoShooterCenterCommandGroup();
+//    		}
+//    		else if(autoShooterChooser.getSelected().equals("shooterOption3")){
+//    			autonomousCommand = new AutoShooterRightCommandGroup();
+//    		}
+//    	}
+//    	else if(autoTypeChooser.getSelected().equals("Straight")){
+//    		autonomousCommand = new CommandGroup();
+//    	}
     }
     
     //This starts the methods for teleop and stops methods for autonomous

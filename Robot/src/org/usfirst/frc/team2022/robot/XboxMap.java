@@ -31,12 +31,12 @@ public class XboxMap {
 	
 	
 	//Shooter commands	
-	public boolean startAutoShooterSystem(){
-		return oi.xbox.GetXValue();
+	public boolean alignShooter(){
+		return oi.xbox.GetBValue();
 	}
 	
 	public boolean startManualShooterCommand(){
-		return oi.xbox.GetBValue();
+		return oi.xbox.GetXValue();
 	}
 
 //	public boolean openGate() {

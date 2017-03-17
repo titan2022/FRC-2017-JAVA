@@ -29,7 +29,7 @@ public class ShooterSubsystem extends Subsystem {
 	public ShooterSubsystem(){
 		shooterMotor1 = new CANTalon(RobotMap.SHOOTER_MOTOR_PORT);
 		agitatorMotor = new CANTalon(RobotMap.AGITATOR_MOTOR_PORT);
-		servo = new Servo(RobotMap.SERVO_MOTOR_PORT);
+//		servo = new Servo(RobotMap.SERVO_MOTOR_PORT);
 
 		shooterMotor1.setInverted(true);
 		shooterMotor1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);

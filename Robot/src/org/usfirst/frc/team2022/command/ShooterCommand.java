@@ -51,7 +51,7 @@ public class ShooterCommand extends Command {
     	}
 	   	
 	   	//Autonomous shooting
-	   	if(xboxMap.startAutoShooterSystem()){
+	   	if(xboxMap.alignShooter()){
 			Timer.delay(1);
 			
 	    	double boilerDistance = VisionTable.getUltrasonicDistance();

@@ -31,12 +31,14 @@ public class AutoDriveStraightCommand extends Command{
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(driveSubsystem);
-    	this.inchesToDrive = inchesToDrive;
+    	this.inchesToDrive = inchesToDrive;	
+    	System.out.println("Inside autonomous command");
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	System.out.println("Inside initialize command");
+
     	driveSubsystem.enableBrake();
     	
     	//Reset gyro so reading is 0
@@ -59,7 +61,8 @@ public class AutoDriveStraightCommand extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	System.out.println("Executing");
+
     	/*
     	 * While the right encoder distance is less than inchesToDrive
     	 * and xbox right bumper is not pressed, use output to drive straight

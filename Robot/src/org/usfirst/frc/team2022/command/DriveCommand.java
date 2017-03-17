@@ -51,9 +51,9 @@ public class DriveCommand extends Command {
     	}
     	driveSubsystem.setRightSpeed(speedRight);
     	
-    	if(xboxMap.switchySwitch()) {
-    		driveSubsystem.switchTheSwitchySwitch();
-    	}
+//    	if(xboxMap.switchySwitch()) {
+//    		driveSubsystem.switchTheSwitchySwitch();
+//    	}
     	
     	//Autonomous gear
     	if(xboxMap.startAutoGearAlignment()){
@@ -65,11 +65,13 @@ public class DriveCommand extends Command {
     	}
     	
     	if(xboxMap.moveTowardsGear()){
-    		Timer.delay(1);
-      		double pegDistance = VisionTable.getPegDistance();
-      		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(pegDistance - 5);
+//    		Timer.delay(1);
+//      		double pegDistance = VisionTable.getPegDistance();
+//      		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(pegDistance - 5);
+//      		autoDriveStraightCommand.start();
+    		double ultrasonicDistance = VisionTable.getUltrasonicDistance();
+    		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(ultrasonicDistance - 11.7);
       		autoDriveStraightCommand.start();
-      		
     	}
     	
     	if(xboxMap.stopSystem()){
