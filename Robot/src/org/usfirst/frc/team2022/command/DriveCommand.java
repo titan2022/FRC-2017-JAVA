@@ -69,8 +69,7 @@ public class DriveCommand extends Command {
 //      		double pegDistance = VisionTable.getPegDistance();
 //      		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(pegDistance - 5);
 //      		autoDriveStraightCommand.start();
-    		double ultrasonicDistance = VisionTable.getUltrasonicDistance();
-    		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(ultrasonicDistance - 11.7);
+    		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(-5);
       		autoDriveStraightCommand.start();
     	}
     	

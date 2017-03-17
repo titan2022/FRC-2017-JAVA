@@ -72,12 +72,13 @@ public class XboxMap {
 
 	public boolean moveTowardsGear() {
 		// TODO Auto-generated method stub
-		if(oi.xbox.getPOV() == 0){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return oi.xbox.GetAValue();
+//		if(oi.xbox.getPOV() == 0){
+//			return true;
+//		}
+//		else{
+//			return false;
+//		}
 	}
 
 	public boolean moveToShooter() {

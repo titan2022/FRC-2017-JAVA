@@ -1,21 +1,12 @@
 package org.usfirst.frc.team2022.robot;
 
-import org.opencv.core.Mat;
 import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
-import org.usfirst.frc.team2022.command.ShooterCommand;
 import org.usfirst.frc.team2022.command.UltrasonicCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
-import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterCenterCommandGroup;
-import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterLeftCommandGroup;
-import org.usfirst.frc.team2022.command.autonomous.group.AutoShooterRightCommandGroup;
 import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
-import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -38,12 +29,12 @@ public class Robot extends IterativeRobot {
 
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+//	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 	
 	//Create References to commands
 	public DriveCommand driveCommand;
-	public ShooterCommand shooterCommand;
+//	public ShooterCommand shooterCommand;
 	private UltrasonicCommand ultrasonicCommand;
 	public ClimberCommand climberCommand;
 	
@@ -70,7 +61,7 @@ public class Robot extends IterativeRobot {
     	
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
-    	shooterCommand = new ShooterCommand();
+//    	shooterCommand = new ShooterCommand();
     	climberCommand = new ClimberCommand();
     	ultrasonicCommand = new UltrasonicCommand();
     	
@@ -122,9 +113,9 @@ public class Robot extends IterativeRobot {
     	autoTypeChooser.addDefault("Position Gear 2 (Middle)", "gearOption2"); 
     	autoTypeChooser.addObject("Position Gear 1 (Right)", "gearOption1"); 
     	autoTypeChooser.addObject("Position Gear 3 (Left)", "gearOption3");
-    	autoTypeChooser.addObject("Left starting position", "shooterOption1"); 
-    	autoTypeChooser.addObject("Center starting position", "shooterOption2"); 
-    	autoTypeChooser.addObject("Right starting position", "shooterOption3"); 
+//    	autoTypeChooser.addObject("Left starting position", "shooterOption1"); 
+//    	autoTypeChooser.addObject("Center starting position", "shooterOption2"); 
+//    	autoTypeChooser.addObject("Right starting position", "shooterOption3"); 
     	SmartDashboard.putData("Autonomous Mode", autoTypeChooser);
 //    	
 //    	autoGearChooser = new SendableChooser<String>();
@@ -148,15 +139,15 @@ public class Robot extends IterativeRobot {
         	else if(autoTypeChooser.getSelected().equals("gearOption3")){
         		autonomousCommand = new AutoGearCommandGroup(3);
         	}
-        	else if(autoTypeChooser.getSelected().equals("shooterOption1")){
-        		autonomousCommand = new AutoShooterLeftCommandGroup();
-        	}
-        	else if(autoTypeChooser.getSelected().equals("shooterOption2")){
-        		autonomousCommand = new AutoShooterCenterCommandGroup();
-        	}
-        	else if(autoTypeChooser.getSelected().equals("shooterOption3")){
-        		autonomousCommand = new AutoShooterRightCommandGroup();
-        	}
+//        	else if(autoTypeChooser.getSelected().equals("shooterOption1")){
+//        		autonomousCommand = new AutoShooterLeftCommandGroup();
+//        	}
+//        	else if(autoTypeChooser.getSelected().equals("shooterOption2")){
+//        		autonomousCommand = new AutoShooterCenterCommandGroup();
+//        	}
+//        	else if(autoTypeChooser.getSelected().equals("shooterOption3")){
+//        		autonomousCommand = new AutoShooterRightCommandGroup();
+//        	}
     	}
     	catch(Exception ex){
     		System.out.println(ex);
@@ -195,7 +186,7 @@ public class Robot extends IterativeRobot {
     		ultrasonicCommand.start();
     	}
     	driveCommand.start();
-    	shooterCommand.start();
+//    	shooterCommand.start();
     	climberCommand.start();
     }
     
@@ -204,7 +195,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		ultrasonicCommand.cancel();
 		driveCommand.cancel();
-		shooterCommand.cancel();
+//		shooterCommand.cancel();
 		climberCommand.cancel();
 	}
     
