@@ -76,17 +76,17 @@ public class AutoDriveStraightCommand extends Command{
 		speed = speedController.getOutput(driveSubsystem.getRightEncoderDistance());
         
 		//adjust speed of each wheel
-		if(inchesToDrive == -5){
-			driveSubsystem.tankDrive(0.2, -0.2);
-			if(driveSubsystem.getRightEncoderDistance() > 4.8){
-				driveSubsystem.stop();
-				finished = true;
-				end();
-			}
-		}
-		else{
-			driveSubsystem.tankDrive(-0.5 * (speed + rotateToAngleRate), 0.5 * (speed - rotateToAngleRate));
-		}
+//		if(inchesToDrive == -5){
+//			driveSubsystem.tankDrive(0.2, -0.2);
+//			if(driveSubsystem.getRightEncoderDistance() > 4.8){
+//				driveSubsystem.stop();
+//				finished = true;
+//				end();
+//			}
+//		}
+//		else{
+		driveSubsystem.tankDrive(-0.5 * (speed + rotateToAngleRate), 0.5 * (speed - rotateToAngleRate));
+//		}
 		if(speedController.onTarget() || xboxMap.stopSystem()){
 			finished = true;
 			end();

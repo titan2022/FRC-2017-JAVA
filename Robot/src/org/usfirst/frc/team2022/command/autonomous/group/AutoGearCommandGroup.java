@@ -31,7 +31,7 @@ public class AutoGearCommandGroup extends CommandGroup {
 		// position 2 is from the middle 
 		// position 3 is from the left side 
 		
-		System.out.println("Position:" + position);
+		//System.out.println("Position:" + position);
 		if(position == 1){
 			runCommand(94.745, -60, 63); 
 		}	
@@ -45,7 +45,7 @@ public class AutoGearCommandGroup extends CommandGroup {
 	}
 	//11.7
 	public void runCommand(double distance, double angle, double secondDistance){
-		System.out.println("run");
+		//System.out.println("run");
 		addSequential(new AutoDriveStraightCommand(distance));
 		addSequential(new AutoDriveTurnCommand(angle));
 				

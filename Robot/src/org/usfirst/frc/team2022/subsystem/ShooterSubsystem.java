@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ShooterSubsystem extends Subsystem {
 
 	CANTalon shooterMotor1, shooterMotor2;
-	CANTalon agitatorMotor;
+//	CANTalon agitatorMotor;
 	private double feederSpeed = -0.5;
 		
 	private Servo servo;	
@@ -29,8 +29,8 @@ public class ShooterSubsystem extends Subsystem {
 	public ShooterSubsystem(){
 		shooterMotor1 = new CANTalon(RobotMap.SHOOTER_MOTOR_PORT1);
 		shooterMotor2 = new CANTalon(RobotMap.SHOOTER_MOTOR_PORT2);
-		agitatorMotor = new CANTalon(RobotMap.AGITATOR_MOTOR_PORT);
-//		servo = new Servo(RobotMap.SERVO_MOTOR_PORT);
+//		agitatorMotor = new CANTalon(RobotMap.AGITATOR_MOTOR_PORT);
+		servo = new Servo(RobotMap.SERVO_MOTOR_PORT);
 
 		shooterMotor1.setInverted(true);
 		shooterMotor2.setInverted(true);
@@ -51,7 +51,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 	
 	public void setAgitatorSpeed(double speed){
-		agitatorMotor.set(speed);
+//		agitatorMotor.set(speed);
 	}
 	
 	public double getVoltage(){
@@ -66,9 +66,9 @@ public class ShooterSubsystem extends Subsystem {
 		return shooterMotor1.getSpeed();
 	}
 	
-	public double getAgitatorSpeed() {
-		return agitatorMotor.get();
-	}
+//	public double getAgitatorSpeed() {
+////		return agitatorMotor.get();
+//	}
  
 	public void stopShooter(){
 		shooterMotor2.set(0);
@@ -76,7 +76,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 	
 	public void stopAgitator() {
-		agitatorMotor.set(0);
+//		agitatorMotor.set(0);
 	}
 	
 	//Sensor Methods
