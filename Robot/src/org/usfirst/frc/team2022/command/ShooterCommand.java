@@ -40,8 +40,9 @@ public class ShooterCommand extends Command {
     protected void execute() { 
     	NetworkTable sd = NetworkTable.getTable("Preferences");
     	shooterSubsystem.setShooterSpeed(sd.getNumber("speed", 0));
+    	SmartDashboard.putNumber("Shooter Speed", shooterSubsystem.getShooterSpeed());
+//    	shooterSubsystem.setShooterSpeed(oi.xbox.GetRightTriggers());
     	//53.5
-    	
     	//Manual shooting
     	if(xboxMap.startManualShooterCommand())
     	{

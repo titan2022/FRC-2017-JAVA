@@ -6,6 +6,7 @@ import org.usfirst.frc.team2022.command.ShooterCommand;
 import org.usfirst.frc.team2022.command.UltrasonicCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoNewShooterCommandGroup;
+import org.usfirst.frc.team2022.command.autonomous.group.AutoNewShooterVisionCommandGroup;
 import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
@@ -120,6 +121,8 @@ public class Robot extends IterativeRobot {
     	autoTypeChooser.addObject("Position Gear 3 (Left)", "gearOption3");
     	autoTypeChooser.addObject("Shooter (Blue Side)", "blue");
     	autoTypeChooser.addObject("Shooter (Red Side)", "red");
+    	autoTypeChooser.addObject("Vision Shooter", "vision");
+
 //    	autoTypeChooser.addObject("Left starting position", "shooterOption1"); 
 //    	autoTypeChooser.addObject("Center starting position", "shooterOption2"); 
 //    	autoTypeChooser.addObject("Right starting position", "shooterOption3"); 
@@ -157,6 +160,9 @@ public class Robot extends IterativeRobot {
         	}
         	else if(autoTypeChooser.getSelected().equals("red")){
         		autonomousCommand = new AutoNewShooterCommandGroup("Red");
+        	}
+        	else if(autoTypeChooser.getSelected().equals("vision")){
+        		autonomousCommand = new AutoNewShooterVisionCommandGroup();
         	}
 //        	else if(autoTypeChooser.getSelected().equals("shooterOption1")){
 //        		autonomousCommand = new AutoShooterLeftCommandGroup();

@@ -6,6 +6,7 @@ import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.XboxMap;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -15,6 +16,8 @@ public class AutoDriveStraightCommand extends Command{
 	private double inchesToDrive = 0;
 	private double speed = 0;
 	double rotateToAngleRate = 0;
+	private DigitalInput limit;
+	
 	
 	//PID Objects
 	
@@ -59,6 +62,7 @@ public class AutoDriveStraightCommand extends Command{
     	speedController.setAbsoluteTolerance(0.1);
     	speedController.setOutputRange(-ConstantsMap.KSPEED_DRIVE_SPEED, ConstantsMap.KSPEED_DRIVE_SPEED);
     	speedController.setSetpoint(inchesToDrive);
+    	limit = new DigitalInput(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -87,7 +91,7 @@ public class AutoDriveStraightCommand extends Command{
 //		else{
 		driveSubsystem.tankDrive(-0.5 * (speed + rotateToAngleRate), 0.5 * (speed - rotateToAngleRate));
 //		}
-		if(speedController.onTarget() || oi.xbox.GetBValue()){
+		if(speedController.onTarget() || oi.xbox.GetBValue() || limit.get()){
 			finished = true;
 			end();
 		}

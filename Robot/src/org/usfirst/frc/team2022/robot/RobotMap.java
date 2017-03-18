@@ -36,7 +36,7 @@ public class RobotMap {
 	public static final int K_ULTRASONIC_PORT = 1;
 
 	//port for servo (gate that opens and closes for balls to go through)
-	public static final int SERVO_MOTOR_PORT = 0;
+	public static final int SERVO_MOTOR_PORT = 9;
 
 	// encoder ports for drive base
 	public static int LEFT_ENCODER_PORT_A = 7;
@@ -45,7 +45,7 @@ public class RobotMap {
 	public static int RIGHT_ENCODER_PORT_B = 8;
 	
 	//Encoder ports for shooter
-	public static int SHOOTER_ENCODER_A = 0;
-	public static int SHOOTER_ENCODER_B = 1;
+//	public static int SHOOTER_ENCODER_A = 0;
+//	public static int SHOOTER_ENCODER_B = 1;
 }
 

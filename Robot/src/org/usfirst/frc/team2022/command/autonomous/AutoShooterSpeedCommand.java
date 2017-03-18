@@ -49,6 +49,14 @@ public class AutoShooterSpeedCommand extends Command{
 	
 	protected void execute() {
 		//Set speed from pid controller
+		if(oi.xbox.GetXValue()){
+			if(shooterSubsystem.getServo() > 0.5){
+				shooterSubsystem.setServo(0);
+			}
+			else{
+				shooterSubsystem.setServo(1);
+			}
+		}
 		desiredRate = sd.getNumber("Rate", 0);
 		pidController.setSetpoint(desiredRate);
 		pidController.setP(sd.getNumber("P", ConstantsMap.KP_SHOOTER_SPEED));
