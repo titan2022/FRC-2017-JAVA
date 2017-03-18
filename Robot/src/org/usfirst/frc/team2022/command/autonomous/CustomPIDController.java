@@ -29,6 +29,19 @@ public class CustomPIDController {
 		this.kf = kf;
 	}
 	
+	public void setP(double kp){
+		this.kp = kp;
+	}
+	
+	public void setI(double ki){
+		this.ki = ki;
+	}
+	public void setD(double kd){
+		this.kd = kd;
+	}
+	public void setF(double kf){
+		this.kf = kf;
+	}
 	public double getOutput(double input){
 		lastInput = input;
 		error = setpoint - input;

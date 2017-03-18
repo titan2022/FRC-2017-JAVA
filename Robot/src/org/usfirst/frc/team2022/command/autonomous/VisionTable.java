@@ -34,6 +34,7 @@ public class VisionTable {
 	
 	//Boiler things
 	public static double getBoilerAngle(){
+		System.out.println("angle: " + table.getNumber("boilerAngle", 0));
 		return table.getNumber("boilerAngle", 0);
 	}
 	

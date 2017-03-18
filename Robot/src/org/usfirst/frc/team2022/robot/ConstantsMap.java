@@ -1,11 +1,13 @@
 package org.usfirst.frc.team2022.robot;
 
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+
 /*
  * Easy place to access variables that need to be easily changed
  */
 
 public class ConstantsMap {
-
+//	NetworkTable sd = NetworkTable.getTable("Rate");
 	//Robot dimensions
 	public static final double ROBOT_LENGTH_INCHES = 36.5; 
 

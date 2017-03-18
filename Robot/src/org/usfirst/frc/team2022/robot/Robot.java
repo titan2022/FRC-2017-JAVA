@@ -136,6 +136,12 @@ public class Robot extends IterativeRobot {
 //    	autoShooterChooser.addObject("Center starting position", "shooterOption2"); 
 //    	autoShooterChooser.addObject("Right starting position", "shooterOption3"); 
 //    	SmartDashboard.putData("Auto Field Position", autoShooterChooser);  	
+    	
+    }
+    
+    
+    //This starts the methods for autonomous
+    public void autonomousInit() {
     	try{
     		if(autoTypeChooser.getSelected().equals("gearOption1")){
         		autonomousCommand = new AutoGearCommandGroup(1);
@@ -165,11 +171,6 @@ public class Robot extends IterativeRobot {
     	catch(Exception ex){
     		System.out.println(ex);
     	}
-    }
-    
-    
-    //This starts the methods for autonomous
-    public void autonomousInit() {
     	ultrasonicCommand.start();
     	
     	autonomousCommand.start();

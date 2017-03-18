@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AutoDriveTurnCommand extends Command{
+public class AutoDriveTurnVisionCommand extends Command{
 	
 	private boolean finished = false;
 	private double degreeToTurn = 0;
@@ -26,12 +26,11 @@ public class AutoDriveTurnCommand extends Command{
 	
 	CustomPIDController pidController;
 
-    public AutoDriveTurnCommand(double degreeToTurn) {
+    public AutoDriveTurnVisionCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(driveSubsystem);
-    	this.degreeToTurn = degreeToTurn;
-
+    	
     	driveSubsystem.resetGyro();
     	driveSubsystem.enableBrake();
 
@@ -46,6 +45,7 @@ public class AutoDriveTurnCommand extends Command{
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	degreeToTurn = VisionTable.getBoilerAngle();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -57,13 +57,13 @@ public class AutoDriveTurnCommand extends Command{
     	
     		//adjust speed of each wheel
 
-    	double newSpeed = pidController.getOutput(driveSubsystem.getGyroAngle());
-//    	double newSpeed = 0.2;
-		driveSubsystem.setLeftSpeed(-0.2);
-		driveSubsystem.setRightSpeed(-0.2);
-		System.out.println("Executing turn command");
+//    	double newSpeed = pidController.getOutput(driveSubsystem.getGyroAngle());
+    	System.out.println("Executing turn command");
+    	double newSpeed = 0.2;
+		driveSubsystem.setLeftSpeed(-newSpeed);
+		driveSubsystem.setRightSpeed(-newSpeed);
 //		System.out.println("Running turn command");
-		if(xboxMap.stopSystem() || Math.abs(Math.abs(degreeToTurn) - Math.abs(driveSubsystem.getGyroAngle())) < 1){
+		if(xboxMap.stopSystem() || Math.abs(Math.abs(degreeToTurn) - Math.abs(driveSubsystem.getGyroAngle())) < 0.5){
 			System.out.println("Finishing turn command");
 			finished = true;
     		end();
