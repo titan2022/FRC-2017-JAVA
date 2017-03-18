@@ -50,11 +50,11 @@ public class AutoDriveStraightCommand extends Command{
     	//Create PIDController and enable
     	pidController = new CustomPIDController(ConstantsMap.KP_DRIVE_ANGLE, ConstantsMap.KI_DRIVE_ANGLE, ConstantsMap.KD_DRIVE_ANGLE, ConstantsMap.KF_DRIVE_ANGLE);
     	pidController.setInputRange(-180, 180);
-    	pidController.setAbsoluteTolerance(0.5);
+    	pidController.setAbsoluteTolerance(1.5);
     	pidController.setOutputRange(-0.2, 0.2);
     	pidController.setSetpoint(0);    
     	
-    	speedController = new CustomPIDController(ConstantsMap.KP_DRIVE_TURN, ConstantsMap.KI_DRIVE_TURN, ConstantsMap.KD_DRIVE_TURN, ConstantsMap.KF_DRIVE_TURN);
+    	speedController = new CustomPIDController(ConstantsMap.KP_DRIVE_SPEED, ConstantsMap.KI_DRIVE_SPEED, ConstantsMap.KD_DRIVE_SPEED, ConstantsMap.KF_DRIVE_SPEED);
     	speedController.setInputRange(-1.5 * inchesToDrive, 1.5 * inchesToDrive);
     	speedController.setAbsoluteTolerance(0.1);
     	speedController.setOutputRange(-ConstantsMap.KSPEED_DRIVE_SPEED, ConstantsMap.KSPEED_DRIVE_SPEED);
@@ -87,7 +87,7 @@ public class AutoDriveStraightCommand extends Command{
 //		else{
 		driveSubsystem.tankDrive(-0.5 * (speed + rotateToAngleRate), 0.5 * (speed - rotateToAngleRate));
 //		}
-		if(speedController.onTarget() || xboxMap.stopSystem()){
+		if(speedController.onTarget() || oi.xbox.GetBValue()){
 			finished = true;
 			end();
 		}

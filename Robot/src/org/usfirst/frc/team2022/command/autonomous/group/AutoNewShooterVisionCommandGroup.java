@@ -2,17 +2,20 @@ package org.usfirst.frc.team2022.command.autonomous.group;
 
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraightCommand;
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurnCommand;
+import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurnVisionCommand;
 import org.usfirst.frc.team2022.command.autonomous.AutoShooterSpeedCommand;
+import org.usfirst.frc.team2022.command.autonomous.VisionTable;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class AutoNewShooterCommandGroup extends CommandGroup {
+public class AutoNewShooterVisionCommandGroup extends CommandGroup {
 
-    public AutoNewShooterCommandGroup(String side) {
+    public AutoNewShooterVisionCommandGroup(String side) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -29,17 +32,18 @@ public class AutoNewShooterCommandGroup extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
-    	if(side.equals("Red")){
-//    		addSequential(new AutoDriveStraightCommand(53.217));
-//    		addSequential(new AutoDriveTurnCommand(-4));
+    	if(side.equals("Blue")){
+    		addSequential(new AutoDriveStraightCommand(53.217));
+    		addSequential(new AutoDriveTurnVisionCommand());
+    		
     		addSequential(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
+    		
     	}
     	else{
-//    		addSequential(new AutoDriveStraightCommand(52.249));
-//    		addSequential(new AutoDriveTurnCommand(4));
+    		addSequential(new AutoDriveStraightCommand(52.249));
+    		addSequential(new AutoDriveTurnVisionCommand());
+    		
     		addSequential(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
     	}
-    	
     }
 }
