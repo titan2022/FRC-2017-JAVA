@@ -24,7 +24,8 @@ public class RobotMap {
 	
 	//Shooter motor ports
 	public static int AGITATOR_MOTOR_PORT = 1;
-	public static int SHOOTER_MOTOR_PORT = 2;
+	public static int SHOOTER_MOTOR_PORT1 = 2;
+	public static int SHOOTER_MOTOR_PORT2 = 11;
 	
 	//Climber motor ports
 	public static int CLIMBER_MOTOR_PORT = 10;

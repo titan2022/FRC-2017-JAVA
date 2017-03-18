@@ -25,6 +25,8 @@ public class DriveCommand extends Command {
 		
 	boolean brakeState = true;
 	long lastPressed = 0;
+	double turtleSpeed = 0.3;
+	boolean turtle = false;
 	
     public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -43,25 +45,48 @@ public class DriveCommand extends Command {
     	if(Math.abs(speedLeft) < 0.1){
     		speedLeft = 0;
     	}
-    	driveSubsystem.setLeftSpeed(speedLeft);
+    	
 
     	double speedRight = xboxMap.getSpeedRightWheel();
     	if(Math.abs(speedRight) < 0.1){
     		speedRight = 0; 
     	}
-    	driveSubsystem.setRightSpeed(speedRight);
+    	
+    	if(oi.xbox.GetRightBumperValue() && System.currentTimeMillis() - lastPressed > 200){
+    		turtle = !turtle;
+    		lastPressed = System.currentTimeMillis();
+    	}
     	
 //    	if(xboxMap.switchySwitch()) {
 //    		driveSubsystem.switchTheSwitchySwitch();
 //    	}
     	
     	//Autonomous gear
-    	if(xboxMap.startAutoGearAlignment()){
-    		Timer.delay(1);
-    		
-        	double pegAngle = VisionTable.getPegAngle();
-      		AutoDriveTurnCommand autoDriveTurnCommand = new AutoDriveTurnCommand(pegAngle-6);
-      		autoDriveTurnCommand.start();
+//    	if(xboxMap.startAutoGearAlignment()){
+//    		Timer.delay(1);
+//    		
+//        	double pegAngle = VisionTable.getPegAngle();
+//      		AutoDriveTurnCommand autoDriveTurnCommand = new AutoDriveTurnCommand(pegAngle-6);
+//      		autoDriveTurnCommand.start();
+//    	}
+    	
+    	if(oi.xbox.getPOV() == 0){
+    		driveSubsystem.setLeftSpeed(-turtleSpeed);
+        	driveSubsystem.setRightSpeed(turtleSpeed);
+    	}
+    	else if (oi.xbox.getPOV() == 180){
+    		driveSubsystem.setLeftSpeed(turtleSpeed);
+        	driveSubsystem.setRightSpeed(-turtleSpeed);
+    	}
+    	else if(turtle){
+    		driveSubsystem.setLeftSpeed(speedLeft * turtleSpeed);
+        	driveSubsystem.setRightSpeed(speedRight * turtleSpeed);
+
+    	}
+    	else{
+    		driveSubsystem.setLeftSpeed(speedLeft);
+        	driveSubsystem.setRightSpeed(speedRight);
+
     	}
     	
     	if(xboxMap.moveTowardsGear()){
@@ -69,7 +94,8 @@ public class DriveCommand extends Command {
 //      		double pegDistance = VisionTable.getPegDistance();
 //      		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(pegDistance - 5);
 //      		autoDriveStraightCommand.start();
-    		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(-5);
+    		double distance = VisionTable.getUltrasonicDistance();
+    		AutoDriveStraightCommand autoDriveStraightCommand = new AutoDriveStraightCommand(distance-11.7);
       		autoDriveStraightCommand.start();
     	}
     	

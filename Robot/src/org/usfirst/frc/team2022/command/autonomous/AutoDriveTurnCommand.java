@@ -57,12 +57,14 @@ public class AutoDriveTurnCommand extends Command{
     	
     		//adjust speed of each wheel
 
-    	double newSpeed = pidController.getOutput(driveSubsystem.getGyroAngle());
+//    	double newSpeed = pidController.getOutput(driveSubsystem.getGyroAngle());
+    	double newSpeed = 0.4;
 		driveSubsystem.setLeftSpeed(-newSpeed);
 		driveSubsystem.setRightSpeed(-newSpeed);
-		if(xboxMap.stopSystem()){
+//		System.out.println("Running turn command");
+		if(xboxMap.stopSystem() || Math.abs(60 - driveSubsystem.getGyroAngle()) < 1){
+			System.out.println("Finishing turn command");
 			finished = true;
-    		cancel();
     		end();
     	}
     

@@ -36,8 +36,9 @@ public class AutoGearCommandGroup extends CommandGroup {
 			runCommand(94.745, -60, 63); 
 		}	
 		else if(position == 2){
-			runCommand(7*12 + 11 - 40, 0, 0);
+			runCommand(60, 0, 0);
 		}
+		//7*12 + 11 - 27
 		else if(position == 3){
 			runCommand(83.879, 60, 88); 
 		}
@@ -48,14 +49,14 @@ public class AutoGearCommandGroup extends CommandGroup {
 		addSequential(new AutoDriveStraightCommand(distance));
 		addSequential(new AutoDriveTurnCommand(angle));
 				
-		//Timer.delay(1);
-//		double pegDistance = VisionTable.getPegDistance();
-//    	double pegAngle = VisionTable.getPegAngle();
+		Timer.delay(1);
+		double pegDistance = VisionTable.getPegDistance();
+    	double pegAngle = VisionTable.getPegAngle();
 		  		
-  		addSequential(new AutoDriveStraightCommand(secondDistance));
+//  		addSequential(new AutoDriveStraightCommand(secondDistance));
   		
-  		//Timer.delay(1);
-//  		pegDistance = VisionTable.getPegDistance();
-//  		addSequential(new AutoDriveStraightCommand(pegDistance));
+  		Timer.delay(1);
+  		pegDistance = VisionTable.getPegDistance();
+  		addSequential(new AutoDriveStraightCommand(pegDistance));
 	}
 }

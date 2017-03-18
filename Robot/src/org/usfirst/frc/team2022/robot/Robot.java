@@ -2,11 +2,14 @@ package org.usfirst.frc.team2022.robot;
 
 import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
+import org.usfirst.frc.team2022.command.ShooterCommand;
 import org.usfirst.frc.team2022.command.UltrasonicCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
+import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -29,12 +32,12 @@ public class Robot extends IterativeRobot {
 
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-//	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 	
 	//Create References to commands
 	public DriveCommand driveCommand;
-//	public ShooterCommand shooterCommand;
+	public ShooterCommand shooterCommand;
 	private UltrasonicCommand ultrasonicCommand;
 	public ClimberCommand climberCommand;
 	
@@ -61,11 +64,13 @@ public class Robot extends IterativeRobot {
     	
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
-//    	shooterCommand = new ShooterCommand();
+    	shooterCommand = new ShooterCommand();
     	climberCommand = new ClimberCommand();
     	ultrasonicCommand = new UltrasonicCommand();
     	
-    	CameraServer.getInstance().startAutomaticCapture();
+    	UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    	camera.setResolution(480, 360);
+    	camera.setFPS(30);
     	
     	//Create thread for streaming cameras
 //    	Thread t = new Thread(new Runnable(){
@@ -186,7 +191,7 @@ public class Robot extends IterativeRobot {
     		ultrasonicCommand.start();
     	}
     	driveCommand.start();
-//    	shooterCommand.start();
+    	shooterCommand.start();
     	climberCommand.start();
     }
     
@@ -195,7 +200,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		ultrasonicCommand.cancel();
 		driveCommand.cancel();
-//		shooterCommand.cancel();
+		shooterCommand.cancel();
 		climberCommand.cancel();
 	}
     
