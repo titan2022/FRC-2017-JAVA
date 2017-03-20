@@ -61,10 +61,10 @@ public class AutoDriveTurnCommand extends Command{
 //    	double newSpeed = 0.2;
 		driveSubsystem.setLeftSpeed(-0.2);
 		driveSubsystem.setRightSpeed(-0.2);
-		System.out.println("Executing turn command");
+		//System.out.println("Executing turn command");
 //		System.out.println("Running turn command");
 		if(xboxMap.stopSystem() || Math.abs(Math.abs(degreeToTurn) - Math.abs(driveSubsystem.getGyroAngle())) < 1){
-			System.out.println("Finishing turn command");
+			//System.out.println("Finishing turn command");
 			finished = true;
     		end();
     	}

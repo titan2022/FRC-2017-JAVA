@@ -32,12 +32,11 @@ public class AutoNewShooterCommandGroup extends CommandGroup {
     	
     	if(side.equals("Red")){
 //    		addSequential(new AutoDriveStraightCommand(53.217));
-//    		addSequential(new AutoDriveTurnCommand(-4));
     		addSequential(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
     	}
     	else{
-//    		addSequential(new AutoDriveStraightCommand(52.249));
-//    		addSequential(new AutoDriveTurnCommand(4));
+    		addSequential(new AutoDriveStraightCommand(52.249));
+    		addSequential(new AutoDriveTurnCommand(4));
     		addSequential(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
     	}
     	

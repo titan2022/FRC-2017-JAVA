@@ -19,7 +19,7 @@ public class VisionTable {
 	public static boolean getBoilerDone(){
 		return table.getBoolean("boilerDone", false);
 	}
-	
+		
 	public static boolean getPegDone(){
 		return table.getBoolean("pegDone", false);
 	}
@@ -34,7 +34,9 @@ public class VisionTable {
 	
 	//Boiler things
 	public static double getBoilerAngle(){
+		System.out.println("table is: " + table.isConnected());
 		System.out.println("angle: " + table.getNumber("boilerAngle", 0));
+
 		return table.getNumber("boilerAngle", 0);
 	}
 	
