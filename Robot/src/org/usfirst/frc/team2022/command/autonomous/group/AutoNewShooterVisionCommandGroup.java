@@ -48,7 +48,7 @@ public class AutoNewShooterVisionCommandGroup extends CommandGroup {
   		
 //  		addSequential(new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT));
   		
-  		new AutoDriveStraightCommand(boilerDistance - ConstantsMap.DIST_TO_SHOOT).start();
+  		new AutoDriveStraightCommand(boilerDistance - ConstantsMap.RED_DIST_TO_SHOOT).start();
   		//AutoShooterSpeedCommand autoShooterSpeedCommand = new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED);
   		//autoShooterSpeedCommand.start();
   		VisionTable.setProcessBoiler(false);

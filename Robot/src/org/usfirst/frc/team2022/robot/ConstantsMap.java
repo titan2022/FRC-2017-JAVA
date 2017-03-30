@@ -15,7 +15,8 @@ public class ConstantsMap {
 	public static final double DRIVE_ENCODER_DIST_PER_TICK = ((4* Math.PI)/(360));
 
 	//Distance and speeds
-	public static final double DIST_TO_SHOOT = 57;
+	public static final double RED_DIST_TO_SHOOT = 53.217;
+	public static final double BLUE_DIST_TO_SHOOT = 52.249;
 	public static final double SHOOTING_SPEED = 3234.082;
 	public static final double CLIMBER_SPEED = 0;
 
@@ -37,9 +38,9 @@ public class ConstantsMap {
 	public static double KF_DRIVE_TURN = 0.7;
 	public static double KSPEED_DRIVE_TURN = 0.2;
 	
-	public static double KP_SHOOTER_SPEED = 0.0001;
-	public static double KI_SHOOTER_SPEED = 0;
-	public static double KD_SHOOTER_SPEED = 0.302;
-	public static double KF_SHOOTER_SPEED = 0;
+	public static double KP_SHOOTER_SPEED = 0.0013;
+	public static double KI_SHOOTER_SPEED = 1e-9;
+	public static double KD_SHOOTER_SPEED = 0.01;
+	public static double KF_SHOOTER_SPEED = 0.635;
 
 }

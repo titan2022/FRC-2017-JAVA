@@ -31,11 +31,13 @@ public class AutoNewShooterCommandGroup extends CommandGroup {
         // arm.
     	
     	if(side.equals("Red")){
-//    		addSequential(new AutoDriveStraightCommand(53.217));
+    		addSequential(new AutoDriveStraightCommand(110));
+    		addSequential(new AutoDriveStraightCommand(-(110 - ConstantsMap.RED_DIST_TO_SHOOT)));
     		addSequential(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
     	}
     	else{
-    		addSequential(new AutoDriveStraightCommand(52.249));
+    		addSequential(new AutoDriveStraightCommand(110));
+    		addSequential(new AutoDriveStraightCommand(-(110 - ConstantsMap.BLUE_DIST_TO_SHOOT)));
     		addSequential(new AutoDriveTurnCommand(4));
     		addSequential(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
     	}
