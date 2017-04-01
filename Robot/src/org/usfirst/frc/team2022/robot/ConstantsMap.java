@@ -17,7 +17,7 @@ public class ConstantsMap {
 	//Distance and speeds
 	public static final double RED_DIST_TO_SHOOT = 53.217;
 	public static final double BLUE_DIST_TO_SHOOT = 52.249;
-	public static final double SHOOTING_SPEED = 3234.082;
+	public static final double SHOOTING_SPEED = 3310;
 	public static final double CLIMBER_SPEED = 0;
 
 	//PID Values

@@ -39,7 +39,7 @@ public class ShooterCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { 
     	NetworkTable sd = NetworkTable.getTable("Preferences");
-    	shooterSubsystem.setShooterSpeed(sd.getNumber("speed", 0));
+//    	shooterSubsystem.setShooterSpeed(sd.getNumber("speed", 0));
     	SmartDashboard.putNumber("Shooter Speed", shooterSubsystem.getShooterSpeed());
 //    	shooterSubsystem.setShooterSpeed(oi.xbox.GetRightTriggers());
     	//53.5

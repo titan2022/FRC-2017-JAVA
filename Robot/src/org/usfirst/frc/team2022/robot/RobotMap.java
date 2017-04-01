@@ -22,6 +22,9 @@ public class RobotMap {
 	public static final int RIGHT_DRIVE_PORT_2 = 8;
 	public static final int RIGHT_DRIVE_PORT_3 = 9;
 	
+	public static final int LIMIT_SWITCH = 0;
+	public static final int GEAR_SWITCH = 1;
+	
 	//Shooter motor ports
 	public static int AGITATOR_MOTOR_PORT = 1;
 	public static int SHOOTER_MOTOR_PORT1 = 2;
@@ -32,8 +35,8 @@ public class RobotMap {
 	
 	//Sensors
 	//Drive base sensors
-	public static final int GYRO_PORT = 0;
-	public static final int K_ULTRASONIC_PORT = 1;
+	public static final int GYRO_PORT = 1;
+	public static final int K_ULTRASONIC_PORT = 0;
 
 	//port for servo (gate that opens and closes for balls to go through)
 	public static final int SERVO_MOTOR_PORT = 9;
@@ -43,7 +46,10 @@ public class RobotMap {
 	public static int LEFT_ENCODER_PORT_B = 6;
 	public static int RIGHT_ENCODER_PORT_A = 9;
 	public static int RIGHT_ENCODER_PORT_B = 8;
-	
+	//LIGHTS
+	public static int SPIKE_1 = 2;
+	public static int SPIKE_2 = 3;
+
 	//Encoder ports for shooter
 //	public static int SHOOTER_ENCODER_A = 0;
 //	public static int SHOOTER_ENCODER_B = 1;

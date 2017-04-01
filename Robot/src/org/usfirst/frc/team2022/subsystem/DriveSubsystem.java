@@ -1,17 +1,14 @@
 package org.usfirst.frc.team2022.subsystem;
 
-import org.usfirst.frc.team2022.robot.ConstantsMap;
-
 import org.usfirst.frc.team2022.command.DriveCommand;
+import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.RobotMap;
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Ultrasonic;
+
 import com.ctre.CANTalon;
 
-
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
@@ -24,7 +21,9 @@ public class DriveSubsystem extends Subsystem {
 
 	private Encoder leftEncoder, rightEncoder;
 
-	private AnalogGyro gyro; 
+	private AnalogGyro gyro;
+	
+	private DigitalInput limitSwitch, gearSwitch;
 	
 //	private boolean switchUrMom = false;
 
@@ -50,16 +49,27 @@ public class DriveSubsystem extends Subsystem {
 		
 		//Instantiate Gyro
 		gyro = new AnalogGyro(RobotMap.GYRO_PORT);
-		
+		gyro.calibrate();
 		//Set Encoder distanceFromTower per pulse
 		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
 		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
+		
+		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
+		gearSwitch = new DigitalInput(RobotMap.GEAR_SWITCH);
 	}
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveCommand());
+    }
+    
+    public boolean getLimitSwitch(){
+    	return limitSwitch.get();
+    }
+    
+    public boolean getGearSwitch(){
+    	return !gearSwitch.get();
     }
 
 	// Setter methods for each side.

@@ -36,7 +36,7 @@ public class AutoGearCommandGroup extends CommandGroup {
 			runCommand(94.745, -60, 63); 
 		}	
 		else if(position == 2){
-			runCommand(60.75221, 0, 0);
+			addSequential(new AutoDriveStraightCommand());
 		}
 		//7*12 + 11 - 27
 		else if(position == 3){

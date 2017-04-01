@@ -57,6 +57,9 @@ public class DriveCommand extends Command {
     		lastPressed = System.currentTimeMillis();
     	}
     	
+    	SmartDashboard.putBoolean("Gear Collected", driveSubsystem.getGearSwitch());
+    	SmartDashboard.putBoolean("Limit Switch", driveSubsystem.getLimitSwitch());
+
 //    	if(xboxMap.switchySwitch()) {
 //    		driveSubsystem.switchTheSwitchySwitch();
 //    	}

@@ -3,7 +3,9 @@ package org.usfirst.frc.team2022.command.autonomous.group;
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveStraightCommand;
 import org.usfirst.frc.team2022.command.autonomous.AutoDriveTurnCommand;
 import org.usfirst.frc.team2022.command.autonomous.AutoShooterSpeedCommand;
+import org.usfirst.frc.team2022.command.autonomous.ChangeServoCommand;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
+import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -31,15 +33,18 @@ public class AutoNewShooterCommandGroup extends CommandGroup {
         // arm.
     	
     	if(side.equals("Red")){
-    		addSequential(new AutoDriveStraightCommand(110));
-    		addSequential(new AutoDriveStraightCommand(-(110 - ConstantsMap.RED_DIST_TO_SHOOT)));
-    		addSequential(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
+    		addSequential(new AutoDriveStraightCommand(70));
+    		addParallel(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
+    		addSequential(new AutoDriveStraightCommand(-(70 - ConstantsMap.RED_DIST_TO_SHOOT)));
+    		addSequential(new ChangeServoCommand("open"));
+    		
     	}
     	else{
-    		addSequential(new AutoDriveStraightCommand(110));
-    		addSequential(new AutoDriveStraightCommand(-(110 - ConstantsMap.BLUE_DIST_TO_SHOOT)));
+    		addSequential(new AutoDriveStraightCommand(70));
+    		addParallel(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
+    		addSequential(new AutoDriveStraightCommand(-(70 - ConstantsMap.BLUE_DIST_TO_SHOOT)));
     		addSequential(new AutoDriveTurnCommand(4));
-    		addSequential(new AutoShooterSpeedCommand(ConstantsMap.SHOOTING_SPEED));
+    		addSequential(new ChangeServoCommand("open"));
     	}
     	
     }

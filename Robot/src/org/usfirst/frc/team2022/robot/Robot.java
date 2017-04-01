@@ -2,13 +2,16 @@ package org.usfirst.frc.team2022.robot;
 
 import org.usfirst.frc.team2022.command.ClimberCommand;
 import org.usfirst.frc.team2022.command.DriveCommand;
+import org.usfirst.frc.team2022.command.LightCommand;
 import org.usfirst.frc.team2022.command.ShooterCommand;
 import org.usfirst.frc.team2022.command.UltrasonicCommand;
+import org.usfirst.frc.team2022.command.autonomous.ChangeServoCommand;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoGearCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoNewShooterCommandGroup;
 import org.usfirst.frc.team2022.command.autonomous.group.AutoNewShooterVisionCommandGroup;
 import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
+import org.usfirst.frc.team2022.subsystem.LightSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
 
 import edu.wpi.cscore.UsbCamera;
@@ -36,13 +39,16 @@ public class Robot extends IterativeRobot {
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+	//LIGHTS!!
+//	public static final LightSubsystem lights = new LightSubsystem();
 	
 	//Create References to commands
 	public DriveCommand driveCommand;
 	public ShooterCommand shooterCommand;
 	private UltrasonicCommand ultrasonicCommand;
 	public ClimberCommand climberCommand;
-	
+	public ChangeServoCommand changeServoCommand;
+//	public LightCommand lightCommand;
 	//Autonomous
 	CommandGroup autonomousCommand = new CommandGroup();
 	SendableChooser<String> autoTypeChooser;
@@ -56,6 +62,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public XboxMap xboxMap = new XboxMap();
 	
+	
 	//Initialization code ran when you turn on the robot
 
     public void robotInit() {    	
@@ -68,7 +75,8 @@ public class Robot extends IterativeRobot {
     	shooterCommand = new ShooterCommand();
     	climberCommand = new ClimberCommand();
     	ultrasonicCommand = new UltrasonicCommand();
-    	
+    	changeServoCommand = new ChangeServoCommand("close");
+//    	lightCommand = new LightCommand(0);
     	UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     	camera.setResolution(480, 360);
     	camera.setFPS(30);
@@ -209,6 +217,8 @@ public class Robot extends IterativeRobot {
     	driveCommand.start();
     	shooterCommand.start();
     	climberCommand.start();
+    	changeServoCommand.start();
+//    	lightCommand.start();
     }
     
     //This stops the methods for autonomous

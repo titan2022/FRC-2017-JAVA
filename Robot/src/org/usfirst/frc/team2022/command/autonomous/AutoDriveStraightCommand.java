@@ -16,7 +16,6 @@ public class AutoDriveStraightCommand extends Command{
 	private double inchesToDrive = 0;
 	private double speed = 0;
 	double rotateToAngleRate = 0;
-	private DigitalInput limit;
 	
 	
 	//PID Objects
@@ -29,6 +28,7 @@ public class AutoDriveStraightCommand extends Command{
 	//References to objects in Robot
 	DriveSubsystem driveSubsystem = Robot.driveSubsystem;
 	OI oi = Robot.oi;
+	boolean limitSwitch = false;
 
     public AutoDriveStraightCommand(double inchesToDrive) {
         // Use requires() here to declare subsystem dependencies
@@ -39,7 +39,15 @@ public class AutoDriveStraightCommand extends Command{
     	driveSubsystem.resetEncoders();
     	driveSubsystem.resetGyro();
     }
-
+    
+    public AutoDriveStraightCommand(){
+    	requires(driveSubsystem);
+    	inchesToDrive = 150;
+    	limitSwitch = true;
+    	driveSubsystem.resetEncoders();
+    	driveSubsystem.resetGyro();
+    }
+    
     // Called just before this Command runs the first time
     protected void initialize() {
     	System.out.println("Inside initialize command");
@@ -62,7 +70,6 @@ public class AutoDriveStraightCommand extends Command{
     	speedController.setAbsoluteTolerance(0.1);
     	speedController.setOutputRange(-ConstantsMap.KSPEED_DRIVE_SPEED, ConstantsMap.KSPEED_DRIVE_SPEED);
     	speedController.setSetpoint(inchesToDrive);
-    	limit = new DigitalInput(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -91,7 +98,13 @@ public class AutoDriveStraightCommand extends Command{
 //		else{
 		driveSubsystem.tankDrive(-0.5 * (speed + rotateToAngleRate), 0.5 * (speed - rotateToAngleRate));
 //		}
-		if(speedController.onTarget() || oi.xbox.GetBValue() || limit.get()){
+		if(limitSwitch){
+			if(driveSubsystem.getLimitSwitch()){
+				finished = true;
+				end();
+			}
+		}
+		if(speedController.onTarget() || oi.xbox.GetBValue()  ){
 			finished = true;
 			end();
 		}
