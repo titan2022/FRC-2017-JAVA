@@ -30,13 +30,31 @@ public class XboxMap {
 	}
 	
 	
-	//Shooter commands	
-	public boolean startAutoShooterSystem(){
+//	Replacing with Arm Commands
+//	
+//	//Shooter commands	
+//	public boolean startAutoShooterSystem(){
+//		return oi.xbox.GetXValue();
+//	}
+//	
+//	public boolean startManualShooterCommand(){
+//		return oi.xbox.GetBValue();
+//	}
+	
+	public boolean BottomArmUp(){
 		return oi.xbox.GetXValue();
 	}
 	
-	public boolean startManualShooterCommand(){
+	public boolean BottomArmDown(){
 		return oi.xbox.GetBValue();
+	}
+	
+	public boolean MiddleArmUp(){
+		return oi.xbox.GetAValue();
+	}
+	
+	public boolean MiddleArmDown(){
+		return oi.xbox.GetYValue();
 	}
 
 //	public boolean openGate() {
@@ -60,15 +78,15 @@ public class XboxMap {
 		return oi.xbox.GetYValue();
 	}
 
-	public boolean runAgitator() {
-		// TODO Auto-generated method stub
-		if(oi.xbox.GetRightTriggers() > 0.4){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
+//	public boolean runAgitator() {
+//		// TODO Auto-generated method stub
+//		if(oi.xbox.GetRightTriggers() > 0.4){
+//			return true;
+//		}
+//		else{
+//			return false;
+//		}
+//	}
 
 	public boolean moveTowardsGear() {
 		// TODO Auto-generated method stub
@@ -80,10 +98,10 @@ public class XboxMap {
 		}
 	}
 
-	public boolean moveToShooter() {
-		// TODO Auto-generated method stub
-		return oi.xbox.GetAValue();
-	}
+//	public boolean moveToShooter() {
+//		// TODO Auto-generated method stub
+//		return oi.xbox.GetAValue();
+//	}
 	
 	public boolean pneumaticSwitchEx() {
 		return oi.xbox.GetLeftBumperValue();

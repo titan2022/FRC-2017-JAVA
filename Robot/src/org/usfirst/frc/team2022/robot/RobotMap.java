@@ -36,6 +36,10 @@ public class RobotMap {
 
 	//port for servo (gate that opens and closes for balls to go through)
 	public static final int SERVO_MOTOR_PORT = 1;
+	
+	//port for arm CANTalon motors 
+	public static final int BOTTOM_ARM = 0;
+	public static final int MIDDLE_ARM = 0;
 
 	// encoder ports for drive base
 	public static int LEFT_ENCODER_PORT_A = 7;

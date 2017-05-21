@@ -14,6 +14,7 @@ import org.usfirst.frc.team2022.subsystem.ClimberSubsystem;
 import org.usfirst.frc.team2022.subsystem.DriveSubsystem;
 import org.usfirst.frc.team2022.subsystem.PneumaticsSubsystem;
 import org.usfirst.frc.team2022.subsystem.ShooterSubsystem;
+import org.usfirst.frc.team2022.subsystem.ArmSubsystem;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot {
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 	public static final PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem();
+	public static final ArmSubsystem armSubsystem = new ArmSubsystem();
 	
 	//Create References to commands
 	public DriveCommand driveCommand;
