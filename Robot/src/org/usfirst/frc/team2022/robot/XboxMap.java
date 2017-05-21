@@ -17,7 +17,7 @@ public class XboxMap {
 //	}
 	
 	public boolean switchySwitch(){
-		return oi.xbox.GetRightBumperValue();
+		return oi.xbox.getTop();
 	}
 	
 	public boolean startAutoGearAlignment(){
@@ -84,6 +84,14 @@ public class XboxMap {
 		// TODO Auto-generated method stub
 		return oi.xbox.GetAValue();
 	}
+	
+	public boolean pneumaticSwitchEx() {
+		return oi.xbox.GetLeftBumperValue();
+	}	
+	
+	public boolean pneumaticSwitchRe() {
+		return oi.xbox.GetRightBumperValue();
+	}		
 }
 
 
